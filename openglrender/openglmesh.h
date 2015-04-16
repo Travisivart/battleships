@@ -29,7 +29,7 @@ public:
     //Load an object into memory from filename.
     void load(QString filename);
 
-    //Deleted the mesh if one has been loaded.
+    //Delete the mesh if one has been loaded.
     void deleteMesh();
 
     //If the mesh was created with an object file, then return the filename used.
