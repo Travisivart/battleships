@@ -2,7 +2,6 @@
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
@@ -27,4 +26,4 @@
 *.out
 *.app
 
-*.user.pro
+*.pro.user
