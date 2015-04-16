@@ -32,6 +32,4 @@ protected:
     bool debug;
 };
 
-//class openGLPoint : public openGLObject{};
-
 #endif // OPENGLOBJECT_H

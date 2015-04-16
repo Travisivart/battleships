@@ -29,6 +29,7 @@ void openGLRender::initializeGL(){
 
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    //glLightfv(GL_LIGHT0, GL_AMBIENT, light0_position);
     glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
 
     glEnable(GL_LIGHTING);

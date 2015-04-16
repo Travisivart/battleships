@@ -28,7 +28,12 @@ SOURCES += main.cpp\
     tutor/glm.cpp \
     openglrender/openglmesh.cpp \
     openglrender/openglcamera.cpp \
-    openglrender/ship.cpp
+    openglrender/ship.cpp \
+    openglrender/projectile.cpp \
+    openglrender/projectile2d.cpp \
+    openglrender/projectile3d.cpp \
+    openglrender/barrier.cpp \
+    openglrender/terrain.cpp
 
 HEADERS  += window.h \
     openglrender/openglrender.h \
@@ -45,6 +50,11 @@ HEADERS  += window.h \
     tutor/glm.h \
     openglrender/openglmesh.h \
     openglrender/openglcamera.h \
-    openglrender/ship.h
+    openglrender/ship.h \
+    openglrender/projectile.h \
+    openglrender/projectile2d.h \
+    openglrender/projectile3d.h \
+    openglrender/barrier.h \
+    openglrender/terrain.h
 
 FORMS    += window.ui
