@@ -5,10 +5,10 @@
 //openGLRender(QWidget *parent  = 0);
 openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
-    objects = new QList<openGLObject*>();
+    this->objects = new QList<openGLObject*>();
 
-    m = new QList<GLMmodel*>();
-    selectedObj = -1;
+    this->models = new QList<GLMmodel*>();
+    this->selectedObj = -1;
 }
 
 openGLRender::~openGLRender()

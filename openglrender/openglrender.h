@@ -13,21 +13,8 @@
 #include "openglmesh.h"
 #include "openglcamera.h"
 
-struct modelRot
-{
-    GLfloat angle;
-    GLfloat xRot;
-    GLfloat yRot;
-    GLfloat zRot;
-};
-
-struct modelTrans
-{
-    GLfloat xTrans;
-    GLfloat yTrans;
-    GLfloat zTrans;
-};
-
+#define GAME_MODE 0
+#define MENU_MODE 1
 
 class openGLRender : public QGLWidget
 {
@@ -44,18 +31,15 @@ public:
     void clearObjects();
     void setLineSizeGL(int newSize);
 
+    //Operations on the object list
     bool isEmpty();
     int size();
-
     void removeAt(int i);
     void push(openGLObject *newObj);
     openGLObject* pop();
-
     openGLObject* at(const int i);
 
     void setBackgroundColor(int newRed, int newGreen, int newBlue, int newAlpha);
-
-    QList<GLMmodel*> *m;
 
 protected:
 
@@ -63,6 +47,9 @@ protected:
     void resizeGL(int width, int height);
 
 private:
+
+    GLint mode;
+
     void draw();
 
     QList<openGLObject*> *objects;
@@ -72,8 +59,5 @@ private:
 
     openGLCamera *camera;
 };
-
-//void triangle(GLfloat *va, GLfloat *vb, GLfloat *vc);
-void divide_tetra(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d, int m);
 
 #endif // OPENGLRENDER_H

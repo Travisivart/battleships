@@ -203,13 +203,6 @@ void openGLLine::bresenham(openGLPoint* bp1, openGLPoint* bp2, const int pk)
     int dy = qAbs((bp2->getY()-bp1->getY()));
     openGLPoint *p;
 
-    int styleMod = 1;
-    if (style == "Line")
-        styleMod = 1;
-    else if(style == "Dot")
-        styleMod = 8;
-
-
     //Vertical line
     if (bp1->getX() == bp2->getX())
     {
