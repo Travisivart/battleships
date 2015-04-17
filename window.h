@@ -21,7 +21,6 @@
 
 #define YOFFSET 50
 
-
 namespace Ui {
 class Window;
 }
@@ -36,6 +35,11 @@ public:
     explicit Window(QOpenGLWidget *parent = 0);
     ~Window();
 
+
+
+    //Keypress events:
+    void keyPressEvent(QKeyEvent *ev);
+
     //void clearButton_clicked();
     void mouseMoveEvent(QMouseEvent *ev);
     void mousePressEvent(QMouseEvent *ev);
@@ -47,6 +51,11 @@ public:
     void updateCamera();
 
 private slots:
+
+    void awake();
+
+    void aboutToBlock();
+
     void on_clearBtn_clicked();
 
     void on_redInput_textEdited(const QString &arg1);
@@ -158,11 +167,13 @@ private slots:
 private:
     Ui::Window *ui;
 
+    QAbstractEventDispatcher *dispatcher;
+    QTime lastAwake;
+    QTime lastBlock;
+
     bool clicked;
 
     bool buildingPolygon;
-
-    //RenderArea *renderArea;
 };
 
 #endif // WINDOW_H

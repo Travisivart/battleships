@@ -7,28 +7,83 @@ Window::Window(QOpenGLWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Window)
 {
-    ui->setupUi(this);
 
-    //ui->openGLRenderWindow->initializeGL();
+    dispatcher = QAbstractEventDispatcher::instance();
+    connect(dispatcher, SIGNAL(awake()), SLOT(awake()));
+    connect(dispatcher, SIGNAL(aboutToBlock()), SLOT(aboutToBlock()));
+
+    ui->setupUi(this);
 
     this->clicked = false;
 
     this->buildingPolygon = false;
-
-    /*    ui->circleTypeCmb->setItemData(1,CircleType::FULL);
-    ui->circleTypeCmb->setItemData(2,CircleType::SEMINORTH);
-    ui->circleTypeCmb->setItemData(3,CircleType::SEMIEAST);
-    ui->circleTypeCmb->setItemData(4,CircleType::SEMISOUTH);
-    ui->circleTypeCmb->setItemData(5,CircleType::SEMIWEST);
-    ui->circleTypeCmb->setItemData(6,CircleType::QUADNW);
-    ui->circleTypeCmb->setItemData(7,CircleType::QUADNE);
-    ui->circleTypeCmb->setItemData(8,CircleType::QUADSE);
-    ui->circleTypeCmb->setItemData(9,CircleType::QUADSW);*/
 }
 
 Window::~Window()
 {
     delete ui;
+}
+
+void Window::awake()
+{
+    lastAwake = QTime::currentTime();
+    qDebug() << "Slept for " << lastBlock.msecsTo(lastAwake) << " msec";
+
+    //Process input queue
+    //update objects to new positions
+    //Check for collisions
+}
+
+void Window::aboutToBlock()
+{
+    lastBlock = QTime::currentTime();
+    qDebug() << "Worked for " << lastAwake.msecsTo(lastBlock) << " msec";
+}
+
+
+void Window::keyPressEvent(QKeyEvent *ev)
+{
+    //37 - Left arrow
+    //38 = Up arrow
+    //39 = Right arrow
+    //40 = Down arrow
+    //32 = Space
+    //27 = Esc
+    //qDebug()<<"key: " <<ev->key() <<ev->nativeVirtualKey() <<ev->text();
+
+    switch (ev->nativeVirtualKey())
+    {
+    //Esc key
+    case 27:
+        //Set mode to MENU_MODE if set to GAME_MODE and vice versa
+        break;
+
+        //Space key
+    case 32:
+        //Create a projectile
+        break;
+
+        //Left arrow key
+    case 37:
+        //Rotate the player slightly left
+        //ui->openGLRenderWindow->rotatePlayer(0.1f);
+        break;
+
+        //Up arrow key
+    case 38:
+        break;
+
+        //Right arrow key
+    case 39:
+        break;
+
+        //Down arrow key
+    case 40:
+        break;
+
+    default:
+        break;
+    }
 }
 
 void Window::mouseMoveEvent(QMouseEvent *ev)
