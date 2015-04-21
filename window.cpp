@@ -17,6 +17,12 @@ Window::Window(QOpenGLWidget *parent) :
     this->clicked = false;
 
     this->buildingPolygon = false;
+
+    //Load player model
+    this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16.obj"));
+    ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
+    //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 0.0f, 0.0f);
+    //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 180.0f, 0.0f);
 }
 
 Window::~Window()
@@ -27,17 +33,19 @@ Window::~Window()
 void Window::awake()
 {
     lastAwake = QTime::currentTime();
-    qDebug() << "Slept for " << lastBlock.msecsTo(lastAwake) << " msec";
+    //qDebug() << "Slept for " << lastBlock.msecsTo(lastAwake) << " msec";
 
     //Process input queue
     //update objects to new positions
     //Check for collisions
+    if (!ui->openGLRenderWindow->hasFocus())
+        ui->openGLRenderWindow->setFocus();
 }
 
 void Window::aboutToBlock()
 {
     lastBlock = QTime::currentTime();
-    qDebug() << "Worked for " << lastAwake.msecsTo(lastBlock) << " msec";
+    //qDebug() << "Worked for " << lastAwake.msecsTo(lastBlock) << " msec";
 }
 
 
@@ -50,6 +58,10 @@ void Window::keyPressEvent(QKeyEvent *ev)
     //32 = Space
     //27 = Esc
     //qDebug()<<"key: " <<ev->key() <<ev->nativeVirtualKey() <<ev->text();
+
+    openGLObject *o;
+    GLfloat* trans;
+    GLfloat* rot;
 
     switch (ev->nativeVirtualKey())
     {
@@ -67,14 +79,25 @@ void Window::keyPressEvent(QKeyEvent *ev)
     case 37:
         //Rotate the player slightly left
         //ui->openGLRenderWindow->rotatePlayer(0.1f);
+        o = ui->openGLRenderWindow->pop();
+        rot = ((openGLMesh*)o)->getRotation();
+        ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]+1.0f);
+
         break;
 
         //Up arrow key
     case 38:
+        o = ui->openGLRenderWindow->pop();
+        trans = ((openGLMesh*)o)->getTranslation();
+        rot = ((openGLMesh*)o)->getRotation();
+        ((openGLMesh*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
         break;
 
         //Right arrow key
     case 39:
+        o = ui->openGLRenderWindow->pop();
+        rot = ((openGLMesh*)o)->getRotation();
+        ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]-1.0f);
         break;
 
         //Down arrow key
@@ -84,6 +107,10 @@ void Window::keyPressEvent(QKeyEvent *ev)
     default:
         break;
     }
+    //qDebug()<<"rotZ:" <<rot[2];
+    //qDebug()<<"sin(rotZ):" <<sin(rot[2]*3.14159265/180);
+    //qDebug()<<"cos(rotZ):" <<cos(rot[2]*3.14159265/180);
+    ui->openGLRenderWindow->paintGL();
 }
 
 void Window::mouseMoveEvent(QMouseEvent *ev)
@@ -1185,14 +1212,6 @@ void Window::on_transResetBtn_clicked()
 
 void Window::on_loadObjButton_clicked()
 {
-    //char* filename = "D:\\Projects\\Qt\\Assignment4\\obj\\al.obj";
-    //GLMmodel* m = glmReadOBJ(filename);
-
-    //glmDraw(m, GLM_NONE);
-
-    //makeCurrent();
-    //this->swapBuffers();
-
     QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), "../battleships/obj", tr("Files (*.obj)"));
 
     //Only try to load a file if a file was actually selected.
@@ -1201,9 +1220,6 @@ void Window::on_loadObjButton_clicked()
         this->ui->openGLRenderWindow->push(new openGLMesh(filename));
 
         ui->openGLRenderWindow->paintGL();
-
-        //ui->modelListView->addItem((QStringList(QString(c_str2).split('/')).last()).split('.').first());
-        //ui->modelListView->setCurrentRow(ui->modelListView->count()-1);
     }
 }
 

@@ -13,8 +13,10 @@
 #include <QFileDialog>
 #include <QStringRef>
 #include <QDateTime>
+#include <QAbstractEventDispatcher>
 
 #include "math.h"
+#include "openglrender/openglrender.h"
 
 //#define OGLWIDTH 950
 //#define OGLHEIGHT 700
