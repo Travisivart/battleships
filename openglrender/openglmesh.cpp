@@ -27,6 +27,7 @@ openGLMesh::openGLMesh()
 
 openGLMesh::openGLMesh(const QString newFilename)
 {
+    qDebug()<<"Constructor: openGLMesh(" <<newFilename <<")";
     this->translation[0] = 0.0f;
     this->translation[1] = 0.0f;
     this->translation[2] = 0.0f;
@@ -49,6 +50,7 @@ openGLMesh::openGLMesh(const QString newFilename)
 
     this->filename = newFilename;
 
+    qDebug()<<"openGLMesh::openGLMesh(const QString newFilename)" <<"Attempting file load";
     this->load(this->filename);
 }
 
@@ -73,16 +75,16 @@ void openGLMesh::translate(GLfloat *newTranslation)
 
 void openGLMesh::rotate(GLfloat newX, GLfloat newY, GLfloat newZ)
 {
-    this->rotation[0] = newX;
-    this->rotation[1] = newY;
-    this->rotation[2] = newZ;
+    this->rotation[0] = fmod(newX, 360);
+    this->rotation[1] = fmod(newY, 360);
+    this->rotation[2] = fmod(newZ, 360);
 }
 
 void openGLMesh::rotate(GLfloat *newRotation)
 {
-    this->rotation[0] = newRotation[0];
-    this->rotation[1] = newRotation[1];
-    this->rotation[2] = newRotation[2];
+    this->rotation[0] = fmod(newRotation[0], 360);
+    this->rotation[1] = fmod(newRotation[1], 360);
+    this->rotation[2] = fmod(newRotation[2], 360);
 }
 
 void openGLMesh::scale(GLfloat newX, GLfloat newY, GLfloat newZ)
@@ -104,15 +106,30 @@ void openGLMesh::setMode(int GLM_MODE)
     this->mode = GLM_MODE;
 }
 
+GLfloat* openGLMesh::getTranslation()
+{
+    return this->translation;
+}
+
+GLfloat* openGLMesh::getRotation()
+{
+    return this->rotation;
+}
+
+GLfloat* openGLMesh::getScaling()
+{
+    return this->scaling;
+}
+
 void openGLMesh::load(QString filename)
 {
-
+    qDebug()<<"openGLMesh::load(QString filename)";
     //Make sure that we are actually trying to load an existing file.
     if (filename != "")
     {
         //If something is already loaded into the mesh, then delete it.
-        if ( mesh != NULL )
-            deleteMesh();
+        //if ( mesh != NULL )
+            //deleteMesh();
 
         QByteArray ba = filename.toLatin1();
         char *c_str2 = ba.data();
@@ -136,16 +153,22 @@ void openGLMesh::draw()
 {
     glPushMatrix();
 
-    //Perform translations
+    glLoadIdentity();
+
     glTranslatef(this->translation[0], this->translation[1], this->translation[2]);
 
-    //Perform rotations
     glRotatef(this->rotation[0], 1.0f, 0.0f, 0.0f);
     glRotatef(this->rotation[1], 0.0f, 1.0f, 0.0f);
     glRotatef(this->rotation[2], 0.0f, 0.0f, 1.0f);
 
     //Perform scaling
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
+
+    //Return to original position
+    //glTranslatef(0.0,0.0,0.0);
+    glRotatef(90, 1.0,0.0,0.0);
+    glRotatef(180, 0.0,1.0,0.0);
+
 
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
 

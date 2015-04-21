@@ -3,6 +3,7 @@
 
 #include "openglobject.h"
 
+#include "math.h"
 #include "tutor/glm.h"
 
 class openGLMesh : public openGLObject
@@ -45,9 +46,7 @@ protected:
     GLMmodel *mesh;
 
     GLfloat translation[3];
-
     GLfloat rotation[3];
-
     GLfloat scaling[3];
 
     //The GLM_MODE which we are using to render the mesh.
