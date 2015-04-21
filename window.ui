@@ -2690,16 +2690,16 @@
         </rect>
        </property>
        <property name="minimum">
-        <number>5</number>
+        <number>50</number>
        </property>
        <property name="maximum">
-        <number>10000</number>
+        <number>150</number>
        </property>
        <property name="singleStep">
         <number>1</number>
        </property>
        <property name="value">
-        <number>5</number>
+        <number>50</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -2776,7 +2776,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>0</string>
+        <string>50</string>
        </property>
       </widget>
      </widget>
