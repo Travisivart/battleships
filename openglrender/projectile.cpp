@@ -23,12 +23,12 @@ void projectile::setAcceleration(GLfloat newAcceleration)
 
 GLfloat projectile::getVelocity()
 {
-
+    return 0.0f;
 }
 
 GLfloat projectile::getAcceleration()
 {
-
+    return 0.0f;
 }
 
 QString projectile::name()
