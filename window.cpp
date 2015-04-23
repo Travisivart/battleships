@@ -1,16 +1,16 @@
 #include "window.h"
 #include "ui_window.h"
 
-
-
 Window::Window(QOpenGLWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Window)
 {
-
     dispatcher = QAbstractEventDispatcher::instance();
     connect(dispatcher, SIGNAL(awake()), SLOT(awake()));
     connect(dispatcher, SIGNAL(aboutToBlock()), SLOT(aboutToBlock()));
+
+    //Sets an idle function to run after 10 milliseconds
+    QTimer::singleShot(10, this, SLOT(doWorkInIdle()));
 
     ui->setupUi(this);
 
@@ -19,8 +19,8 @@ Window::Window(QOpenGLWidget *parent) :
     this->buildingPolygon = false;
 
     //Load player model
-    this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16.obj"));
-    ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
+    this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16ver2.obj"));
+    ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.6f, 0.6f, 0.6f);
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 0.0f, 0.0f);
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 180.0f, 0.0f);
 }
@@ -36,81 +36,40 @@ void Window::awake()
     //qDebug() << "Slept for " << lastBlock.msecsTo(lastAwake) << " msec";
 
     //Process input queue
+    this->ui->openGLRenderWindow->processInput();
+
     //update objects to new positions
+    this->ui->openGLRenderWindow->update(lastBlock.msecsTo(lastAwake));
+
     //Check for collisions
+
+    //Give focus back to the openGL window.
     if (!ui->openGLRenderWindow->hasFocus())
         ui->openGLRenderWindow->setFocus();
+
+    //Paint the scene.
+    ui->openGLRenderWindow->paintGL();
 }
 
 void Window::aboutToBlock()
 {
     lastBlock = QTime::currentTime();
     //qDebug() << "Worked for " << lastAwake.msecsTo(lastBlock) << " msec";
+
+    ui->openGLRenderWindow->paintGL();
 }
 
+void Window::doWorkInIdle()
+{
+    //Sets this idle function to run again after 10 milliseconds
+    QTimer::singleShot(10, this, SLOT(doWorkInIdle()));
+
+    ui->openGLRenderWindow->paintGL();
+}
 
 void Window::keyPressEvent(QKeyEvent *ev)
 {
-    //37 - Left arrow
-    //38 = Up arrow
-    //39 = Right arrow
-    //40 = Down arrow
-    //32 = Space
-    //27 = Esc
-    //qDebug()<<"key: " <<ev->key() <<ev->nativeVirtualKey() <<ev->text();
-
-    openGLObject *o;
-    GLfloat* trans;
-    GLfloat* rot;
-
-    switch (ev->nativeVirtualKey())
-    {
-    //Esc key
-    case 27:
-        //Set mode to MENU_MODE if set to GAME_MODE and vice versa
-        break;
-
-        //Space key
-    case 32:
-        //Create a projectile
-        break;
-
-        //Left arrow key
-    case 37:
-        //Rotate the player slightly left
-        //ui->openGLRenderWindow->rotatePlayer(0.1f);
-        o = ui->openGLRenderWindow->pop();
-        rot = ((openGLMesh*)o)->getRotation();
-        ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]+1.0f);
-
-        break;
-
-        //Up arrow key
-    case 38:
-        o = ui->openGLRenderWindow->pop();
-        trans = ((openGLMesh*)o)->getTranslation();
-        rot = ((openGLMesh*)o)->getRotation();
-        ((openGLMesh*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
-        break;
-
-        //Right arrow key
-    case 39:
-        o = ui->openGLRenderWindow->pop();
-        rot = ((openGLMesh*)o)->getRotation();
-        ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]-1.0f);
-        break;
-
-        //Down arrow key
-    case 40:
-        break;
-
-    default:
-        break;
-    }
-    //qDebug()<<"rotZ:" <<rot[2];
-    //qDebug()<<"sin(rotZ):" <<sin(rot[2]*3.14159265/180);
-    //qDebug()<<"cos(rotZ):" <<cos(rot[2]*3.14159265/180);
-    ui->openGLRenderWindow->paintGL();
+    this->ui->openGLRenderWindow->pushInput(ev->nativeVirtualKey());
 }
 
 void Window::mouseMoveEvent(QMouseEvent *ev)

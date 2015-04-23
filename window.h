@@ -14,12 +14,10 @@
 #include <QStringRef>
 #include <QDateTime>
 #include <QAbstractEventDispatcher>
+#include <QTimer>
 
 #include "math.h"
 #include "openglrender/openglrender.h"
-
-//#define OGLWIDTH 950
-//#define OGLHEIGHT 700
 
 #define YOFFSET 50
 
@@ -36,8 +34,6 @@ class Window : public QMainWindow
 public:
     explicit Window(QOpenGLWidget *parent = 0);
     ~Window();
-
-
 
     //Keypress events:
     void keyPressEvent(QKeyEvent *ev);
@@ -57,6 +53,8 @@ private slots:
     void awake();
 
     void aboutToBlock();
+
+    void doWorkInIdle();
 
     void on_clearBtn_clicked();
 
