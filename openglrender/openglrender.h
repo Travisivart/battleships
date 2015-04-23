@@ -5,6 +5,7 @@
 #include <QtOpenGL/QGL>
 #include <QList>
 #include <QLine>
+
 #include "openglcircle.h"
 #include "openglline.h"
 #include "openglpolygon.h"
@@ -41,6 +42,15 @@ public:
 
     void setBackgroundColor(int newRed, int newGreen, int newBlue, int newAlpha);
 
+    /*****Input queue functions*****/
+
+    //When a user presses a key, push it onto the input queue.
+    void pushInput(const quint32 &newKey);
+    void processInput();
+
+    //Update all objects based upon how much time has passed.
+    void update(const int &msec);
+
 protected:
 
     // void paintGL();
@@ -56,8 +66,11 @@ private:
     int selectedObj;
 
     QList<_GLMmodel*> *models;
+    _GLMmodel *player;
 
     openGLCamera *camera;
+
+    QList<quint32> *inputQueue;
 };
 
 #endif // OPENGLRENDER_H

@@ -18,11 +18,12 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     unsigned char *bitmapImage; // bitmap image data
     int imageIdx = 0; // image index counter
     unsigned char tempRGB; // swap variable
-
+qDebug()<<filename;
     // open filename in "read binary" mode
     filePtr = fopen(filename, "rb");
     if (filePtr == NULL)
         return NULL;
+
 
     // read the bitmap file header
     fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER), 1, filePtr);
@@ -83,11 +84,15 @@ openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuf
 
     this->models = new QList<GLMmodel*>();
     this->selectedObj = -1;
+
+    this->inputQueue = new QList<quint32>();
 }
 
 openGLRender::~openGLRender()
 {
-    delete objects;
+    delete this->objects;
+    delete this->models;
+    delete this->inputQueue;
 }
 
 void openGLRender::initializeGL(){
@@ -97,7 +102,7 @@ void openGLRender::initializeGL(){
 
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_shininess[] = { 50.0 };
-    GLfloat light0_position[] = { 0.0, 0.0, 10.0, 0.0 };
+    GLfloat light0_position[] = { 0.0, 0.0, 1.0, 0.0 };
     glClearColor (0.0, 0.0, 0.0, 0.0);
     glShadeModel (GL_SMOOTH);
 
@@ -124,7 +129,7 @@ void openGLRender::initializeGL(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glOrtho(-10.0f, 10.0f, -10.0f, 10.0f, -2.0f, 2.0f);
+    glOrtho(-20.0f, 20.0f, -20.0f, 20.0f, -2.0f, 2.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -180,7 +185,7 @@ void openGLRender::paintGL(){
     glEnable(GL_TEXTURE_2D); // enable 2D texturing
     //change wood.bmp to the name of your bitmap
     // load our bitmap file
-    bitmapData = LoadBitmapFile("D:\\Projects\\Qt\\battleships\\tga\\water.bmp", &bitmapInfoHeader);
+    bitmapData = LoadBitmapFile("..\\battleships\\tga\\water2.bmp", &bitmapInfoHeader);
 
     glGenTextures(1, &texture); // generate texture object
     glBindTexture(GL_TEXTURE_2D, texture); // enable our texture object
@@ -193,13 +198,25 @@ void openGLRender::paintGL(){
                  bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
     glBegin(GL_QUADS); // front face
     glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 0.0f);
-    glTexCoord2f(5.0f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
-    glTexCoord2f(5.0f, 5.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
-    glTexCoord2f(0.0f, 5.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glTexCoord2f(40.0f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
+    glTexCoord2f(40.0f, 40.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
+    glTexCoord2f(0.0f, 40.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
     glEnd();
 
+    /* //Draw 2d ui overlay
+    glMatrixMode(GL_PROJECTION);
 
+    glDisable(GL_LIGHTING);
+    glColor3f(0.0,0.0,0.0);
 
+    glBegin(GL_QUADS);
+    glVertex3f(-1.0f,-1.0f,1.0f);
+    glVertex3f(1.0f,-1.0f,1.0f);
+    glVertex3f(1.0f,1.0f,1.0f);
+    glVertex3f(-1.0f,1.0f,1.0f);
+    glEnd();
+
+    glEnable(GL_LIGHTING);*/
     makeCurrent();
     this->swapBuffers();
 
@@ -312,65 +329,91 @@ void openGLRender::setBackgroundColor(int newRed, int newGreen, int newBlue, int
 
 
 
-
-void triangle(GLfloat *va, GLfloat *vb, GLfloat *vc)
+void openGLRender::pushInput(const quint32 &newKey)
 {
-    glVertex3fv(va);
-    glVertex3fv(vb);
-    glVertex3fv(vc);
+    this->inputQueue->push_back(newKey);
 }
 
-void tetra(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d)
+void openGLRender::processInput()
 {
+    openGLObject *o;
+    GLfloat* trans;
+    GLfloat* rot;
 
-    GLfloat colors[4][3] = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0},
-                            {0.0, 0.0, 1.0}, {0.0, 0.0, 0.0}};
+    //37 - Left arrow
+    //38 = Up arrow
+    //39 = Right arrow
+    //40 = Down arrow
+    //32 = Space
+    //27 = Esc
+    //qDebug()<<"key: " <<ev->key() <<ev->nativeVirtualKey() <<ev->text();
 
-    glColor3fv(colors[0]);
-    triangle(a, b, c);
-    glColor3fv(colors[1]);
-    triangle(a, c, d);
-    glColor3fv(colors[2]);
-    triangle(a, d, b);
-    glColor3fv(colors[3]);
-    triangle(b, d, c);
-}
-
-
-void divide_tetra(GLfloat *a, GLfloat *b, GLfloat *c, GLfloat *d, int m)
-{
-
-    GLfloat mid[6][3];
-    int j;
-    if(m>0)
+    if( !this->inputQueue->isEmpty())
     {
-        /* compute six midpoints */
+        for(int i=0;this->inputQueue->size(); i++)
+        {
+            switch (this->inputQueue->front())
+            {
+            //Esc key
+            case 27:
+                //Set mode to MENU_MODE if set to GAME_MODE and vice versa
+                break;
 
-        for(j=0; j<3; j++) mid[0][j]=(a[j]+b[j])/2;
-        for(j=0; j<3; j++) mid[1][j]=(a[j]+c[j])/2;
-        for(j=0; j<3; j++) mid[2][j]=(a[j]+d[j])/2;
-        for(j=0; j<3; j++) mid[3][j]=(b[j]+c[j])/2;
-        for(j=0; j<3; j++) mid[4][j]=(c[j]+d[j])/2;
-        for(j=0; j<3; j++) mid[5][j]=(b[j]+d[j])/2;
+                //Space key
+            case 32:
+                //Create a projectile
+                break;
 
-        /* create 4 tetrahedrons by subdivision */
+                //Left arrow key
+            case 37:
+                //Rotate the player slightly left
+                //ui->openGLRenderWindow->rotatePlayer(0.1f);
+                o = this->pop();
+                rot = ((openGLMesh*)o)->getRotation();
+                ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]+1.0f);
 
-        divide_tetra(a, mid[0], mid[1], mid[2], m-1);
-        divide_tetra(mid[0], b, mid[3], mid[5], m-1);
-        divide_tetra(mid[1], mid[3], c, mid[4], m-1);
-        divide_tetra(mid[2], mid[4], d, mid[5], m-1);
+                break;
 
+                //Up arrow key
+            case 38:
+                o = this->pop();
+                trans = ((openGLMesh*)o)->getTranslation();
+                rot = ((openGLMesh*)o)->getRotation();
+                //((openGLMesh*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+                break;
+
+                //Right arrow key
+            case 39:
+                o = this->pop();
+                rot = ((openGLMesh*)o)->getRotation();
+                ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]-1.0f);
+                break;
+
+                //Down arrow key
+            case 40:
+                //Reduce acceleration
+                break;
+
+            default:
+                break;
+            }
+
+            //Remove the first input
+            this->inputQueue->pop_front();
+
+            //qDebug()<<"rotZ:" <<rot[2];
+            //qDebug()<<"sin(rotZ):" <<sin(rot[2]*3.14159265/180);
+            //qDebug()<<"cos(rotZ):" <<cos(rot[2]*3.14159265/180);
+
+        }
     }
-    else(tetra(a,b,c,d)); /* draw tetrahedron at end of recursion */
 }
 
+void openGLRender::update(const int &msec)
+{
+    //qDebug()<<"openGLRender::update(const int &msec)" <<this->objects->size() << this->objectName();
 
-
-
-
-
-
-
-
-
-
+    for( int i=0; i< this->objects->size(); i++)
+        if(this->objects->at(i)->name() == "openGLMesh")
+            ((openGLMesh*)this->objects->at(i))->update(msec);
+}
