@@ -52,6 +52,8 @@ openGLMesh::openGLMesh(const QString newFilename)
 
     qDebug()<<"openGLMesh::openGLMesh(const QString newFilename)" <<"Attempting file load";
     this->load(this->filename);
+
+    v = 1.0f;
 }
 
 openGLMesh::~openGLMesh()
@@ -149,11 +151,20 @@ QString openGLMesh::getFilename()
     return this->filename;
 }
 
+void openGLMesh::update(const int &msec)
+{
+    //qDebug()<<"openGLMesh::update(const int &msec)";
+    this->translation[0] -= ((1.0f * msec/1000)*sin(this->rotation[2]*3.14159265/180));
+    //this->translation[1] += 1.0f * msec/1000;
+    this->translation[1] += ((1.0f * msec/1000)*cos(this->rotation[2]*3.14159265/180));
+    //((openGLMesh*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+}
+
 void openGLMesh::draw()
 {
     glPushMatrix();
 
-    glLoadIdentity();
+    //glLoadIdentity();
 
     glTranslatef(this->translation[0], this->translation[1], this->translation[2]);
 

@@ -36,11 +36,16 @@ public:
     //If the mesh was created with an object file, then return the filename used.
     QString getFilename();
 
+    //Update the mesh
+    void update(const int &msec);
+
     //Draw the mesh
     void draw();
 
     //Returns the object's name
     QString name();
+
+    float v;
 
 protected:
     GLMmodel *mesh;
