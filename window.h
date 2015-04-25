@@ -37,6 +37,7 @@ public:
 
     //Keypress events:
     void keyPressEvent(QKeyEvent *ev);
+    void keyReleaseEvent(QKeyEvent *ev);
 
     //void clearButton_clicked();
     void mouseMoveEvent(QMouseEvent *ev);

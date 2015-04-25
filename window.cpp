@@ -19,8 +19,9 @@ Window::Window(QOpenGLWidget *parent) :
     this->buildingPolygon = false;
 
     //Load player model
-    this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16ver2.obj"));
-    ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.6f, 0.6f, 0.6f);
+    //this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16ver2.obj"));
+    this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/shipboat2.obj"));
+    ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 0.0f, 0.0f);
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 180.0f, 0.0f);
 }
@@ -35,6 +36,28 @@ void Window::awake()
     lastAwake = QTime::currentTime();
     //qDebug() << "Slept for " << lastBlock.msecsTo(lastAwake) << " msec";
 
+
+
+    //Paint the scene.
+    //ui->openGLRenderWindow->paintGL();
+}
+
+void Window::aboutToBlock()
+{
+    lastBlock = QTime::currentTime();
+    //qDebug() << "Worked for " << lastAwake.msecsTo(lastBlock) << " msec";
+
+    //ui->openGLRenderWindow->paintGL();
+}
+
+void Window::doWorkInIdle()
+{
+    //Sets this idle function to run again after 10 milliseconds
+    QTimer::singleShot(10, this, SLOT(doWorkInIdle()));
+
+    //Spawn enemies
+    this->ui->openGLRenderWindow->spawnEnemies();
+
     //Process input queue
     this->ui->openGLRenderWindow->processInput();
 
@@ -47,29 +70,27 @@ void Window::awake()
     if (!ui->openGLRenderWindow->hasFocus())
         ui->openGLRenderWindow->setFocus();
 
-    //Paint the scene.
-    ui->openGLRenderWindow->paintGL();
-}
-
-void Window::aboutToBlock()
-{
-    lastBlock = QTime::currentTime();
-    //qDebug() << "Worked for " << lastAwake.msecsTo(lastBlock) << " msec";
-
-    ui->openGLRenderWindow->paintGL();
-}
-
-void Window::doWorkInIdle()
-{
-    //Sets this idle function to run again after 10 milliseconds
-    QTimer::singleShot(10, this, SLOT(doWorkInIdle()));
-
     ui->openGLRenderWindow->paintGL();
 }
 
 void Window::keyPressEvent(QKeyEvent *ev)
 {
-    this->ui->openGLRenderWindow->pushInput(ev->nativeVirtualKey());
+
+    if( !ev->isAutoRepeat())
+    {
+        qDebug()<<"Pressed:" <<ev->nativeVirtualKey();
+        this->ui->openGLRenderWindow->pushInput(ev->nativeVirtualKey());
+    }
+}
+
+void Window::keyReleaseEvent(QKeyEvent *ev)
+{
+
+    if( !ev->isAutoRepeat())
+    {
+        qDebug()<<"Released:" <<ev->nativeVirtualKey();
+        this->ui->openGLRenderWindow->popInput(ev->nativeVirtualKey());
+    }
 }
 
 void Window::mouseMoveEvent(QMouseEvent *ev)
