@@ -5,6 +5,7 @@
 #include <QtOpenGL/QGL>
 #include <QList>
 #include <QLine>
+#include <QTime>
 
 #include "openglcircle.h"
 #include "openglline.h"

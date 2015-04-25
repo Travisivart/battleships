@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include "openglrender.h"
 
 
@@ -393,12 +391,27 @@ void openGLRender::update(const int &msec)
 
 void openGLRender::spawnEnemies()
 {
+    float transX, transY;
+    float rotZ;
+
     //Always make sure there are at least 4 enemies in the world. (Player + enemies = 5)
     if( this->objects->size() < 5 )
     {
         while(this->objects->size() < 5)
         {
             this->push(new openGLMesh("../battleships/obj/al.obj"));
+            qsrand(QTime::currentTime().msec());
+
+            //Give the enemies some random positioning
+            transX = (float)(qrand()%30+70)/10;
+            transY = (float)(qrand()%30+70)/10;
+            //rotZ = (float)(qrand()%100+5)/10;
+
+            qrand()%2 == 0 ? transX : transX = transX*(-1);
+            qrand()%2 == 0 ? transY : transY = transY*(-1);
+
+            ((openGLMesh*)this->pop())->translate(transX, transY, 0.0f );
+            //((openGLMesh*)this->pop())->rotate();
         }
     }
 }
