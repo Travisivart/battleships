@@ -46,10 +46,14 @@ public:
 
     //When a user presses a key, push it onto the input queue.
     void pushInput(const quint32 &newKey);
+    void popInput(const quint32 &newKey);
     void processInput();
 
     //Update all objects based upon how much time has passed.
     void update(const int &msec);
+
+    //Spawn enemies around the map
+    void spawnEnemies();
 
 protected:
 
@@ -71,6 +75,8 @@ private:
     openGLCamera *camera;
 
     QList<quint32> *inputQueue;
+
+    unsigned char* bitmapData; // the texture data
 };
 
 #endif // OPENGLRENDER_H
