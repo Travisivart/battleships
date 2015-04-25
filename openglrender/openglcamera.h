@@ -3,19 +3,30 @@
 
 #include <QtOpenGL/QGL>
 
+#include "math.h"
+
 class openGLCamera
 {
 public:
     openGLCamera();
     ~openGLCamera();
 
+    void init();
+
+    //Set methods
+    void translate(GLfloat newX, GLfloat newY, GLfloat newZ);
+    void translate(GLfloat *newTranslation);
+    void rotate(GLfloat newX, GLfloat newY, GLfloat newZ);
+    void rotate(GLfloat *newRotation);
+
+    //Get methods
+    GLfloat* getTranslation();
+    GLfloat* getRotation();
+
 private:
-    GLfloat cameraLeft;
-    GLfloat cameraRight;
-    GLfloat cameraBottom;
-    GLfloat cameraTop;
-    GLfloat cameraNear;
-    GLfloat cameraFar;
+
+    GLfloat translation[3];
+    GLfloat rotation[3];
 };
 
 #endif // OPENGLCAMERA_H
