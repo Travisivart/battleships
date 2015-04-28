@@ -6,7 +6,6 @@
 #include <QList>
 #include <QLine>
 #include <QTime>
-#include <stdint.h>
 
 #include "openglcircle.h"
 #include "openglline.h"
@@ -19,11 +18,9 @@
 #define GAME_MODE 0
 #define MENU_MODE 1
 
-typedef unsigned long DWORD;
-typedef long LONG;
-typedef unsigned int UINT;
+#ifdef __linux__
+#include <stdint.h>
 typedef unsigned short WORD;
-
 typedef struct
 {
     uint16_t bfType; //2 bytes storing "BM". This means that it is bmp
@@ -49,7 +46,7 @@ typedef struct
     uint32_t biClrImportant;
 } __attribute__((__packed__))
 BITMAPINFOHEADER;
-
+#endif
 
 class openGLRender : public QGLWidget
 {
