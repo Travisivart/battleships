@@ -2,9 +2,10 @@
 #define OPENGLMESH_H
 
 #include "openglobject.h"
+#include "boundingbox.h"
 
 #include "math.h"
-#include "tutor/glm.h"
+//#include "tutor/glm.h"
 
 class openGLMesh : public openGLObject
 {
@@ -42,6 +43,9 @@ public:
     //Draw the mesh
     void draw();
 
+    //Draw the mesh relative to a camera
+    void draw(openGLCamera *c);
+
     //Returns the object's name
     QString name();
 
@@ -49,6 +53,8 @@ public:
 
 protected:
     GLMmodel *mesh;
+
+    boundingBox box;
 
     GLfloat translation[3];
     GLfloat rotation[3];
