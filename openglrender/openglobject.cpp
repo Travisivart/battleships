@@ -15,6 +15,11 @@ void openGLObject::draw()
 {
 }
 
+void openGLObject::draw(openGLCamera *c)
+{
+
+}
+
 QString openGLObject::name()
 {
     return QString("openGLObject");
