@@ -117,12 +117,12 @@ void openGLRender::initializeGL(){
     this->camera->init();
 
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+    //glLoadIdentity();
 
-    glOrtho(-20.0f, 20.0f, -20.0f, 20.0f, -2.0f, 2.0f);
+    glOrtho(-20.0f, 20.0f, -20.0f, 20.0f, -20.0f, 20.0f);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
 
     glViewport(0,0,OGLWIDTH,OGLHEIGHT);
 
@@ -140,7 +140,6 @@ void openGLRender::paintGL(){
     glMatrixMode(GL_MODELVIEW);
 
     draw();
-
 
     //Create terrain
     //g_glRender->Prepare(g_hiResTimer->GetElapsedSeconds(1));
@@ -216,8 +215,13 @@ void openGLRender::draw(){
 
         //Draw meshes
         for(int i=0; i<objects->size();i++)
+        {
             if(objects->at(i)->name() == "openGLMesh")
-                objects->at(i)->draw();
+                if(i != 0)
+                    ((openGLMesh*)this->objects->at(i))->draw(this->camera);
+                else
+                    this->objects->at(i)->draw();
+        }
     }
 }
 
@@ -284,15 +288,10 @@ openGLObject* openGLRender::at(const int i)
     return objects->at(i);
 }
 
-
 void openGLRender::setBackgroundColor(int newRed, int newGreen, int newBlue, int newAlpha)
 {
     glClearColor(((float)newRed/255), ((float)newGreen/255), ((float)newBlue/255), ((float)newAlpha/255));
 }
-
-
-
-
 
 void openGLRender::pushInput(const quint32 &newKey)
 {
@@ -342,6 +341,7 @@ void openGLRender::processInput()
                 o = this->objects->at(0);
                 rot = ((openGLMesh*)o)->getRotation();
                 ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]+0.6f);
+                //this->camera->rotate(rot[0], rot[1], rot[2]+0.6f);
 
                 break;
 
@@ -358,6 +358,7 @@ void openGLRender::processInput()
                 o = this->objects->at(0);
                 rot = ((openGLMesh*)o)->getRotation();
                 ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]-0.6f);
+                //this->camera->rotate(rot[0], rot[1], rot[2]+0.6f);
                 break;
 
                 //Down arrow key
@@ -400,6 +401,8 @@ void openGLRender::spawnEnemies()
         while(this->objects->size() < 5)
         {
             this->push(new openGLMesh("../battleships/obj/al.obj"));
+            //this->push(new openGLMesh("../battleships/obj/tetrahedron.obj"));
+
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
@@ -414,4 +417,11 @@ void openGLRender::spawnEnemies()
             //((openGLMesh*)this->pop())->rotate();
         }
     }
+}
+
+void openGLRender::updateCamera()
+{
+    //glMatrixMode(GL_PROJECTION);
+
+    //glOrtho(-1.0001f, 1.0001f, -1.0001f, 1.0001f, -1.0001f, 1.0001f);
 }
