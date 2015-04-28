@@ -65,16 +65,19 @@ void Window::doWorkInIdle()
     this->ui->openGLRenderWindow->update(lastBlock.msecsTo(lastAwake));
 
     //Check for collisions
+    //this->ui->openGLRenderWindow->checkCollisions();
 
-    //Give focus back to the openGL window.
-    if (!ui->openGLRenderWindow->hasFocus())
-        ui->openGLRenderWindow->setFocus();
+    //Update camera position
+    this->ui->openGLRenderWindow->updateCamera();
 
     ui->openGLRenderWindow->paintGL();
 }
 
 void Window::keyPressEvent(QKeyEvent *ev)
 {
+    //Give focus back to the openGL window.
+    //if (!ui->openGLRenderWindow->hasFocus())
+        //ui->openGLRenderWindow->setFocus();
 
     if( !ev->isAutoRepeat())
     {
@@ -1208,7 +1211,7 @@ void Window::on_cameraZoomSlider_valueChanged(int value)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho((float)(-value)/10, (float)value/10, (float)(-value)/10, (float)(value)/10 , (float)(-value)/10, (float)(value)/10);
+    glOrtho((float)(-value), (float)value, (float)(-value), (float)(value) , (float)(-value), (float)(value));
     //glOrtho((float)(-value), (float)value, (float)(-value), (float)(value), (float)(-value), (float)(value));
 
     //glOrtho(-0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0.5f);
@@ -1225,23 +1228,12 @@ void Window::on_cameraZoomSlider_valueChanged(int value)
 
 void Window::on_cameraAspectSlider_1_valueChanged(int value)
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
 
-    glOrtho((float)(-ui->cameraAspectSlider_2->value())/10, (float)(ui->cameraAspectSlider_2->value())/10, (float)(-value)/10, (float)(value)/10,-15.0f, 15.0f);
-
-    ui->openGLRenderWindow->paintGL();
 }
 
 void Window::on_cameraAspectSlider_2_valueChanged(int value)
 {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
 
-    //glOrtho((float)(-value)/10, (float)(value)/10,-15.0f, 15.0f, -15.0f, 15.0f);
-    glOrtho((float)(-value)/10, (float)(value)/10, (float)(-ui->cameraAspectSlider_1->value())/10, (float)(ui->cameraAspectSlider_1->value())/10,-15.0f, 15.0f);
-
-    ui->openGLRenderWindow->paintGL();
 }
 
 void Window::on_cameraXSliderEdit_textEdited(const QString &arg1)
