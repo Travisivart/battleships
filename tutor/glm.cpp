@@ -1613,13 +1613,13 @@ glmDraw(GLMmodel* model, GLuint mode, GLuint type)
         mode &= ~GLM_FLAT;
     }
     if (mode & GLM_COLOR && !model->materials) {
-        printf("glmDraw() warning: color render mode requested "
-               "with no materials defined.\n");
+        //printf("glmDraw() warning: color render mode requested "
+          //     "with no materials defined.\n");
         mode &= ~GLM_COLOR;
     }
     if (mode & GLM_MATERIAL && !model->materials) {
-        printf("glmDraw() warning: material render mode requested "
-               "with no materials defined.\n");
+        //printf("glmDraw() warning: material render mode requested "
+          //     "with no materials defined.\n");
         mode &= ~GLM_MATERIAL;
     }
     if (mode & GLM_COLOR && mode & GLM_MATERIAL) {

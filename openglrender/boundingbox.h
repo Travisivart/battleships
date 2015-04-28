@@ -1,7 +1,7 @@
 #ifndef BOUNDINGBOX_H
 #define BOUNDINGBOX_H
 
-#include "tutor/glm.h"
+#include "../tutor/glm.h"
 
 class boundingBox
 {
