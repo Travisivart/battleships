@@ -228,7 +228,6 @@ void openGLRender::draw(){
 void openGLRender::clearGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //glFlush();
     makeCurrent();
     this->swapBuffers();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

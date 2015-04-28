@@ -52,6 +52,9 @@ void Window::aboutToBlock()
 
 void Window::doWorkInIdle()
 {
+    //qDebug()<<"old:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
+    lastAwake = QTime::currentTime();
+    //qDebug()<<"new:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
     //Sets this idle function to run again after 10 milliseconds
     QTimer::singleShot(10, this, SLOT(doWorkInIdle()));
 
@@ -71,6 +74,7 @@ void Window::doWorkInIdle()
     this->ui->openGLRenderWindow->updateCamera();
 
     ui->openGLRenderWindow->paintGL();
+    lastBlock = QTime::currentTime();
 }
 
 void Window::keyPressEvent(QKeyEvent *ev)
