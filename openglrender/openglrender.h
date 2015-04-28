@@ -6,6 +6,7 @@
 #include <QList>
 #include <QLine>
 #include <QTime>
+#include <stdint.h>
 
 #include "openglcircle.h"
 #include "openglline.h"
@@ -17,33 +18,38 @@
 
 #define GAME_MODE 0
 #define MENU_MODE 1
-#define DWORD  unsigned int
-#define LONG  int
-#define UINT  unsigned int
-#define WORD  unsigned short int
 
-typedef struct tagBITMAPFILEHEADER {
-  WORD    bfType;
-  DWORD   bfSize;
-  WORD    bfReserved1;
-  WORD    bfReserved2;
-  DWORD   bfOffBits;
-} BITMAPFILEHEADER, *PBITMAPFILEHEADER;
+typedef unsigned long DWORD;
+typedef long LONG;
+typedef unsigned int UINT;
+typedef unsigned short WORD;
 
+typedef struct
+{
+    uint16_t bfType; //2 bytes storing "BM". This means that it is bmp
+    uint32_t bfSize; //4 bytes total file size of bmp. Including both the header and pixel array
+    uint16_t bfReserved1; //Always 0
+    uint16_t bfReserved2; //Always 0
+    uint32_t bfOffBits;   // stores 54. (40 +14)Total size of the headers.
+} __attribute__((__packed__))
+BITMAPFILEHEADER;
 
-typedef struct tagBITMAPINFOHEADER{
-  DWORD  biSize;
-  LONG   biWidth;
-  LONG   biHeight;
-  WORD   biPlanes;
-  WORD   biBitCount;
-  DWORD  biCompression;
-  DWORD  biSizeImage;
-  LONG   biXPelsPerMeter;
-  LONG   biYPelsPerMeter;
-  DWORD  biClrUsed;
-  DWORD  biClrImportant;
-} BITMAPINFOHEADER, *PBITMAPINFOHEADER;
+typedef struct
+{
+    uint32_t biSize; //40 bytes. Size of the header.
+    int32_t biWidth; //Width of the bitmap image. How many pixel wide is the image.
+    int32_t biHeight; //Height of the bitmap image.
+    uint16_t biPlanes; // Always 1.
+    uint16_t biBitCount; //24 for 24 bit bitmap. Number of bit representing each pixel.
+    uint32_t biCompression;
+    uint32_t biSizeImage; //Total size of bitmap pixel array including padding.
+    int32_t biXPelsPerMeter;
+    int32_t biYPelsPerMeter;
+    uint32_t biClrUsed;
+    uint32_t biClrImportant;
+} __attribute__((__packed__))
+BITMAPINFOHEADER;
+
 
 class openGLRender : public QGLWidget
 {

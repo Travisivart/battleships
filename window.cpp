@@ -52,6 +52,8 @@ void Window::aboutToBlock()
 
 void Window::doWorkInIdle()
 {
+	        ui->openGLRenderWindow->setFocus();
+
     //qDebug()<<"old:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
     lastAwake = QTime::currentTime();
     //qDebug()<<"new:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
@@ -85,12 +87,11 @@ void Window::keyPressEvent(QKeyEvent *ev)
 
     if( !ev->isAutoRepeat())
     {
-        qDebug()<<"Pressed:" <<ev->nativeVirtualKey();
-        this->ui->openGLRenderWindow->pushInput(ev->nativeVirtualKey());
+        qDebug()<<"Pressed:" <<ev->key();
+        this->ui->openGLRenderWindow->pushInput(ev->key());
+        qDebug()<<ev->key();
     }
-    if(ev->key()==Qt::Key_Up){
-        printf("up pressed.");
-    }
+
 }
 
 void Window::keyReleaseEvent(QKeyEvent *ev)
@@ -98,8 +99,9 @@ void Window::keyReleaseEvent(QKeyEvent *ev)
 
     if( !ev->isAutoRepeat())
     {
-        qDebug()<<"Released:" <<ev->nativeVirtualKey();
-        this->ui->openGLRenderWindow->popInput(ev->nativeVirtualKey());
+        qDebug()<<"Released:" <<ev->key();
+        this->ui->openGLRenderWindow->popInput(ev->key());
+        qDebug()<<ev->key();
     }
 }
 

@@ -1,6 +1,5 @@
 #include "openglrender.h"
-
-
+#include "QTemporaryDir"
 //Loads Bitmap into memory and Loads it
 ////// Texture Information
 BITMAPINFOHEADER bitmapInfoHeader; // bitmap info header
@@ -15,11 +14,14 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     unsigned char *bitmapImage; // bitmap image data
     int imageIdx = 0; // image index counter
     unsigned char tempRGB; // swap variable
-    //qDebug()<<filename;
+    qDebug()<<filename;
     // open filename in "read binary" mode
     filePtr = fopen(filename, "rb");
-    if (filePtr == NULL)
+    if (filePtr == NULL){
+        qDebug()<< filename;
+        qDebug()<< "NULL!!!\n";
         return NULL;
+    }
 
 
     // read the bitmap file header
@@ -33,6 +35,9 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
         return NULL;
     }
     // read the bitmap information header
+    qDebug()<<"sizeof\n";
+    qDebug()<<sizeof(BITMAPINFOHEADER);
+    qDebug()<<"sizeof(BITMAPFILEHEADER): "<<sizeof(BITMAPFILEHEADER);
     fread(bitmapInfoHeader, sizeof(BITMAPINFOHEADER), 1, filePtr);
 
     // move file pointer to beginning of bitmap data
@@ -44,6 +49,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     // verify memory allocation
     if (!bitmapImage)
     {
+        qDebug()<<"here?\n";
         free(bitmapImage);
         fclose(filePtr);
         return NULL;
@@ -55,6 +61,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     // make sure bitmap image data was read
     if (bitmapImage == NULL)
     {
+        qDebug()<<"how about here?\n";
         fclose(filePtr);
         return NULL;
     }
@@ -69,6 +76,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 
     // close the file and return the bitmap image data
     fclose(filePtr);
+    qDebug()<<bitmapImage;
     return bitmapImage;
 }
 
@@ -129,7 +137,8 @@ void openGLRender::initializeGL(){
 
     glEnable(GL_TEXTURE_2D); // enable 2D texturing
     // load our bitmap file
-    bitmapData = LoadBitmapFile("..\\battleships\\tga\\water2.bmp", &bitmapInfoHeader);
+    QDir dir; qDebug()<< dir.absolutePath()<<flush;
+    bitmapData = LoadBitmapFile("../battleships/tga/water2.bmp", &bitmapInfoHeader);
 
 }
 
@@ -159,6 +168,9 @@ void openGLRender::paintGL(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     // generate the texture image
+    qDebug()<<"here";
+    qDebug()<<bitmapInfoHeader.biWidth;
+    qDebug()<<bitmapInfoHeader.biHeight;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
     glBegin(GL_QUADS); // front face
     glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 0.0f);

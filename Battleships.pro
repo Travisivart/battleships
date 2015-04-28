@@ -57,6 +57,7 @@ HEADERS  += window.h \
     openglrender/projectile3d.h \
     openglrender/barrier.h \
     openglrender/terrain.h \
-    openglrender/boundingbox.h
+    openglrender/boundingbox.h \
+    openglrender/wingdi.h
 
 FORMS    += window.ui
