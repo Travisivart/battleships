@@ -48,11 +48,14 @@ void boundingBox::calculateBox(GLMmodel *mesh)
 
 bool boundingBox::possibleCollision(GLMmodel *mesh1, GLMmodel *mesh2)
 {
-
+    bool flag = false;
+    return flag;
 }
 
 bool boundingBox::checkCollision(GLMmodel *mesh1, GLMmodel *mesh2)
 {
+    bool flag = false;
+
     glBegin(GL_LINES);
     glColor3f(1.0f,0.0f,1.0f);
     glVertex3f(this->minX, this->minY, this->minZ);
@@ -91,4 +94,6 @@ bool boundingBox::checkCollision(GLMmodel *mesh1, GLMmodel *mesh2)
     glVertex3f(this->maxX, this->maxY, this->minZ);
     glVertex3f(this->minX, this->maxY, this->minZ);
     glEnd();
+
+    return flag;
 }
