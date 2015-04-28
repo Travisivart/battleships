@@ -8,9 +8,9 @@ class ship : public openGLMesh
 public:
     ship();
     ~ship();
-    getVelocity();
-    increaseAcceleration();
-    decreaseAcceleration();
+    float getVelocity();
+    void increaseAcceleration();
+    void decreaseAcceleration();
 
 private:
     float acceleration, velocity,angle;

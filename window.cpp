@@ -81,6 +81,9 @@ void Window::keyPressEvent(QKeyEvent *ev)
         qDebug()<<"Pressed:" <<ev->nativeVirtualKey();
         this->ui->openGLRenderWindow->pushInput(ev->nativeVirtualKey());
     }
+    if(ev->key()==Qt::Key_Up){
+        printf("up pressed.");
+    }
 }
 
 void Window::keyReleaseEvent(QKeyEvent *ev)
