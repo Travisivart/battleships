@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QtOpenGL/QGL>
 
+#include "openglcamera.h"
+
 #define OGLWIDTH 950
 #define OGLHEIGHT 700
 
@@ -17,6 +19,8 @@ public:
     virtual ~openGLObject();
 
     void virtual draw();
+
+    void virtual draw(openGLCamera *c);
 
     QString virtual name();
 

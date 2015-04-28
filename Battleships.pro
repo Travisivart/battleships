@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     openglrender/projectile2d.cpp \
     openglrender/projectile3d.cpp \
     openglrender/barrier.cpp \
-    openglrender/terrain.cpp
+    openglrender/terrain.cpp \
+    openglrender/boundingbox.cpp
 
 HEADERS  += window.h \
     openglrender/openglrender.h \
@@ -55,6 +56,7 @@ HEADERS  += window.h \
     openglrender/projectile2d.h \
     openglrender/projectile3d.h \
     openglrender/barrier.h \
-    openglrender/terrain.h
+    openglrender/terrain.h \
+    openglrender/boundingbox.h
 
 FORMS    += window.ui

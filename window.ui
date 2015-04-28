@@ -2699,7 +2699,7 @@
         <number>1</number>
        </property>
        <property name="value">
-        <number>50</number>
+        <number>20</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -2776,7 +2776,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>50</string>
+        <string>20</string>
        </property>
       </widget>
      </widget>

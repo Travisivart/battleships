@@ -83,6 +83,9 @@ public:
     //Spawn enemies around the map
     void spawnEnemies();
 
+    //Update the camera
+    void updateCamera();
+
 protected:
 
     // void paintGL();
