@@ -324,7 +324,7 @@ void openGLRender::processInput()
             switch (this->inputQueue->at(i))
             {
             //Esc key
-            case 27:
+            case 16777216:
                 //Set mode to MENU_MODE if set to GAME_MODE and vice versa
                 break;
 
@@ -334,7 +334,7 @@ void openGLRender::processInput()
                 break;
 
                 //Left arrow key
-            case 37:
+            case 16777234:
                 //Rotate the player slightly left
                 //ui->openGLRenderWindow->rotatePlayer(0.1f);
                 o = this->objects->at(0);
@@ -345,7 +345,7 @@ void openGLRender::processInput()
                 break;
 
                 //Up arrow key
-            case 38:
+            case 16777235:
                 o = this->objects->at(0);
                 trans = ((openGLMesh*)o)->getTranslation();
                 rot = ((openGLMesh*)o)->getRotation();
@@ -353,7 +353,7 @@ void openGLRender::processInput()
                 break;
 
                 //Right arrow key
-            case 39:
+            case 16777236:
                 o = this->objects->at(0);
                 rot = ((openGLMesh*)o)->getRotation();
                 ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]-0.6f);
@@ -361,7 +361,7 @@ void openGLRender::processInput()
                 break;
 
                 //Down arrow key
-            case 40:
+            case 16777237:
                 //Reduce acceleration
                 break;
 

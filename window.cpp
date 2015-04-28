@@ -10,7 +10,7 @@ Window::Window(QOpenGLWidget *parent) :
     connect(dispatcher, SIGNAL(aboutToBlock()), SLOT(aboutToBlock()));
 
     //Sets an idle function to run after 10 milliseconds
-    QTimer::singleShot(10, this, SLOT(doWorkInIdle()));
+    QTimer::singleShot(4000, this, SLOT(doWorkInIdle()));
 
     ui->setupUi(this);
 
@@ -52,11 +52,14 @@ void Window::aboutToBlock()
 
 void Window::doWorkInIdle()
 {
+
+    ui->openGLRenderWindow->setFocus();
+
     //qDebug()<<"old:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
     lastAwake = QTime::currentTime();
     //qDebug()<<"new:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
     //Sets this idle function to run again after 10 milliseconds
-    QTimer::singleShot(10, this, SLOT(doWorkInIdle()));
+    QTimer::singleShot(1, this, SLOT(doWorkInIdle()));
 
     //Spawn enemies
     this->ui->openGLRenderWindow->spawnEnemies();
@@ -85,8 +88,8 @@ void Window::keyPressEvent(QKeyEvent *ev)
 
     if( !ev->isAutoRepeat())
     {
-        qDebug()<<"Pressed:" <<ev->nativeVirtualKey();
-        this->ui->openGLRenderWindow->pushInput(ev->nativeVirtualKey());
+        qDebug()<<"Pressed:" <<ev->key();
+        this->ui->openGLRenderWindow->pushInput(ev->key());
     }
 }
 
@@ -95,8 +98,8 @@ void Window::keyReleaseEvent(QKeyEvent *ev)
 
     if( !ev->isAutoRepeat())
     {
-        qDebug()<<"Released:" <<ev->nativeVirtualKey();
-        this->ui->openGLRenderWindow->popInput(ev->nativeVirtualKey());
+        qDebug()<<"Released:" <<ev->key();
+        this->ui->openGLRenderWindow->popInput(ev->key());
     }
 }
 
