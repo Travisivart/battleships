@@ -10,7 +10,7 @@ Window::Window(QOpenGLWidget *parent) :
     connect(dispatcher, SIGNAL(aboutToBlock()), SLOT(aboutToBlock()));
 
     //Sets an idle function to run after 10 milliseconds
-    QTimer::singleShot(4000, this, SLOT(doWorkInIdle()));
+    QTimer::singleShot(2000, this, SLOT(doWorkInIdle()));
 
     ui->setupUi(this);
 

@@ -412,6 +412,10 @@ void openGLRender::spawnEnemies()
         while(this->objects->size() < 5)
         {
             this->push(new openGLMesh("../battleships/obj/shipboat2.obj"));
+<<<<<<< HEAD
+=======
+            ((openGLMesh*)this->pop())->scale(0.2f, 0.2f, 0.2f);
+>>>>>>> af27f70cb7b269546d7bc1994c2b02590f3ac2d3
             //this->push(new openGLMesh("../battleships/obj/tetrahedron.obj"));
 
             qsrand(QTime::currentTime().msec());
