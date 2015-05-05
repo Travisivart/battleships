@@ -13,6 +13,7 @@
 #include "openglellipse.h"
 #include "openglcycloids.h"
 #include "openglmesh.h"
+#include "ship.h"
 #include "openglcamera.h"
 
 #define GAME_MODE 0

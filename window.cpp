@@ -20,7 +20,7 @@ Window::Window(QOpenGLWidget *parent) :
 
     //Load player model
     //this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16ver2.obj"));
-    this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/shipboat2.obj"));
+    this->ui->openGLRenderWindow->push(new ship("../battleships/obj/shipboat2.obj"));
     ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 0.0f, 0.0f);
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 180.0f, 0.0f);
