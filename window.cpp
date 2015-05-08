@@ -21,7 +21,8 @@ Window::Window(QOpenGLWidget *parent) :
     //Load player model
     //this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16ver2.obj"));
     this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/shipboat2.obj"));
-    ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
+    ((openGLMesh*)ui->openGLRenderWindow->pop())->scale(0.3f, 0.3f, 0.3f);
+    qDebug()<<"Player loaded";
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 0.0f, 0.0f);
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 180.0f, 0.0f);
 }
@@ -33,7 +34,7 @@ Window::~Window()
 
 void Window::awake()
 {
-    lastAwake = QTime::currentTime();
+    //lastAwake = QTime::currentTime();
     //qDebug() << "Slept for " << lastBlock.msecsTo(lastAwake) << " msec";
 
 
@@ -44,7 +45,7 @@ void Window::awake()
 
 void Window::aboutToBlock()
 {
-    lastBlock = QTime::currentTime();
+    //lastBlock = QTime::currentTime();
     //qDebug() << "Worked for " << lastAwake.msecsTo(lastBlock) << " msec";
 
     //ui->openGLRenderWindow->paintGL();
@@ -59,24 +60,27 @@ void Window::doWorkInIdle()
     lastAwake = QTime::currentTime();
     //qDebug()<<"new:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
     //Sets this idle function to run again after 10 milliseconds
-    QTimer::singleShot(1, this, SLOT(doWorkInIdle()));
+    QTimer::singleShot(0, this, SLOT(doWorkInIdle()));
 
-    //Spawn enemies
-    this->ui->openGLRenderWindow->spawnEnemies();
+    if (lastBlock.msecsTo(lastAwake) >0)
+    {
+        //Spawn enemies
+        this->ui->openGLRenderWindow->spawnEnemies();
 
-    //Process input queue
-    this->ui->openGLRenderWindow->processInput();
+        //Process input queue
+        this->ui->openGLRenderWindow->processInput();
 
-    //update objects to new positions
-    this->ui->openGLRenderWindow->update(lastBlock.msecsTo(lastAwake));
+        //update objects to new positions
+        this->ui->openGLRenderWindow->update(lastBlock.msecsTo(lastAwake));
 
-    //Check for collisions
-    //this->ui->openGLRenderWindow->checkCollisions();
+        //Check for collisions
+        this->ui->openGLRenderWindow->checkCollisions();
 
-    //Update camera position
-    this->ui->openGLRenderWindow->updateCamera();
+        //Update camera position
+        this->ui->openGLRenderWindow->updateCamera();
 
-    ui->openGLRenderWindow->paintGL();
+        ui->openGLRenderWindow->paintGL();
+    }
     lastBlock = QTime::currentTime();
 }
 
@@ -84,11 +88,11 @@ void Window::keyPressEvent(QKeyEvent *ev)
 {
     //Give focus back to the openGL window.
     //if (!ui->openGLRenderWindow->hasFocus())
-        //ui->openGLRenderWindow->setFocus();
+    //ui->openGLRenderWindow->setFocus();
 
     if( !ev->isAutoRepeat())
     {
-        qDebug()<<"Pressed:" <<ev->key();
+        //qDebug()<<"Pressed:" <<ev->key();
         this->ui->openGLRenderWindow->pushInput(ev->key());
     }
 
@@ -99,7 +103,7 @@ void Window::keyReleaseEvent(QKeyEvent *ev)
 
     if( !ev->isAutoRepeat())
     {
-        qDebug()<<"Released:" <<ev->key();
+        //qDebug()<<"Released:" <<ev->key();
         this->ui->openGLRenderWindow->popInput(ev->key());
     }
 }
