@@ -466,5 +466,9 @@ void openGLRender::checkCollisions()
 
 void openGLRender::removeDestroyedObjects()
 {
-
+    for(int i=0; i< this->objects->size(); i++)
+    {
+        if(!((openGLMesh*)this->objects->at(i))->isAlive())
+            qDebug()<<"object:" <<i <<"is destroyed";
+    }
 }

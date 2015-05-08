@@ -67,7 +67,7 @@ void Window::doWorkInIdle()
     //Sets this idle function to run again after 10 milliseconds
     QTimer::singleShot(0, this, SLOT(doWorkInIdle()));
 
-    if (lastBlock.msecsTo(lastAwake) >0)
+    if (lastBlock.msecsTo(lastAwake) > 0)
     {
         //Spawn enemies
         this->ui->openGLRenderWindow->spawnEnemies();

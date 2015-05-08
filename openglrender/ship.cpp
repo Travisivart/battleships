@@ -26,6 +26,7 @@ ship::ship()
     mesh = NULL;
 
     this->destructible = true;
+    this->alive = true;
 }
 
 ship::ship(const QString newFilename,bool player)
@@ -67,6 +68,7 @@ ship::ship(const QString newFilename,bool player)
     v = 1.0f;
 
     this->destructible = true;
+    this->alive = true;
 }
 
 ship::~ship()
@@ -204,9 +206,9 @@ void ship::update(const int &msec)
             trigger++;
     }
     else{
-        this->translation[0] -= ((2.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
+        this->translation[0] -= ((0.5f * msec/100)*sin(this->rotation[2]*3.14159265/180));
         //this->translation[1] += 1.0f * msec/1000;
-        this->translation[1] += ((2.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
+        this->translation[1] += ((0.5f * msec/100)*cos(this->rotation[2]*3.14159265/180));
         //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
     }
 }

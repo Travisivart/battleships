@@ -52,6 +52,7 @@ public:
 
     bool isDescructable();
     void destroy();
+    bool isAlive();
 
     //Returns the object's name
     QString name();
@@ -74,6 +75,7 @@ protected:
     QString filename;
 
     bool destructible;
+    bool alive;
 };
 
 #endif // OPENGLMESH_H
