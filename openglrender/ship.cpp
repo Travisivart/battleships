@@ -26,7 +26,7 @@ ship::ship()
     mesh = NULL;
 }
 
-ship::ship(const QString newFilename)
+ship::ship(const QString newFilename,bool player)
 {
     qDebug()<<"Constructor: ship(" <<newFilename <<")";
     this->translation[0] = 0.0f;
@@ -40,7 +40,8 @@ ship::ship(const QString newFilename)
     this->scaling[0] = 1.0f;
     this->scaling[1] = 1.0f;
     this->scaling[2] = 1.0f;
-
+    this->player=player;
+    this->velocity=0;
     //#define GLM_NONE     (0)		/* render with only vertices */
     //#define GLM_FLAT     (1 << 0)		/* render with facet normals */
     //#define GLM_SMOOTH   (1 << 1)		/* render with vertex normals */
@@ -78,15 +79,20 @@ ship::~ship()
 // }
 
 float ship::getVelocity(){
-	return velocity;
+	return this->velocity;
 }
 
 void ship::increaseAcceleration(){
-    acceleration+=.5;
+    qDebug()<<"Speed up";
+    if(velocity<.1)
+        velocity+=.004;
 }
 
 void ship::decreaseAcceleration(){
-    acceleration-=1;
+    if(this->velocity>0.005)
+        velocity-=.005;
+    else
+        this->velocity=0;
 
 }
 
@@ -182,13 +188,31 @@ QString ship::getFilename()
 
 void ship::update(const int &msec)
 {
+    float bounce=-.01f;
+    int trigger=0;
     //qDebug()<<"Ship update";
 
-   // qDebug()<<"Updating for msec: " <<msec;
-    this->translation[0] -= ((2.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
-    //this->translation[1] += 1.0f * msec/1000;
-    this->translation[1] += ((2.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
-    //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+    qDebug()<<"velocity: " <<velocity+(float)(rand()%3-1)/3;
+    if(player){
+        if(trigger%10==0){
+            if(rand()%2>0)
+                bounce=.01f;
+            else
+                bounce=-.01f;
+        }
+            this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+            //this->translation[1] += 1.0f * msec/1000;
+            this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+            //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+            bounce=0;
+            trigger++;
+    }
+    else{
+        this->translation[0] -= ((2.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
+        //this->translation[1] += 1.0f * msec/1000;
+        this->translation[1] += ((2.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
+        //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+    }
 }
 
 void ship::draw()

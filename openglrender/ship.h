@@ -12,7 +12,7 @@ class ship : public openGLMesh
 {
 public:
     ship();
-    ship(const QString newFilename);
+    ship(const QString newFilename,bool player);
     ~ship();
 
     //Set methods
@@ -68,7 +68,7 @@ protected:
 
     //The GLM_MODE which we are using to render the mesh.
     int mode;
-
+    bool player;
     //The location of the .obj file
     QString filename;
 private:

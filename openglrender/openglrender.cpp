@@ -348,12 +348,13 @@ void openGLRender::processInput()
                 //Up arrow key
             case 16777235:
                 o = this->objects->at(0);
-                trans = ((ship*)o)->getTranslation();
-                rot = ((ship*)o)->getRotation();
-                trans[0] -= (.05)*sin(rot[2]*3.14159265/180);
-                //this->translation[1] += 1.0f * msec/1000;
-                trans[1] += (.05)*cos(rot[2]*3.14159265/180);
-                ((ship*)o)->translate(trans[0],trans[1],trans[2]);
+                ((ship*)o)->increaseAcceleration();
+                // trans = ((ship*)o)->getTranslation();
+                // rot = ((ship*)o)->getRotation();
+                // trans[0] -= (.05)*sin(rot[2]*3.14159265/180);
+                // //this->translation[1] += 1.0f * msec/1000;
+                // trans[1] += (.05)*cos(rot[2]*3.14159265/180);
+                // ((ship*)o)->translate(trans[0],trans[1],trans[2]);
                 //((ship*)o)->rotate(rot[0], rot[1], rot[2]);
 
                 //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
@@ -370,6 +371,8 @@ void openGLRender::processInput()
                 //Down arrow key
             case 16777237:
                 //Reduce acceleration
+                o = this->objects->at(0);
+                ((ship*)o)->decreaseAcceleration();
                 break;
 
             default:
@@ -407,7 +410,7 @@ void openGLRender::spawnEnemies()
         while(this->objects->size() < 3)
         {   
             //qDebug()<<"spawnEnemies";
-            this->push(new ship("../battleships/obj/shipboat2.obj"));
+            this->push(new ship("../battleships/obj/shipboat2.obj",false));
 
             ((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
             //this->push(new ship("../battleships/obj/tetrahedron.obj"));

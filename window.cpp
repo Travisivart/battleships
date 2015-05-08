@@ -25,7 +25,7 @@ Window::Window(QOpenGLWidget *parent) :
   //  ((ship*)ui->openGLRenderWindow->pop())->scale(0.3f, 0.3f, 0.3f);
     //qDebug()<<"Player loaded";
 //=======
-    this->ui->openGLRenderWindow->push(new ship("../battleships/obj/shipboat2.obj"));
+    this->ui->openGLRenderWindow->push(new ship("../battleships/obj/shipboat2.obj",true));
     ((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
 //>>>>>>> origin/master
     //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 0.0f, 0.0f);
