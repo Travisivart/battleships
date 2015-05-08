@@ -9,27 +9,18 @@ Window::Window(QOpenGLWidget *parent) :
     connect(dispatcher, SIGNAL(awake()), SLOT(awake()));
     connect(dispatcher, SIGNAL(aboutToBlock()), SLOT(aboutToBlock()));
 
-    //Sets an idle function to run after 10 milliseconds
-    QTimer::singleShot(2000, this, SLOT(doWorkInIdle()));
-
     ui->setupUi(this);
 
     this->clicked = false;
 
     this->buildingPolygon = false;
 
+    //Sets an idle function to run after 1000 milliseconds
+    QTimer::singleShot(1000, this, SLOT(doWorkInIdle()));
+
     //Load player model
-    //this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/f-16ver2.obj"));
-//<<<<<<< HEAD
-//    this->ui->openGLRenderWindow->push(new openGLMesh("../battleships/obj/shipboat2.obj"));
-  //  ((ship*)ui->openGLRenderWindow->pop())->scale(0.3f, 0.3f, 0.3f);
-    //qDebug()<<"Player loaded";
-//=======
     this->ui->openGLRenderWindow->push(new ship("../battleships/obj/shipboat2.obj",true));
     ((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
-//>>>>>>> origin/master
-    //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 0.0f, 0.0f);
-    //((openGLMesh*)ui->openGLRenderWindow->pop())->rotate(90.0f, 180.0f, 0.0f);
 }
 
 Window::~Window()
@@ -41,8 +32,6 @@ void Window::awake()
 {
     //lastAwake = QTime::currentTime();
     //qDebug() << "Slept for " << lastBlock.msecsTo(lastAwake) << " msec";
-
-
 
     //Paint the scene.
     //ui->openGLRenderWindow->paintGL();
