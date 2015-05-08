@@ -199,7 +199,7 @@ void openGLRender::draw(){
                 if(((openGLPolygon*)objects->at(i))->isFinished())
                     ((openGLPolygon*)objects->at(i))->drawFilled();
 
-            if(objects->at(i)->name() != "openGLPolygon" && objects->at(i)->name() != "openGLMesh")
+            if(objects->at(i)->name() != "openGLPolygon" && objects->at(i)->name() != "ship")
                 objects->at(i)->draw();
         }
 
@@ -217,9 +217,9 @@ void openGLRender::draw(){
         //Draw meshes
         for(int i=0; i<objects->size();i++)
         {
-            if(objects->at(i)->name() == "openGLMesh")
+            if(objects->at(i)->name() == "ship")
                 if(i != 0)
-                    ((openGLMesh*)this->objects->at(i))->draw(this->camera);
+                    ((ship*)this->objects->at(i))->draw(this->camera);
                 else
                     this->objects->at(i)->draw();
         }
@@ -339,8 +339,8 @@ void openGLRender::processInput()
                 //Rotate the player slightly left
                 //ui->openGLRenderWindow->rotatePlayer(0.1f);
                 o = this->objects->at(0);
-                rot = ((openGLMesh*)o)->getRotation();
-                ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]+0.6f);
+                rot = ((ship*)o)->getRotation();
+                ((ship*)o)->rotate(rot[0], rot[1], rot[2]+0.6f);
                 //this->camera->rotate(rot[0], rot[1], rot[2]+0.6f);
 
                 break;
@@ -348,16 +348,22 @@ void openGLRender::processInput()
                 //Up arrow key
             case 16777235:
                 o = this->objects->at(0);
-                trans = ((openGLMesh*)o)->getTranslation();
-                rot = ((openGLMesh*)o)->getRotation();
-                //((openGLMesh*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+                trans = ((ship*)o)->getTranslation();
+                rot = ((ship*)o)->getRotation();
+                trans[0] -= (.05)*sin(rot[2]*3.14159265/180);
+                //this->translation[1] += 1.0f * msec/1000;
+                trans[1] += (.05)*cos(rot[2]*3.14159265/180);
+                ((ship*)o)->translate(trans[0],trans[1],trans[2]);
+                //((ship*)o)->rotate(rot[0], rot[1], rot[2]);
+
+                //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
                 break;
 
                 //Right arrow key
             case 16777236:
                 o = this->objects->at(0);
-                rot = ((openGLMesh*)o)->getRotation();
-                ((openGLMesh*)o)->rotate(rot[0], rot[1], rot[2]-0.6f);
+                rot = ((ship*)o)->getRotation();
+                ((ship*)o)->rotate(rot[0], rot[1], rot[2]-0.6f);
                 //this->camera->rotate(rot[0], rot[1], rot[2]+0.6f);
                 break;
 
@@ -386,8 +392,8 @@ void openGLRender::update(const int &msec)
     //qDebug()<<"openGLRender::update(const int &msec)" <<this->objects->size() << this->objectName();
 
     for( int i=0; i< this->objects->size(); i++)
-        if(this->objects->at(i)->name() == "openGLMesh")
-            ((openGLMesh*)this->objects->at(i))->update(msec);
+        if(this->objects->at(i)->name() == "ship")
+            ((ship*)this->objects->at(i))->update(msec);
 }
 
 void openGLRender::spawnEnemies()
@@ -399,10 +405,12 @@ void openGLRender::spawnEnemies()
     if( this->objects->size() < 5 )
     {
         while(this->objects->size() < 5)
-        {
-            this->push(new openGLMesh("../battleships/obj/shipboat2.obj"));
-            ((openGLMesh*)this->pop())->scale(0.2f, 0.2f, 0.2f);
-            //this->push(new openGLMesh("../battleships/obj/tetrahedron.obj"));
+        {   
+            qDebug()<<"spawnEnemies";
+            this->push(new ship("../battleships/obj/shipboat2.obj"));
+
+            ((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
+            //this->push(new ship("../battleships/obj/tetrahedron.obj"));
 
             qsrand(QTime::currentTime().msec());
 
@@ -414,8 +422,8 @@ void openGLRender::spawnEnemies()
             qrand()%2 == 0 ? transX : transX = transX*(-1);
             qrand()%2 == 0 ? transY : transY = transY*(-1);
 
-            ((openGLMesh*)this->pop())->translate(transX, transY, 0.0f );
-            //((openGLMesh*)this->pop())->rotate();
+            ((ship*)this->pop())->translate(transX, transY, 0.0f );
+            //((ship*)this->pop())->rotate();
         }
     }
 }
