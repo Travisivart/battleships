@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Assignment 4 - Travis Neely</string>
+   <string>Battleships</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="drawingTypesTab">
