@@ -9,6 +9,13 @@ public:
     boundingBox();
     ~boundingBox();
 
+    float getMinX();
+    float getMinY();
+    float getMinZ();
+    float getMaxX();
+    float getMaxY();
+    float getMaxZ();
+
     //Takes a mesh and calculates the min and max values to build the box;
     void calculateBox(GLMmodel *mesh);
 

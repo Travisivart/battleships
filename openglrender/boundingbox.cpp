@@ -15,6 +15,36 @@ boundingBox::~boundingBox()
 
 }
 
+float boundingBox::getMinX()
+{
+    return this->minX;
+}
+
+float boundingBox::getMinY()
+{
+    return this->minY;
+}
+
+float boundingBox::getMinZ()
+{
+    return this->minZ;
+}
+
+float boundingBox::getMaxX()
+{
+    return this->maxX;
+}
+
+float boundingBox::getMaxY()
+{
+    return this->maxY;
+}
+
+float boundingBox::getMaxZ()
+{
+    return this->maxZ;
+}
+
 void boundingBox::calculateBox(GLMmodel *mesh)
 {
     //Verticies start at i=1
@@ -56,6 +86,7 @@ bool boundingBox::checkCollision(GLMmodel *mesh1, GLMmodel *mesh2)
 {
     bool flag = false;
 
+    /*
     glBegin(GL_LINES);
     glColor3f(1.0f,0.0f,1.0f);
     glVertex3f(this->minX, this->minY, this->minZ);
@@ -94,6 +125,7 @@ bool boundingBox::checkCollision(GLMmodel *mesh1, GLMmodel *mesh2)
     glVertex3f(this->maxX, this->maxY, this->minZ);
     glVertex3f(this->minX, this->maxY, this->minZ);
     glEnd();
+    */
 
     return flag;
 }
