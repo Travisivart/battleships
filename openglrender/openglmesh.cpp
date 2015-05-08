@@ -274,6 +274,16 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
     return collisionFlag;
 }
 
+bool openGLMesh::isDescructable()
+{
+    return this->destructible;
+}
+
+void openGLMesh::destroy()
+{
+    return;
+}
+
 QString openGLMesh::name()
 {
     return "openGLMesh";

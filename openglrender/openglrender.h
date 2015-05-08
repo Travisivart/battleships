@@ -87,6 +87,9 @@ public:
     //Spawn enemies around the map
     void spawnEnemies();
 
+    //Delete destroyed objects
+    void removeDestroyedObjects();
+
     //Update the camera
     void updateCamera();
 

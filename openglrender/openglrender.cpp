@@ -408,7 +408,7 @@ void openGLRender::spawnEnemies()
     if( this->objects->size() < 3 )
     {
         while(this->objects->size() < 3)
-        {   
+        {
             //qDebug()<<"spawnEnemies";
             this->push(new ship("../battleships/obj/shipboat2.obj",false));
 
@@ -449,9 +449,22 @@ void openGLRender::checkCollisions()
             for(int j=i+1; j<this->objects->size(); j++)
             {
                 //qDebug()<<"Checking for collision at:" <<i <<"and" <<j;
-                ((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) );
+                //If there is a collision between objects i and j then do something (destroy both objects)
+                if(((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) ))
+                {
+                   // qDebug()<<"Collision between objects:" <<i <<"and" <<j;
+                    if( ((openGLMesh*)this->objects->at(i))->isDescructable())
+                        ((openGLMesh*)this->objects->at(i))->destroy();
+                    if( ((openGLMesh*)this->objects->at(j))->isDescructable())
+                        ((openGLMesh*)this->objects->at(j))->destroy();
+                }
 
             }
         }
     }
+}
+
+void openGLRender::removeDestroyedObjects()
+{
+
 }

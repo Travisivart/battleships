@@ -24,6 +24,8 @@ ship::ship()
     this->mode = GLM_MATERIAL;
 
     mesh = NULL;
+
+    this->destructible = true;
 }
 
 ship::ship(const QString newFilename,bool player)
@@ -63,22 +65,14 @@ ship::ship(const QString newFilename,bool player)
     //qDebug()<<"MinY: " <<box.getMinY();
 
     v = 1.0f;
+
+    this->destructible = true;
 }
 
 ship::~ship()
 {
     delete this->mesh;
 }
-
-// ship::ship()
-// {
-
-// }
-
-// ship::~ship()
-// {
-
-// }
 
 float ship::getVelocity(){
 	return this->velocity;
