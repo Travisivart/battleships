@@ -40,6 +40,9 @@ public:
     //Delete the mesh if one has been loaded.
     void deleteMesh();
 
+    //Create a projectile and attack.
+    void attack();
+
     //If the mesh was created with an object file, then return the filename used.
     QString getFilename();
 

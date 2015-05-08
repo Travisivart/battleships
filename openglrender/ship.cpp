@@ -184,6 +184,11 @@ QString ship::getFilename()
     return this->filename;
 }
 
+void ship::attack()
+{
+
+}
+
 void ship::update(const int &msec)
 {
     float bounce=-.01f;

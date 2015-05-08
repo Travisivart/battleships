@@ -332,6 +332,9 @@ void openGLRender::processInput()
                 //Space key
             case 32:
                 //Create a projectile
+                //qDebug()<<"Create projectile";
+                o = this->objects->at(0);
+                ((ship*)o)->attack();
                 break;
 
                 //Left arrow key
@@ -472,8 +475,6 @@ void openGLRender::removeDestroyedObjects()
     {
         if(!((openGLMesh*)this->objects->at(i))->isAlive())
         {
-
-
             if (i != 0)
             {
                 qDebug()<<"object:" <<i <<"is destroyed";
