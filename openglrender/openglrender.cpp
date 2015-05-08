@@ -426,6 +426,8 @@ void openGLRender::spawnEnemies()
             qrand()%2 == 0 ? transY : transY = transY*(-1);
 
             ((ship*)this->pop())->translate(transX, transY, 0.0f );
+            ((ship*)this->pop())->rotate(0, 0, rand()%359);
+
             //((ship*)this->pop())->rotate();
         }
     }

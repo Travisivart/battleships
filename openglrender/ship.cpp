@@ -82,13 +82,13 @@ float ship::getVelocity(){
 
 void ship::increaseAcceleration(){
     qDebug()<<"Speed up";
-    if(velocity<.1)
+    if(velocity<.11)
         velocity+=.004;
 }
 
 void ship::decreaseAcceleration(){
-    if(this->velocity>0.005)
-        velocity-=.005;
+    if(this->velocity>0.003)
+        velocity-=.003;
     else
         this->velocity=0;
 
