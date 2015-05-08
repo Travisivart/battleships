@@ -57,20 +57,10 @@ public:
 
     float v;
 
+
 protected:
-    GLMmodel *mesh;
-
-    boundingBox box;
-
-    GLfloat translation[3];
-    GLfloat rotation[3];
-    GLfloat scaling[3];
-
-    //The GLM_MODE which we are using to render the mesh.
-    int mode;
     bool player;
-    //The location of the .obj file
-    QString filename;
+    
 private:
     float acceleration, velocity,angle;
 

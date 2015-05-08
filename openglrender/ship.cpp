@@ -57,8 +57,10 @@ ship::ship(const QString newFilename,bool player)
 
     qDebug()<<"Calculating bounding box";
     this->getBox().calculateBox(this->mesh);
-    qDebug()<<"MAXx: " <<this->getBox().getMaxX();
-    qDebug()<<"MINy: " <<this->getBox().getMinY();
+    this->box.calculateBox(this->mesh);
+    //qDebug()<<"MaxX: " <<box.getMaxX();
+    //qDebug()<<"MinX: " <<box.getMinX();
+    //qDebug()<<"MinY: " <<box.getMinY();
 
     v = 1.0f;
 }
