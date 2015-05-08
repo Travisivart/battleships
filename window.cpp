@@ -81,6 +81,9 @@ void Window::doWorkInIdle()
         //Check for collisions
         this->ui->openGLRenderWindow->checkCollisions();
 
+        //Remove destroyed objects
+        this->ui->openGLRenderWindow->removeDestroyedObjects();
+
         //Update camera position
         this->ui->openGLRenderWindow->updateCamera();
 
@@ -188,6 +191,7 @@ void Window::mouseMoveEvent(QMouseEvent *ev)
 
 void Window::mousePressEvent(QMouseEvent *ev){
 
+    /*
     int x = (ev->x()-10)*2-OGLWIDTH;
     int y = (-1)*((ev->y()-YOFFSET)*2-OGLHEIGHT);
 
@@ -341,13 +345,13 @@ void Window::mousePressEvent(QMouseEvent *ev){
             //qDebug()<<"Poly2: " <<((openGLPolygon*)o)->isFinished();
             ui->openGLRenderWindow->paintGL();
         }
-    }
+    }*/
 }
 
 void Window::mouseReleaseEvent(QMouseEvent *ev){
 
 
-
+/*
     if(clicked && (ev->button() == Qt::LeftButton) && ev->x()>=10 && ev->x()<=OGLWIDTH+10 && ev->y()>=YOFFSET && ev->y() <=OGLHEIGHT+YOFFSET){
 
         openGLObject *o;
@@ -425,7 +429,7 @@ void Window::mouseReleaseEvent(QMouseEvent *ev){
             //o->setCurrent(false);
             ui->openGLRenderWindow->paintGL();
         }
-    }
+    }*/
 }
 
 void Window::on_clearBtn_clicked()
