@@ -89,6 +89,8 @@ public:
     //Update the camera
     void updateCamera();
 
+    void checkCollisions();
+
 protected:
 
     // void paintGL();
@@ -103,7 +105,7 @@ private:
     QList<openGLObject*> *objects;
     int selectedObj;
 
-    QList<_GLMmodel*> *models;
+    //QList<_GLMmodel*> *models;
     _GLMmodel *player;
 
     openGLCamera *camera;

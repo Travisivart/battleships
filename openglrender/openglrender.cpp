@@ -14,12 +14,10 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     unsigned char *bitmapImage; // bitmap image data
     int imageIdx = 0; // image index counter
     unsigned char tempRGB; // swap variable
-    qDebug()<<filename;
+
     // open filename in "read binary" mode
     filePtr = fopen(filename, "rb");
     if (filePtr == NULL){
-        qDebug()<< filename;
-        qDebug()<< "NULL!!!\n";
         return NULL;
     }
 
@@ -30,14 +28,11 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     // verify that this is a bitmap by checking for the universal bitmap id
     if (bitmapFileHeader.bfType != BITMAP_ID)
     {
-        qDebug()<<"LoadBitmapFile - BITMAP_ID invalid";
         fclose(filePtr);
         return NULL;
     }
     // read the bitmap information header
-    qDebug()<<"sizeof\n";
-    qDebug()<<sizeof(BITMAPINFOHEADER);
-    qDebug()<<"sizeof(BITMAPFILEHEADER): "<<sizeof(BITMAPFILEHEADER);
+
     fread(bitmapInfoHeader, sizeof(BITMAPINFOHEADER), 1, filePtr);
 
     // move file pointer to beginning of bitmap data
@@ -49,7 +44,6 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     // verify memory allocation
     if (!bitmapImage)
     {
-        qDebug()<<"here?\n";
         free(bitmapImage);
         fclose(filePtr);
         return NULL;
@@ -61,7 +55,6 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
     // make sure bitmap image data was read
     if (bitmapImage == NULL)
     {
-        qDebug()<<"how about here?\n";
         fclose(filePtr);
         return NULL;
     }
@@ -76,7 +69,6 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 
     // close the file and return the bitmap image data
     fclose(filePtr);
-    qDebug()<<bitmapImage;
     return bitmapImage;
 }
 
@@ -87,7 +79,7 @@ openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuf
 {
     this->objects = new QList<openGLObject*>();
 
-    this->models = new QList<GLMmodel*>();
+    //this->models = new QList<GLMmodel*>();
     this->selectedObj = -1;
 
     this->inputQueue = new QList<quint32>();
@@ -98,7 +90,7 @@ openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuf
 openGLRender::~openGLRender()
 {
     delete this->objects;
-    delete this->models;
+    //delete this->models;
     delete this->inputQueue;
     delete this->camera;
 }
@@ -137,7 +129,7 @@ void openGLRender::initializeGL(){
 
     glEnable(GL_TEXTURE_2D); // enable 2D texturing
     // load our bitmap file
-    QDir dir; qDebug()<< dir.absolutePath()<<flush;
+    //QDir dir; qDebug()<< dir.absolutePath()<<flush;
     bitmapData = LoadBitmapFile("../battleships/tga/water2.bmp", &bitmapInfoHeader);
 
 }
@@ -168,9 +160,6 @@ void openGLRender::paintGL(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     // generate the texture image
-    qDebug()<<"here";
-    qDebug()<<bitmapInfoHeader.biWidth;
-    qDebug()<<bitmapInfoHeader.biHeight;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
     glBegin(GL_QUADS); // front face
     glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 0.0f);
@@ -277,11 +266,11 @@ int openGLRender::size()
 
 void openGLRender::removeAt(int i)
 {
-    qDebug()<<"deleting i";
+    //qDebug()<<"deleting i";
     //delete this->objects->at(i);
-    qDebug()<<"removing i";
+    //qDebug()<<"removing i";
     this->objects->removeAt(i);
-    qDebug()<<"i removed";
+    //qDebug()<<"i removed";
 }
 
 void openGLRender::push(openGLObject *newObj)
@@ -418,8 +407,8 @@ void openGLRender::spawnEnemies()
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            transX = (float)(qrand()%30+70)/10;
-            transY = (float)(qrand()%30+70)/10;
+            //transX = (float)(qrand()%30+70)/10;
+            //transY = (float)(qrand()%30+70)/10;
             //rotZ = (float)(qrand()%100+5)/10;
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
@@ -436,4 +425,22 @@ void openGLRender::updateCamera()
     //glMatrixMode(GL_PROJECTION);
 
     //glOrtho(-1.0001f, 1.0001f, -1.0001f, 1.0001f, -1.0001f, 1.0001f);
+}
+
+void openGLRender::checkCollisions()
+{
+    //Only check for collisions if there is more than one object.
+
+    if(this->objects->size() > 1)
+    {
+        for(int i=0; i< this->objects->size(); i++)
+        {
+            for(int j=i+1; j<this->objects->size(); j++)
+            {
+                qDebug()<<"Checking for collision at:" <<i <<"and" <<j;
+                ((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) );
+
+            }
+        }
+    }
 }
