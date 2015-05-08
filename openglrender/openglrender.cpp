@@ -405,9 +405,9 @@ void openGLRender::spawnEnemies()
     float rotZ;
 
     //Always make sure there are at least 4 enemies in the world. (Player + enemies = 5)
-    if( this->objects->size() < 3 )
+    if( this->objects->size() < 5 )
     {
-        while(this->objects->size() < 3)
+        while(this->objects->size() < 5)
         {
             //qDebug()<<"spawnEnemies";
             this->push(new ship("../battleships/obj/shipboat2.obj",false));
@@ -471,13 +471,14 @@ void openGLRender::removeDestroyedObjects()
         if(!((openGLMesh*)this->objects->at(i))->isAlive())
         {
 
-            qDebug()<<"object:" <<i <<"is destroyed";
-            //if (i != 0)
-            //{
-                //((openGLMesh*)this->objects->at(i))->deleteMesh();
-                //delete ((openGLMesh*)this->objects->at(i));
-                //this->objects->removeAt(i);
-            //}
+
+            if (i != 0)
+            {
+                qDebug()<<"object:" <<i <<"is destroyed";
+                ((openGLMesh*)this->objects->at(i))->deleteMesh();
+                delete ((openGLMesh*)this->objects->at(i));
+                this->objects->removeAt(i);
+            }
         }
     }
 }
