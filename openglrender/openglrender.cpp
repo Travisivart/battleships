@@ -402,11 +402,11 @@ void openGLRender::spawnEnemies()
     float rotZ;
 
     //Always make sure there are at least 4 enemies in the world. (Player + enemies = 5)
-    if( this->objects->size() < 5 )
+    if( this->objects->size() < 3 )
     {
-        while(this->objects->size() < 5)
+        while(this->objects->size() < 3)
         {   
-            qDebug()<<"spawnEnemies";
+            //qDebug()<<"spawnEnemies";
             this->push(new ship("../battleships/obj/shipboat2.obj"));
 
             ((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
@@ -415,8 +415,8 @@ void openGLRender::spawnEnemies()
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            //transX = (float)(qrand()%30+70)/10;
-            //transY = (float)(qrand()%30+70)/10;
+            transX = (float)(qrand()%30+70)/10;
+            transY = (float)(qrand()%30+70)/10;
             //rotZ = (float)(qrand()%100+5)/10;
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
@@ -445,7 +445,7 @@ void openGLRender::checkCollisions()
         {
             for(int j=i+1; j<this->objects->size(); j++)
             {
-                qDebug()<<"Checking for collision at:" <<i <<"and" <<j;
+                //qDebug()<<"Checking for collision at:" <<i <<"and" <<j;
                 ((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) );
 
             }

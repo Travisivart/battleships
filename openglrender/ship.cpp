@@ -54,7 +54,10 @@ ship::ship(const QString newFilename)
     qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
     this->load(this->filename);
 
-    this->box.calculateBox(this->mesh);
+    qDebug()<<"Calculating bounding box";
+    this->getBox().calculateBox(this->mesh);
+    qDebug()<<"MAXx: " <<this->getBox().getMaxX();
+    qDebug()<<"MINy: " <<this->getBox().getMinY();
 
     v = 1.0f;
 }
@@ -179,11 +182,12 @@ QString ship::getFilename()
 
 void ship::update(const int &msec)
 {
+    //qDebug()<<"Ship update";
 
    // qDebug()<<"Updating for msec: " <<msec;
-    this->translation[0] -= ((3.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
+    this->translation[0] -= ((2.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
     //this->translation[1] += 1.0f * msec/1000;
-    this->translation[1] += ((3.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
+    this->translation[1] += ((2.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
     //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
 }
 
