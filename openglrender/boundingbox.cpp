@@ -67,12 +67,12 @@ void boundingBox::calculateBox(GLMmodel *mesh)
         minY > mesh->vertices[3*i + 1] ? minY = mesh->vertices[3*i + 1] : minY < mesh->vertices[3*i + 1] ? maxY = mesh->vertices[3*i + 1] : maxY;
         minZ > mesh->vertices[3*i + 2] ? minZ = mesh->vertices[3*i + 2] : minZ < mesh->vertices[3*i + 2] ? maxZ = mesh->vertices[3*i + 2] : maxZ;
     }
-    qDebug()<<"minx" <<this->minX;
-    qDebug()<<"minY" <<this->minY;
-    qDebug()<<"minZ" <<this->minZ;
-    qDebug()<<"maxX" <<this->maxX;
-    qDebug()<<"maxY" <<this->maxY;
-    qDebug()<<"maxZ" <<this->maxZ;
+    //qDebug()<<"minx" <<this->minX;
+    //qDebug()<<"minY" <<this->minY;
+    //qDebug()<<"minZ" <<this->minZ;
+    //qDebug()<<"maxX" <<this->maxX;
+    //qDebug()<<"maxY" <<this->maxY;
+    //qDebug()<<"maxZ" <<this->maxZ;
 
 }
 

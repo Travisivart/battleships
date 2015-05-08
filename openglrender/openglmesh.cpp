@@ -240,10 +240,10 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
 
     //qDebug()<<myScale[0]*this->box.getMinX() + myTrans[0] <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] << myScale[0]*this->box.getMaxX() +myTrans[0];
 
-    qDebug()<<"My Real minX: " <<myScale[0]*this->box.getMinX() + myTrans[0] <<"My Real maxX: " <<myScale[0]*this->box.getMaxX() + myTrans[0];
+    //qDebug()<<"My Real minX: " <<myScale[0]*box.getMinX() + myTrans[0] <<"My Real maxX: " <<myScale[0]*box.getMaxX() + myTrans[0];
     //qDebug()<<"sin(myRot[2]*3.1415 9265/180" <<sin(myRot[2]*3.14159265/180);
     //qDebug()<<"My Real minX: " <<myScale[0]*this->box.getMinX()+abs(sin(myRot[2]*3.14159265/180)) + myTrans[0] <<"My Real maxX: " <<myScale[0]*this->box.getMaxX()+abs(sin(myRot[2]*3.14159265/180)) + myTrans[0];
-    qDebug()<<"Ot Real minX: " <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] <<"Ot Real maxX: " <<otherScale[0]*otherMesh->getBox().getMaxX() + otherTrans[0];
+    //qDebug()<<"Ot Real minX: " <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] <<"Ot Real maxX: " <<otherScale[0]*otherMesh->getBox().getMaxX() + otherTrans[0];
 
     if (myScale[0]*this->box.getMinX() + myTrans[0] <= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] && myScale[0]*this->box.getMaxX() +myTrans[0] >= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0])
     {
