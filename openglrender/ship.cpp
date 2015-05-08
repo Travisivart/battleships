@@ -190,7 +190,7 @@ void ship::update(const int &msec)
     int trigger=0;
     //qDebug()<<"Ship update";
 
-    qDebug()<<"velocity: " <<velocity+(float)(rand()%3-1)/3;
+    //qDebug()<<"velocity: " <<velocity+(float)(rand()%3-1)/3;
     if(player){
         if(trigger%10==0){
             if(rand()%2>0)

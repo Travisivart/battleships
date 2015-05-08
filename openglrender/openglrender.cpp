@@ -452,7 +452,7 @@ void openGLRender::checkCollisions()
                 //If there is a collision between objects i and j then do something (destroy both objects)
                 if(((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) ))
                 {
-                   // qDebug()<<"Collision between objects:" <<i <<"and" <<j;
+                    qDebug()<<"Collision between objects:" <<i <<"and" <<j;
                     if( ((openGLMesh*)this->objects->at(i))->isDescructable())
                         ((openGLMesh*)this->objects->at(i))->destroy();
                     if( ((openGLMesh*)this->objects->at(j))->isDescructable())
@@ -469,6 +469,15 @@ void openGLRender::removeDestroyedObjects()
     for(int i=0; i< this->objects->size(); i++)
     {
         if(!((openGLMesh*)this->objects->at(i))->isAlive())
+        {
+
             qDebug()<<"object:" <<i <<"is destroyed";
+            //if (i != 0)
+            //{
+                //((openGLMesh*)this->objects->at(i))->deleteMesh();
+                //delete ((openGLMesh*)this->objects->at(i));
+                //this->objects->removeAt(i);
+            //}
+        }
     }
 }
