@@ -23,6 +23,9 @@ openGLMesh::openGLMesh()
     this->mode = GLM_MATERIAL;
 
     mesh = NULL;
+
+    this->destructible = false;
+    this->alive = false;
 }
 
 openGLMesh::openGLMesh(const QString newFilename)
@@ -57,6 +60,9 @@ openGLMesh::openGLMesh(const QString newFilename)
     this->box.calculateBox(this->mesh);
 
     v = 1.0f;
+
+    this->destructible = false;
+    this->alive = false;
 }
 
 openGLMesh::~openGLMesh()
@@ -281,7 +287,14 @@ bool openGLMesh::isDescructable()
 
 void openGLMesh::destroy()
 {
+    this->alive = false;
+
     return;
+}
+
+bool openGLMesh::isAlive()
+{
+    return this->alive;
 }
 
 QString openGLMesh::name()
