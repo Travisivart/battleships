@@ -27,6 +27,8 @@ public:
     GLfloat* getTranslation();
     GLfloat* getRotation();
     GLfloat* getScaling();
+    _GLMmodel *getMesh();
+    boundingBox getBox();
 
     //Load an object into memory from filename.
     void load(QString filename);
@@ -45,6 +47,8 @@ public:
 
     //Draw the mesh relative to a camera
     void draw(openGLCamera *c);
+
+    bool checkCollision(openGLMesh *otherMesh);
 
     //Returns the object's name
     QString name();

@@ -53,6 +53,7 @@ openGLMesh::openGLMesh(const QString newFilename)
     qDebug()<<"openGLMesh::openGLMesh(const QString newFilename)" <<"Attempting file load";
     this->load(this->filename);
 
+    qDebug()<<"Calculating bounding box";
     this->box.calculateBox(this->mesh);
 
     v = 1.0f;
@@ -125,6 +126,16 @@ GLfloat* openGLMesh::getScaling()
     return this->scaling;
 }
 
+_GLMmodel* openGLMesh::getMesh()
+{
+    return this->mesh;
+}
+
+boundingBox openGLMesh::getBox()
+{
+    return this->box;
+}
+
 void openGLMesh::load(QString filename)
 {
     qDebug()<<"openGLMesh::load(QString filename)";
@@ -156,7 +167,7 @@ QString openGLMesh::getFilename()
 void openGLMesh::update(const int &msec)
 {
 
-   // qDebug()<<"Updating for msec: " <<msec;
+    // qDebug()<<"Updating for msec: " <<msec;
     this->translation[0] -= ((3.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
     //this->translation[1] += 1.0f * msec/1000;
     this->translation[1] += ((3.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
@@ -184,7 +195,7 @@ void openGLMesh::draw()
     glRotatef(180, 0.0,1.0,0.0);
 
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
-
+    //this->box.checkCollision(this->mesh, this->mesh);
     glPopMatrix();
 }
 
@@ -207,8 +218,59 @@ void openGLMesh::draw(openGLCamera *c)
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
 
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
-    this->box.checkCollision(this->mesh, this->mesh);
+    //this->box.checkCollision(this->mesh, this->mesh);
     glPopMatrix();
+}
+
+bool openGLMesh::checkCollision(openGLMesh *otherMesh)
+{
+    bool collisionFlag = false;
+
+    //this->box.checkCollision(this->mesh, otherMesh->getMesh());
+
+    float* myTrans = this->getTranslation();
+    float* otherTrans = otherMesh->getTranslation();
+    float* myRot = this->getRotation();
+    float* otherRot = otherMesh->getRotation();
+    float* myScale = this->getScaling();
+    float* otherScale = otherMesh->getScaling();
+
+    //this->translation[0] -= ((3.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
+    //this->translation[1] += ((3.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
+
+    //qDebug()<<myScale[0]*this->box.getMinX() + myTrans[0] <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] << myScale[0]*this->box.getMaxX() +myTrans[0];
+
+    //qDebug()<<"My Real minX: " <<myScale[0]*this->box.getMinX() + myTrans[0] <<"My Real maxX: " <<myScale[0]*this->box.getMaxX() + myTrans[0];
+    qDebug()<<"sin(myRot[2]*3.1415 9265/180" <<sin(myRot[2]*3.14159265/180);
+    //qDebug()<<"My Real minX: " <<myScale[0]*this->box.getMinX()+abs(sin(myRot[2]*3.14159265/180)) + myTrans[0] <<"My Real maxX: " <<myScale[0]*this->box.getMaxX()+abs(sin(myRot[2]*3.14159265/180)) + myTrans[0];
+    //qDebug()<<"Ot Real minX: " <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] <<"Ot Real maxX: " <<otherScale[0]*otherMesh->getBox().getMaxX() + otherTrans[0];
+
+    if (myScale[0]*this->box.getMinX() + myTrans[0] <= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] && myScale[0]*this->box.getMaxX() +myTrans[0] >= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0])
+    {
+        if (myScale[1]*this->box.getMinY() + myTrans[1] <= otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1] && myScale[1]*this->box.getMaxY() +myTrans[1] >= otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1])
+        {
+            collisionFlag = true;
+        }
+
+    }
+
+    /* Original without Rotation
+    if (myScale[0]*this->box.getMinX() + myTrans[0] <= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] && myScale[0]*this->box.getMaxX() +myTrans[0] >= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0])
+    {
+        if (myScale[1]*this->box.getMinY() + myTrans[1] <= otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1] && myScale[1]*this->box.getMaxY() +myTrans[1] >= otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1])
+        {
+            collisionFlag = true;
+        }
+
+    }*/
+
+    if (collisionFlag)
+        qDebug()<<"COLLISION";
+    else
+        qDebug()<<"NO COLLISION";
+    
+
+    return collisionFlag;
 }
 
 QString openGLMesh::name()
