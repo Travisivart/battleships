@@ -184,6 +184,11 @@ QString ship::getFilename()
     return this->filename;
 }
 
+void ship::attack()
+{
+
+}
+
 void ship::update(const int &msec)
 {
     float bounce=-.01f;
@@ -240,11 +245,10 @@ void ship::update(const int &msec)
 
         }
        
-        this->translation[0] -= ((14.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
+        this->translation[0] -= ((0.5f * msec/100)*sin(this->rotation[2]*3.14159265/180));
         //this->translation[1] += 1.0f * msec/1000;
-        this->translation[1] += ((14.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
+        this->translation[1] += ((0.5f * msec/100)*cos(this->rotation[2]*3.14159265/180));
         //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
-    
     }
 }
 
