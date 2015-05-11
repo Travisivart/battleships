@@ -55,7 +55,7 @@ ship::ship(GLMmodel* ship,bool player)
     this->mesh=ship;
    // this->filename = newFilename;
 
-    qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
+    //qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
     //this->load(this->filename);
 
     qDebug()<<"Calculating bounding box";
@@ -81,7 +81,7 @@ float ship::getVelocity(){
 }
 
 void ship::increaseAcceleration(){
-    qDebug()<<"Speed up";
+    
     if(velocity<.11)
         velocity+=.004;
 }

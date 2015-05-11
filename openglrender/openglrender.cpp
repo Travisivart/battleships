@@ -78,7 +78,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
     this->objects = new QList<openGLObject*>();
-    this->ships = load("../battleships/obj/shipboat2.obj");
+    this->ships = load("../battleships/obj/Shipboatsmall.obj");
     //this->models = new QList<GLMmodel*>();
     this->selectedObj = -1;
 
@@ -116,7 +116,29 @@ GLMmodel* openGLRender::load(QString filename)
 
 void openGLRender::initializeGL(){
 
+    // float ambientLight[] = { 1, 1, 1, 1.0 };
+    // float specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
+    // float specularity[] = { 1.0, 1.0, 1.0, 1.0 };
+    // float emission[]={0.3, 0.3, 0.3, 1.0};
+    // float shininess[] = { 60.0 };
+    // float lightPosition[] = { 0.0, 0.0, 10.0, 1.0 };
+    // glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHT0);
+    // // glColorMaterial ( GL_FRONT, GL_EMISSION ) ;
+    // // glEnable ( GL_COLOR_MATERIAL ) ;
+    // glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, emission ) ;
+    // glMaterialfv(GL_FRONT, GL_SPECULAR, specularity); // Reflectance
+    // glMaterialfv(GL_FRONT, GL_SHININESS, shininess); // Shininess
 
+    // // Enable ambient light usage
+    // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+
+    // glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    // glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+
+    // // Position of the light source
+    // glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    
     glMatrixMode(GL_MODELVIEW);
 
     glClearColor (0.0, 0.0, 0.0, 0.0);

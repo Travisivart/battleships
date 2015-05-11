@@ -18,7 +18,7 @@ Window::Window(QOpenGLWidget *parent) :
 
     //Sets an idle function to run after 1000 milliseconds
     QTimer::singleShot(1000, this, SLOT(doWorkInIdle()));
-    GLMmodel* playership=openGLRender::load("../battleships/obj/shipboat2.obj");
+    GLMmodel* playership=openGLRender::load("../battleships/obj/shipboat3.obj");
     //Load player model
     this->ui->openGLRenderWindow->push(new ship(playership,true));
     ((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
