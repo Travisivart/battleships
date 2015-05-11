@@ -167,6 +167,7 @@ private slots:
 
 private:
     Ui::Window *ui;
+    //GLMmodel* Window::loadplayer(QString filename);
 
     QAbstractEventDispatcher *dispatcher;
     QTime lastAwake;

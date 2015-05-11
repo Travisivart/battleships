@@ -29,9 +29,9 @@ ship::ship()
     this->alive = true;
 }
 
-ship::ship(const QString newFilename,bool player)
+ship::ship(GLMmodel* ship,bool player)
 {
-    qDebug()<<"Constructor: ship(" <<newFilename <<")";
+    //qDebug()<<"Constructor: ship(" <<newFilename <<")";
     this->translation[0] = 0.0f;
     this->translation[1] = 0.0f;
     this->translation[2] = 0.0f;
@@ -52,11 +52,11 @@ ship::ship(const QString newFilename,bool player)
     //#define GLM_COLOR    (1 << 3)		/* render with colors */
     //#define GLM_MATERIAL (1 << 4)		/* render with materials */
     this->mode = GLM_MATERIAL;
-
-    this->filename = newFilename;
+    this->mesh=ship;
+   // this->filename = newFilename;
 
     qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
-    this->load(this->filename);
+    //this->load(this->filename);
 
     qDebug()<<"Calculating bounding box";
     this->getBox().calculateBox(this->mesh);
@@ -73,7 +73,7 @@ ship::ship(const QString newFilename,bool player)
 
 ship::~ship()
 {
-    delete this->mesh;
+    //delete this->mesh;
 }
 
 float ship::getVelocity(){
@@ -156,22 +156,22 @@ GLfloat* ship::getScaling()
     return this->scaling;
 }
 
-void ship::load(QString filename)
-{
-    qDebug()<<"ship::load(QString filename)";
-    //Make sure that we are actually trying to load an existing file.
-    if (filename != "")
-    {
-        //If something is already loaded into the mesh, then delete it.
-        //if ( mesh != NULL )
-        //deleteMesh();
+// void ship::load(QString filename)
+// {
+//     qDebug()<<"ship::load(QString filename)";
+//     //Make sure that we are actually trying to load an existing file.
+//     if (filename != "")
+//     {
+//         //If something is already loaded into the mesh, then delete it.
+//         //if ( mesh != NULL )
+//         //deleteMesh();
 
-        QByteArray ba = filename.toLatin1();
-        char *c_str2 = ba.data();
+//         QByteArray ba = filename.toLatin1();
+//         char *c_str2 = ba.data();
 
-        this->mesh = glmReadOBJ(c_str2);
-    }
-}
+//         this->mesh = glmReadOBJ(c_str2);
+//     }
+// }
 
 void ship::deleteMesh()
 {
@@ -240,15 +240,9 @@ void ship::update(const int &msec)
 
         }
        
-<<<<<<< HEAD
-        this->translation[0] -= ((0.5f * msec/100)*sin(this->rotation[2]*3.14159265/180));
-        //this->translation[1] += 1.0f * msec/1000;
-        this->translation[1] += ((0.5f * msec/100)*cos(this->rotation[2]*3.14159265/180));
-=======
         this->translation[0] -= ((14.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
         //this->translation[1] += 1.0f * msec/1000;
         this->translation[1] += ((14.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
->>>>>>> origin/master
         //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
     
     }

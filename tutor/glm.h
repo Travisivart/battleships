@@ -11,6 +11,8 @@
 
  */
 
+#ifndef GLM_H
+#define GLM_H
 
 #include <QtOpenGL/QGL>
 #include <QDebug>
@@ -245,3 +247,6 @@ glmList(GLMmodel* model, GLuint mode, GLuint type);
  */
 GLvoid
 glmWeld(GLMmodel* model, GLfloat epsilon);
+
+
+#endif // GLM_H

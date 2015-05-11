@@ -78,7 +78,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
     this->objects = new QList<openGLObject*>();
-
+    this->ships = load("../battleships/obj/shipboat2.obj");
     //this->models = new QList<GLMmodel*>();
     this->selectedObj = -1;
 
@@ -93,6 +93,25 @@ openGLRender::~openGLRender()
     //delete this->models;
     delete this->inputQueue;
     delete this->camera;
+}
+
+GLMmodel* openGLRender::load(QString filename)
+{
+    GLMmodel *mesh;
+    qDebug()<<"ship::load(QString filename)";
+    //Make sure that we are actually trying to load an existing file.
+    if (filename != "")
+    {
+        //If something is already loaded into the mesh, then delete it.
+        //if ( mesh != NULL )
+        //deleteMesh();
+
+        QByteArray ba = filename.toLatin1();
+        char *c_str2 = ba.data();
+
+        mesh = glmReadOBJ(c_str2);
+    }
+    return mesh;
 }
 
 void openGLRender::initializeGL(){
@@ -217,11 +236,12 @@ void openGLRender::draw(){
         //Draw meshes
         for(int i=0; i<objects->size();i++)
         {
-            if(objects->at(i)->name() == "ship")
+            if(objects->at(i)->name() == "ship"){
                 if(i != 0)
                     ((ship*)this->objects->at(i))->draw(this->camera);
                 else
                     this->objects->at(i)->draw();
+            }
         }
     }
 }
@@ -410,7 +430,7 @@ void openGLRender::spawnEnemies()
         while(this->objects->size() < 5)
         {
             //qDebug()<<"spawnEnemies";
-            this->push(new ship("../battleships/obj/shipboat2.obj",false));
+            this->push(new ship(this->ships,false));
 
             ((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
             //this->push(new ship("../battleships/obj/tetrahedron.obj"));
@@ -477,7 +497,7 @@ void openGLRender::removeDestroyedObjects()
             if (i != 0)
             {
                 qDebug()<<"object:" <<i <<"is destroyed";
-                ((openGLMesh*)this->objects->at(i))->deleteMesh();
+                //((openGLMesh*)this->objects->at(i))->deleteMesh();
                 delete ((openGLMesh*)this->objects->at(i));
                 this->objects->removeAt(i);
             }

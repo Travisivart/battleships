@@ -1,5 +1,6 @@
 #include "window.h"
 #include "ui_window.h"
+#include "tutor/glm.h"
 
 Window::Window(QOpenGLWidget *parent) :
     QMainWindow(parent),
@@ -17,9 +18,9 @@ Window::Window(QOpenGLWidget *parent) :
 
     //Sets an idle function to run after 1000 milliseconds
     QTimer::singleShot(1000, this, SLOT(doWorkInIdle()));
-
+    GLMmodel* playership=openGLRender::load("../battleships/obj/shipboat2.obj");
     //Load player model
-    this->ui->openGLRenderWindow->push(new ship("../battleships/obj/shipboat2.obj",true));
+    this->ui->openGLRenderWindow->push(new ship(playership,true));
     ((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
 }
 
@@ -27,6 +28,25 @@ Window::~Window()
 {
     delete ui;
 }
+
+// GLMmodel* Window::loadplayer(QString filename)
+// {
+//     GLMmodel *mesh;
+//     qDebug()<<"ship::load(QString filename)";
+//     //Make sure that we are actually trying to load an existing file.
+//     if (filename != "")
+//     {
+//         //If something is already loaded into the mesh, then delete it.
+//         //if ( mesh != NULL )
+//         //deleteMesh();
+
+//         QByteArray ba = filename.toLatin1();
+//         char *c_str2 = ba.data();
+
+//         mesh = glmReadOBJ(c_str2);
+//     }
+//     return mesh;
+// }
 
 void Window::awake()
 {

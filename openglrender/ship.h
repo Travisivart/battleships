@@ -5,14 +5,14 @@
 #include "boundingbox.h"
 #include "openglmesh.h"
 #include "math.h"
-//#include "tutor/glm.h"
+//#include "../tutor/glm.h"
 class openGLMesh;
 
 class ship : public openGLMesh
 {
 public:
     ship();
-    ship(const QString newFilename,bool player);
+    ship(GLMmodel* ship,bool player);
     ~ship();
 
     //Set methods
@@ -35,7 +35,7 @@ public:
     GLfloat* getScaling();
 
     //Load an object into memory from filename.
-    void load(QString filename);
+    //void load(QString filename);
 
     //Delete the mesh if one has been loaded.
     void deleteMesh();

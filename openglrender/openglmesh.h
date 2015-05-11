@@ -5,7 +5,7 @@
 #include "boundingbox.h"
 
 #include "math.h"
-//#include "tutor/glm.h"
+#include "tutor/glm.h"
 
 class openGLMesh : public openGLObject
 {
@@ -60,8 +60,8 @@ public:
     float v;
 
 protected:
-    GLMmodel *mesh;
 
+    GLMmodel *mesh;
     boundingBox box;
 
     GLfloat translation[3];

@@ -67,7 +67,7 @@ openGLMesh::openGLMesh(const QString newFilename)
 
 openGLMesh::~openGLMesh()
 {
-    delete this->mesh;
+    //delete this->mesh;
 }
 
 void openGLMesh::translate(GLfloat newX, GLfloat newY, GLfloat newZ)

@@ -15,6 +15,7 @@
 #include "openglmesh.h"
 #include "ship.h"
 #include "openglcamera.h"
+#include "../tutor/glm.h"
 
 #define GAME_MODE 0
 #define MENU_MODE 1
@@ -95,6 +96,9 @@ public:
 
     void checkCollisions();
 
+    static GLMmodel* load(QString filename);
+
+    GLMmodel *ships;
 protected:
 
     // void paintGL();
