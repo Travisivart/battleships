@@ -176,6 +176,13 @@ void openGLRender::initializeGL(){
     bitmapData = LoadBitmapFile("../battleships/tga/water2.bmp", &bitmapInfoHeader);
     bitmapData2 = LoadBitmapFile("../battleships/tga/skybox.bmp", &bitmapInfoHeader2);
 
+    //Bind the textures
+    glGenTextures(1, &texture); // generate texture object
+    glBindTexture(GL_TEXTURE_2D, texture); // enable our texture object
+
+    glGenTextures(1, &texture2); // generate texture object
+    glBindTexture(GL_TEXTURE_2D, texture2); // enable our texture object
+
 }
 
 void openGLRender::paintGL(){
@@ -196,12 +203,6 @@ void openGLRender::paintGL(){
     glEnable(GL_DEPTH_TEST); // hidden surface removal
     glEnable(GL_CULL_FACE); // do not calculate inside of poly's
     glFrontFace(GL_CCW); // counter clock-wise polygons are out
-
-    glGenTextures(1, &texture); // generate texture object
-    glBindTexture(GL_TEXTURE_2D, texture); // enable our texture object
-
-    glGenTextures(1, &texture2); // generate texture object
-    glBindTexture(GL_TEXTURE_2D, texture2); // enable our texture object
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
