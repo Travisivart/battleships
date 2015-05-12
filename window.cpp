@@ -18,6 +18,8 @@ Window::Window(QOpenGLWidget *parent) :
 
     //Sets an idle function to run after 1000 milliseconds
     QTimer::singleShot(1000, this, SLOT(doWorkInIdle()));
+
+    //GLMmodel* playership=openGLRender::load("../battleships/obj/shipboat3.obj");
     GLMmodel* playership=openGLRender::load("../battleships/obj/Shipboatsmall.obj");
     //Load player model
     this->ui->openGLRenderWindow->push(new ship(playership,true));
@@ -1241,7 +1243,7 @@ void Window::on_cameraZoomSlider_valueChanged(int value)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho((float)(-value), (float)value, (float)(-value), (float)(value) , (float)(-value), (float)(value));
+    glOrtho((float)(-value), (float)value, (float)(-value), (float)(value) , -50, 50);
     //glOrtho((float)(-value), (float)value, (float)(-value), (float)(value), (float)(-value), (float)(value));
 
     //glOrtho(-0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0.5f);
