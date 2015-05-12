@@ -2533,10 +2533,10 @@
         </rect>
        </property>
        <property name="minimum">
-        <number>-45</number>
+        <number>-360</number>
        </property>
        <property name="maximum">
-        <number>45</number>
+        <number>360</number>
        </property>
        <property name="singleStep">
         <number>1</number>
@@ -2555,10 +2555,10 @@
         </rect>
        </property>
        <property name="minimum">
-        <number>-45</number>
+        <number>-360</number>
        </property>
        <property name="maximum">
-        <number>45</number>
+        <number>360</number>
        </property>
        <property name="singleStep">
         <number>1</number>
@@ -2690,10 +2690,10 @@
         </rect>
        </property>
        <property name="minimum">
-        <number>10</number>
+        <number>1</number>
        </property>
        <property name="maximum">
-        <number>50</number>
+        <number>40</number>
        </property>
        <property name="singleStep">
         <number>1</number>
