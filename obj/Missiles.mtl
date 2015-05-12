@@ -1,0 +1,22 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl None
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.007542 0.007542 0.007542
+Ks 0.349091 0.349091 0.349091
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Convidado.Cliente-JMF-PC\Desktop\untitl55555555555555ed.png
+
+newmtl None_untitl55555555555555ed.png.001
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.509259 0.000000
+Ks 0.800000 0.800000 0.800000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Convidado.Cliente-JMF-PC\Desktop\Missile MBDA Meteor\Textures\untitl55555555555555ed.png
