@@ -116,28 +116,28 @@ GLMmodel* openGLRender::load(QString filename)
 
 void openGLRender::initializeGL(){
 
-    // float ambientLight[] = { 1, 1, 1, 1.0 };
-    // float specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
-    // float specularity[] = { 1.0, 1.0, 1.0, 1.0 };
-    // float emission[]={0.3, 0.3, 0.3, 1.0};
-    // float shininess[] = { 60.0 };
-    // float lightPosition[] = { 0.0, 0.0, 10.0, 1.0 };
-    // glEnable(GL_LIGHTING);
-    // glEnable(GL_LIGHT0);
-    // // glColorMaterial ( GL_FRONT, GL_EMISSION ) ;
-    // // glEnable ( GL_COLOR_MATERIAL ) ;
-    // glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, emission ) ;
-    // glMaterialfv(GL_FRONT, GL_SPECULAR, specularity); // Reflectance
-    // glMaterialfv(GL_FRONT, GL_SHININESS, shininess); // Shininess
+    float ambientLight[] = { 1, 1, 1, 1.0 };
+    float specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
+    float specularity[] = { 1.0, 1.0, 1.0, 1.0 };
+    float emission[]={0.3, 0.3, 0.3, 1.0};
+    float shininess[] = { 60.0 };
+    float lightPosition[] = { 0.0, 0.0, 10.0, 1.0 };
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    // glColorMaterial ( GL_FRONT, GL_EMISSION ) ;
+    // glEnable ( GL_COLOR_MATERIAL ) ;
+    glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, emission ) ;
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specularity); // Reflectance
+    glMaterialfv(GL_FRONT, GL_SHININESS, shininess); // Shininess
 
-    // // Enable ambient light usage
-    // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+    // Enable ambient light usage
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
-    // glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    // glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-    // // Position of the light source
-    // glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    // Position of the light source
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     
     glMatrixMode(GL_MODELVIEW);
 

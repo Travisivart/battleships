@@ -60,7 +60,7 @@ void projectile::draw()
     //glLoadIdentity();
 
     //glTranslatef(0, 0, 0);
-	if(this->translation[2]>100){
+	if(this->translation[1]>20 && this->translation[0]>20){
 		//qDebug()<<"missile translation"<<this->translation[2];
 		this->mesh=NULL;
 	}
