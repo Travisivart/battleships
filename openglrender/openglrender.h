@@ -121,6 +121,7 @@ private:
     QList<quint32> *inputQueue;
 
     unsigned char* bitmapData; // the texture data
+    unsigned char* bitmapData2;
 };
 
 #endif // OPENGLRENDER_H

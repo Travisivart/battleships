@@ -3,7 +3,9 @@
 //Loads Bitmap into memory and Loads it
 ////// Texture Information
 BITMAPINFOHEADER bitmapInfoHeader; // bitmap info header
+BITMAPINFOHEADER bitmapInfoHeader2; // bitmap info header
 unsigned int texture; // the texture object
+unsigned int texture2; // the texture object
 WORD BITMAP_ID = 19778;
 
 
@@ -98,7 +100,7 @@ openGLRender::~openGLRender()
 GLMmodel* openGLRender::load(QString filename)
 {
     GLMmodel *mesh;
-    qDebug()<<"ship::load(QString filename)";
+    //qDebug()<<"ship::load(QString filename)";
     //Make sure that we are actually trying to load an existing file.
     if (filename != "")
     {
@@ -172,6 +174,7 @@ void openGLRender::initializeGL(){
     // load our bitmap file
     //QDir dir; qDebug()<< dir.absolutePath()<<flush;
     bitmapData = LoadBitmapFile("../battleships/tga/water2.bmp", &bitmapInfoHeader);
+    bitmapData2 = LoadBitmapFile("../battleships/tga/skybox.bmp", &bitmapInfoHeader2);
 
 }
 
@@ -197,6 +200,9 @@ void openGLRender::paintGL(){
     glGenTextures(1, &texture); // generate texture object
     glBindTexture(GL_TEXTURE_2D, texture); // enable our texture object
 
+    glGenTextures(1, &texture2); // generate texture object
+    glBindTexture(GL_TEXTURE_2D, texture2); // enable our texture object
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
@@ -207,6 +213,36 @@ void openGLRender::paintGL(){
     glTexCoord2f(40.0f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
     glTexCoord2f(40.0f, 40.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
     glTexCoord2f(0.0f, 40.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glEnd();
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader2.biWidth, bitmapInfoHeader2.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData2);
+    glBegin(GL_QUADS); // front face
+    glTexCoord2f(0.75390625f, 0.24609375f); glVertex3f(20.0f, 20.0f, 20.0f);
+    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-20.0f, 20.0f, 20.0f);
+    glTexCoord2f(0.24609375f, 0.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
+    glTexCoord2f(0.75390625f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
+
+    glTexCoord2f(0.75390625f, 0.24609375f); glVertex3f(20.0f, 20.0f, 20.0f);
+    glTexCoord2f(1.0f, 0.24609375f); glVertex3f(20.0f, 20.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.75390625f); glVertex3f(20.0f, -20.0f, 0.0f);
+    glTexCoord2f(0.75390625f, 0.75390625f); glVertex3f(20.0f, -20.0f, 20.0f);
+
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(20.0f, -20.0f, 00.0f);
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(-20.0f, -20.0f, 20.0f);
+
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(-20.0f, 20.0f, 20.0f);
+
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, 20.0f, 20.0f);
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(20.0f, -20.0f, 20.0f);
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(-20.0f, -20.0f, 20.0f);
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(-20.0f, 20.0f, 20.0f);
+
+
     glEnd();
 
     /* //Draw 2d ui overlay
@@ -260,7 +296,7 @@ void openGLRender::draw(){
         {
             if(objects->at(i)->name() == "ship"){
                 if(i != 0)
-                    ((ship*)this->objects->at(i))->draw(this->camera);
+                    ((ship*)this->objects->at(i))->draw();
                 else
                     this->objects->at(i)->draw();
             }
