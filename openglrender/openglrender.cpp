@@ -227,7 +227,7 @@ void openGLRender::paintGL(){
     glTexCoord2f(1.0f, 0.75390625f); glVertex3f(20.0f, -20.0f, 0.0f);
     glTexCoord2f(0.75390625f, 0.75390625f); glVertex3f(20.0f, -20.0f, 20.0f);
 
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.24609375f, 0.75390625f); glVertex3f(20.0f, -20.0f, 20.0f);
     glTexCoord2f(0.0f, 1.0f); glVertex3f(20.0f, -20.0f, 00.0f);
     glTexCoord2f(1.0f, 1.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
     glTexCoord2f(1.0f, 0.0f); glVertex3f(-20.0f, -20.0f, 20.0f);
