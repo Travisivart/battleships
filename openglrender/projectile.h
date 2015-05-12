@@ -8,6 +8,7 @@
 #define PROJECTILE_H
 
 #include "openglobject.h"
+#include "../tutor/glm.h"
 
 class projectile : public openGLObject
 {
@@ -22,12 +23,22 @@ public:
     //Get methods
     GLfloat getVelocity();
     GLfloat getAcceleration();
+    void changemesh(GLMmodel* missile,GLfloat translation[3], GLfloat rotation[3]);
+    void draw();
+
 
     QString name();
 
 protected:
     GLfloat velocity;
     GLfloat acceleration;
+    GLMmodel* mesh;
+
+
+
+    GLfloat translation[3];
+    GLfloat rotation[3];
+    GLfloat scaling[3];
 };
 
 #endif // PROJECTILE_H

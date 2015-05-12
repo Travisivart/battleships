@@ -1,4 +1,5 @@
 #include "ship.h"
+#include "openglrender.h"
 #include <QDebug>
 
 ship::ship()
@@ -53,7 +54,9 @@ ship::ship(GLMmodel* ship,bool player)
     //#define GLM_MATERIAL (1 << 4)		/* render with materials */
     this->mode = GLM_MATERIAL;
     this->mesh=ship;
+    this->missilemesh = openGLRender::load("../battleships/obj/Missiles.obj");
    // this->filename = newFilename;
+    this->missile=new projectile();
 
     //qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
     //this->load(this->filename);
@@ -186,6 +189,7 @@ QString ship::getFilename()
 
 void ship::attack()
 {
+   this->missile->changemesh(this->missilemesh,this->translation,this->rotation);
 
 }
 
@@ -254,6 +258,7 @@ void ship::update(const int &msec)
 
 void ship::draw()
 {
+    this->missile->draw();
     glPushMatrix();
 
     //glLoadIdentity();
@@ -294,7 +299,6 @@ void ship::draw(openGLCamera *c)
 
     //Perform scaling
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
-
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
     this->box.checkCollision(this->mesh, this->mesh);
     glPopMatrix();

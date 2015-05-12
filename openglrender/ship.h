@@ -5,8 +5,10 @@
 #include "boundingbox.h"
 #include "openglmesh.h"
 #include "math.h"
+#include "projectile.h"
 //#include "../tutor/glm.h"
 class openGLMesh;
+class projectile;
 
 class ship : public openGLMesh
 {
@@ -57,6 +59,7 @@ public:
 
     //Returns the object's name
     QString name();
+    projectile* missile;
 
     float v;
 
@@ -66,6 +69,7 @@ protected:
     
 private:
     float acceleration, velocity,angle;
+    GLMmodel *missilemesh;
 
 };
 
