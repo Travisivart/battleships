@@ -20,7 +20,7 @@ void openGLCamera::init()
 {
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat mat_shininess[] = { 50.0 };
-    GLfloat light0_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat light0_ambient[] = { 5.0, 5.0, 5.0, 5.0 };
     GLfloat light0_diffuse[] = { 10.0, 10.0, 10.0, 10.0 };
     GLfloat light0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat light0_position[] = { 1.0, 1.0, 1.0, 0.0 };
