@@ -56,13 +56,8 @@ ship::ship(GLMmodel* ship,bool player)
     this->mode = GLM_MATERIAL;
     this->mesh=ship;
     this->missilemesh = openGLRender::load("../battleships/obj/Missiles.obj");
-<<<<<<< HEAD
     // this->filename = newFilename;
     this->missile=new projectile();
-=======
-   // this->filename = newFilename;
-    //this->missile=new projectile();
->>>>>>> origin/master
 
     //qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
     //this->load(this->filename);
@@ -195,11 +190,7 @@ QString ship::getFilename()
 
 void ship::attack()
 {
-<<<<<<< HEAD
     this->missile->changemesh(this->missilemesh,this->translation,this->rotation);
-=======
-   //openGLRender::spawnMissile(this->missilemesh,getTranslation(),getRotation());
->>>>>>> origin/master
 
 }
 
@@ -309,7 +300,6 @@ void ship::draw()
     //Perform scaling
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
 
-<<<<<<< HEAD
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
 
 
@@ -355,16 +345,6 @@ void ship::draw()
     glVertex3f(minx, miny ,maxz);
 
     glEnd();
-=======
-    //Return to original position
-    //glTranslatef(0.0,0.0,0.0);
-    glRotatef(90, 1.0,0.0,0.0);
-    glRotatef(180, 0.0,1.0,0.0);
-    glmDraw(this->mesh,this->mode, GL_TRIANGLES);
-
-//    glDisable(GL_LIGHTING);
-  //  glEnable(GL_LIGHTING);
->>>>>>> origin/master
 
     glPopMatrix();
 }
