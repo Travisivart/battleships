@@ -7,7 +7,7 @@
 
 #include "openglcamera.h"
 
-#define OGLWIDTH 950
+#define OGLWIDTH 1520
 #define OGLHEIGHT 700
 
 #define TRAVDEBUG FALSE
