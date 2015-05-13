@@ -9,7 +9,9 @@
 
 #include "openglobject.h"
 #include "../tutor/glm.h"
+#include "boundingbox.h"
 
+class boundingbox;
 class projectile : public openGLObject
 {
 public:
@@ -26,6 +28,9 @@ public:
     void changemesh(GLMmodel* missile,GLfloat translation[3], GLfloat rotation[3]);
     void draw();
 
+    boundingBox getBox();
+
+
 
     QString name();
 
@@ -33,6 +38,8 @@ protected:
     GLfloat velocity;
     GLfloat acceleration;
     GLMmodel* mesh;
+    
+    boundingBox box;
 
 
 

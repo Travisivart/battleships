@@ -40,6 +40,8 @@ QString projectile::name()
 
 void projectile::changemesh(GLMmodel* missile, GLfloat translation[3], GLfloat rotation[3]){
 	this->mesh=missile;
+	this->getBox().calculateBox(this->mesh);
+    //this->box.calculateBox(this->mesh);
 	this->translation[0] = translation[0];
     this->translation[1] = translation[1];
     this->translation[2] = translation[2];
@@ -78,8 +80,16 @@ void projectile::draw()
     //glTranslatef(0.0,0.0,0.0);
     // glRotatef(90, 1.0,0.0,0.0);
     // glRotatef(180, 0.0,1.0,0.0);
-    if(this->mesh!=NULL)
+    if(this->mesh!=NULL){
     	glmDraw(this->mesh,GLM_MATERIAL, GL_TRIANGLES);
+    	this->box.checkCollision(this->mesh, this->mesh);
+    }
     //qDebug()<<"draw missile";
     glPopMatrix();
+}
+
+
+boundingBox projectile::getBox()
+{
+    return this->box;
 }

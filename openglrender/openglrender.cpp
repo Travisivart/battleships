@@ -479,7 +479,10 @@ void openGLRender::update(const int &msec)
         if(this->objects->at(i)->name() == "ship")
             ((ship*)this->objects->at(i))->update(msec);
 }
+//void openGLRender::spawnMissile(projectile missile){
+//    this->push(missile);
 
+//}
 void openGLRender::spawnEnemies()
 {
     float transX, transY;
@@ -499,8 +502,8 @@ void openGLRender::spawnEnemies()
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            transX = (float)(qrand()%30+70)/10;
-            transY = (float)(qrand()%30+70)/10;
+            transX = (float)(qrand()%10);
+            transY = (float)(qrand()%10);
             //rotZ = (float)(qrand()%100+5)/10;
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
