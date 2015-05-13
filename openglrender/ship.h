@@ -63,13 +63,13 @@ public:
 
     float v;
 
+    GLMmodel *missilemesh;
 
 protected:
     bool player;
     
 private:
     float acceleration, velocity,angle;
-    GLMmodel *missilemesh;
 
 };
 

@@ -25,6 +25,7 @@ ship::ship()
     this->mode = GLM_MATERIAL;
 
     mesh = NULL;
+    this->missilemesh=NULL;
 
     this->destructible = true;
     this->alive = true;
@@ -56,7 +57,7 @@ ship::ship(GLMmodel* ship,bool player)
     this->mesh=ship;
     this->missilemesh = openGLRender::load("../battleships/obj/Missiles.obj");
    // this->filename = newFilename;
-    this->missile=new projectile();
+    //this->missile=new projectile();
 
     //qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
     //this->load(this->filename);
@@ -189,7 +190,7 @@ QString ship::getFilename()
 
 void ship::attack()
 {
-   this->missile->changemesh(this->missilemesh,this->translation,this->rotation);
+   //openGLRender::spawnMissile(this->missilemesh,getTranslation(),getRotation());
 
 }
 
@@ -283,7 +284,6 @@ void ship::draw()
     glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    this->missile->draw();
 
     //glLoadIdentity();
     //glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 0.0);

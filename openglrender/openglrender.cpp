@@ -80,8 +80,9 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
     this->objects = new QList<openGLObject*>();
-    this->ships = load("../battleships/obj/Shipboatsmall1.obj");
-    //this->models = new QList<GLMmodel*>();
+    this->ships = load("../battleships/obj/Shipboatsmall.obj");
+    this->missilemesh = load("../battleships/obj/Missiles.obj");    //this->models = new QList<GLMmodel*>();
+
     this->selectedObj = -1;
 
     this->inputQueue = new QList<quint32>();
@@ -300,6 +301,9 @@ void openGLRender::draw(){
                 else
                     this->objects->at(i)->draw();
             }
+            else if(objects->at(i)->name()=="projectile"){
+                ((projectile*)this->objects->at(i))->draw();
+            }
         }
     }
 }
@@ -411,8 +415,7 @@ void openGLRender::processInput()
             case 32:
                 //Create a projectile
                 //qDebug()<<"Create projectile";
-                o = this->objects->at(0);
-                ((ship*)o)->attack();
+               this->spawnMissile();
                 break;
 
                 //Left arrow key
@@ -479,10 +482,12 @@ void openGLRender::update(const int &msec)
         if(this->objects->at(i)->name() == "ship")
             ((ship*)this->objects->at(i))->update(msec);
 }
-//void openGLRender::spawnMissile(projectile missile){
-//    this->push(missile);
+void openGLRender::spawnMissile(){
+    openGLObject *o;
+    o = this->objects->at(0);
+   this->push(new projectile(this->missilemesh,((ship*)o)->getTranslation(),((ship*)o)->getRotation()));
 
-//}
+}
 void openGLRender::spawnEnemies()
 {
     float transX, transY;

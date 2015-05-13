@@ -16,6 +16,8 @@ class projectile : public openGLObject
 {
 public:
     projectile();
+    projectile(GLMmodel* mesh,GLfloat *translation, GLfloat *rotation);
+
     virtual ~projectile();
 
     //Set methods

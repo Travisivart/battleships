@@ -6,7 +6,21 @@ projectile::projectile()
 {
 	this->mesh=NULL;
 }
+projectile::projectile(GLMmodel* mesh,GLfloat *translation,GLfloat *rotation){
+	this->mesh=mesh;
+	this->getBox().calculateBox(this->mesh);
+    //this->box.calculateBox(this->mesh);
+	this->translation[0] = translation[0];
+    this->translation[1] = translation[1];
+    this->translation[2] = translation[2];
 
+    this->rotation[0] = rotation[0];
+    this->rotation[1] = rotation[1];
+    this->rotation[2] = rotation[2];
+    this->scaling[0] = .2f;
+    this->scaling[1] = .2f;
+    this->scaling[2] = .2f;
+}
 projectile::~projectile()
 {
 
