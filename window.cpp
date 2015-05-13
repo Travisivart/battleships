@@ -126,6 +126,10 @@ void Window::keyReleaseEvent(QKeyEvent *ev)
         this->ui->openGLRenderWindow->popInput(ev->key());
     }
 }
+void Window::wheelEvent(QWheelEvent *ev)
+{
+    ui->cameraZoomSlider->setValue(ui->cameraZoomSlider->value() - ev->delta()/120);
+}
 
 void Window::mouseMoveEvent(QMouseEvent *ev)
 {
@@ -1243,7 +1247,7 @@ void Window::on_cameraZoomSlider_valueChanged(int value)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho((float)(-value), (float)value, (float)(-value), (float)(value) , -50, 50);
+    glOrtho((float)(-value), (float)value, (float)(-value), (float)(value) , -500, 500);
     //glOrtho((float)(-value), (float)value, (float)(-value), (float)(value), (float)(-value), (float)(value));
 
     //glOrtho(-0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0.5f);
