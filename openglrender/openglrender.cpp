@@ -173,7 +173,7 @@ void openGLRender::initializeGL(){
     glEnable(GL_TEXTURE_2D); // enable 2D texturing
     // load our bitmap file
     //QDir dir; qDebug()<< dir.absolutePath()<<flush;
-    bitmapData = LoadBitmapFile("../battleships/tga/water2.bmp", &bitmapInfoHeader);
+    bitmapData = LoadBitmapFile("../battleships/tga/water4.bmp", &bitmapInfoHeader);
     bitmapData2 = LoadBitmapFile("../battleships/tga/skybox.bmp", &bitmapInfoHeader2);
 
     //Bind the textures
@@ -211,9 +211,9 @@ void openGLRender::paintGL(){
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
     glBegin(GL_QUADS); // front face
     glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 0.0f);
-    glTexCoord2f(40.0f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
-    glTexCoord2f(40.0f, 40.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
-    glTexCoord2f(0.0f, 40.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glTexCoord2f(10.0f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
+    glTexCoord2f(10.0f, 10.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
+    glTexCoord2f(0.0f, 10.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
     glEnd();
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader2.biWidth, bitmapInfoHeader2.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData2);
