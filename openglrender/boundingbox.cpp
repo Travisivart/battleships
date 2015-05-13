@@ -1,4 +1,5 @@
 #include "boundingbox.h"
+#include "../tutor/glm.h"
 
 boundingBox::boundingBox()
 {
@@ -58,15 +59,32 @@ void boundingBox::calculateBox(GLMmodel *mesh)
     this->maxY = mesh->vertices[3*i + 1];
     this->maxZ = mesh->vertices[3*i + 2];
 
+    //qDebug()<<"numgroups: " <<mesh->numgroups;
+    //for(int j = 1; j <2; j++)
+        for( i = 2; i<= mesh->numvertices; i++)
+        {
+            //qDebug()<<mesh->vertices[3*i + 0] <<mesh->vertices[3*i + 1] <<mesh->vertices[3*i + 2];
 
-    for( i = 2; i<= mesh->numvertices; i++)
-    {
-        //qDebug()<<mesh->vertices[3*i + 0] <<mesh->vertices[3*i + 1] <<mesh->vertices[3*i + 2];
+            minX > mesh->vertices[3*i + 0] ? minX = mesh->vertices[3*i + 0] : maxX < mesh->vertices[3*i + 0] ? maxX = mesh->vertices[3*i + 0] : maxX;
+            minY > mesh->vertices[3*i + 1] ? minY = mesh->vertices[3*i + 1] : maxY < mesh->vertices[3*i + 1] ? maxY = mesh->vertices[3*i + 1] : maxY;
+            minZ > mesh->vertices[3*i + 2] ? minZ = mesh->vertices[3*i + 2] : maxZ < mesh->vertices[3*i + 2] ? maxZ = mesh->vertices[3*i + 2] : maxZ;
+        }
+    /*static GLMgroup* group = mesh->groups;
+    static GLMtriangle* triangle;
 
-        minX > mesh->vertices[3*i + 0] ? minX = mesh->vertices[3*i + 0] : maxX < mesh->vertices[3*i + 0] ? maxX = mesh->vertices[3*i + 0] : maxX;
-        minY > mesh->vertices[3*i + 1] ? minY = mesh->vertices[3*i + 1] : minY < mesh->vertices[3*i + 1] ? maxY = mesh->vertices[3*i + 1] : maxY;
-        minZ > mesh->vertices[3*i + 2] ? minZ = mesh->vertices[3*i + 2] : minZ < mesh->vertices[3*i + 2] ? maxZ = mesh->vertices[3*i + 2] : maxZ;
-    }
+    while (group) {
+        for (i = 0; i < group->numtriangles; i++) {
+
+            //triangle = &T(group->triangles[i]);
+            //group->triangles[i]
+            mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 1];
+            //glVertex3fv(&model->vertices[3 * triangle->vindices[2]]);
+            minX > mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 0] ? minX = mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 0] : minX < mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 0] ? maxX = mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 0] : maxX;
+            minY > mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 1] ? minY = mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 1] : minY < mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 1] ? maxY = mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 1] : maxY;
+            minZ > mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 2] ? minZ = mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 2] : minZ < mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 2] ? maxZ = mesh->vertices[3 *((GLMtriangle*)group->triangles[i])->vindices[2] + 2] : maxZ;
+        }
+        group = group->next;
+    }*/
     //qDebug()<<"minx" <<this->minX;
     //qDebug()<<"minY" <<this->minY;
     //qDebug()<<"minZ" <<this->minZ;

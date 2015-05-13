@@ -241,6 +241,24 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
     float* myScale = this->getScaling();
     float* otherScale = otherMesh->getScaling();
 
+    float myMinX, myMinY, myMinZ, myMaxX, myMaxY, myMaxZ;
+    float otherMinX, otherMinY, otherMinZ, otherMaxX, otherMaxY, otherMaxZ;
+
+    myMinX = myScale[0]*this->box.getMinX() + myTrans[0];
+    myMinY = myScale[1]*this->box.getMinY() + myTrans[1];
+    myMaxX = myScale[0]*this->box.getMaxX() + myTrans[0];
+    myMaxY = myScale[1]*this->box.getMaxY() + myTrans[1];
+
+    otherMinX = otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0];
+    otherMinY = otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1];
+    otherMaxX = otherScale[0]*otherMesh->getBox().getMaxX() + otherTrans[0];
+    otherMaxY = otherScale[1]*otherMesh->getBox().getMaxY() + otherTrans[1];
+
+    //this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+    //this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+    //qDebug()<<"Rotation:" <<myRot[2] <<cos(myRot[2]*3.14159265/180)*myMaxX + sin(myRot[2]*3.14159265/180)*myMaxY <<"myMaxY" <<cos(myRot[2]*3.14159265/180)*myMaxY - sin(myRot[2]*3.14159265/180)*myMaxX;
+    //qDebug()<<"otMinX" << otherMinX <<"otMaxX" <<otherMaxX;
+
     //this->translation[0] -= ((3.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
     //this->translation[1] += ((3.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
 
@@ -252,14 +270,24 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
     //qDebug()<<"Ot Real minX: " <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] <<"Ot Real maxX: " <<otherScale[0]*otherMesh->getBox().getMaxX() + otherTrans[0];
 
 
-    if (myScale[0]*this->box.getMinX() + myTrans[0] <= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] && myScale[0]*this->box.getMaxX() +myTrans[0] >= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0])
+    if (myMinX <= otherMinX && myMaxX >= otherMinX || myMinX <= otherMaxX && myMaxX >= otherMaxX)
+    {
+        if (myMinY <= otherMinY && myMaxY >= otherMinY || myMinY <= otherMaxY && myMaxY >= otherMaxY)
+        {
+            collisionFlag = true;
+        }
+
+    }
+
+    /*  Currently used:
+     *     if (myScale[0]*this->box.getMinX() + myTrans[0] <= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] && myScale[0]*this->box.getMaxX() +myTrans[0] >= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0])
     {
         if (myScale[1]*this->box.getMinY() + myTrans[1] <= otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1] && myScale[1]*this->box.getMaxY() +myTrans[1] >= otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1])
         {
             collisionFlag = true;
         }
 
-    }
+    }*/
 
     /* Original without Rotation
     if (myScale[0]*this->box.getMinX() + myTrans[0] <= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] && myScale[0]*this->box.getMaxX() +myTrans[0] >= otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0])
