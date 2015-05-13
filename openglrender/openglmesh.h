@@ -5,7 +5,7 @@
 #include "boundingbox.h"
 
 #include "math.h"
-#include "tutor/glm.h"
+#include "../tutor/glm.h"
 
 class openGLMesh : public openGLObject
 {

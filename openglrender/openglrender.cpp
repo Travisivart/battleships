@@ -80,7 +80,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
     this->objects = new QList<openGLObject*>();
-    this->ships = load("../battleships/obj/Shipboatsmall.obj");
+    this->ships = load("../battleships/obj/Shipboatsmall1.obj");
     //this->models = new QList<GLMmodel*>();
     this->selectedObj = -1;
 
@@ -118,28 +118,28 @@ GLMmodel* openGLRender::load(QString filename)
 
 void openGLRender::initializeGL(){
 
-    float ambientLight[] = { 1, 1, 1, 1.0 };
-    float specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
-    float specularity[] = { 1.0, 1.0, 1.0, 1.0 };
-    float emission[]={0.3, 0.3, 0.3, 1.0};
-    float shininess[] = { 60.0 };
-    float lightPosition[] = { 0.0, 0.0, 10.0, 1.0 };
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    // float ambientLight[] = { 1, 1, 1, 1.0 };
+    // float specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
+    // float specularity[] = { 1.0, 1.0, 1.0, 1.0 };
+    // float emission[]={0.3, 0.3, 0.3, 1.0};
+    // float shininess[] = { 60.0 };
+    // float lightPosition[] = { 0.0, 0.0, 10.0, 1.0 };
+    // glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHT0);
     // glColorMaterial ( GL_FRONT, GL_EMISSION ) ;
     // glEnable ( GL_COLOR_MATERIAL ) ;
-    glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, emission ) ;
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specularity); // Reflectance
-    glMaterialfv(GL_FRONT, GL_SHININESS, shininess); // Shininess
+    // glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, emission ) ;
+    // glMaterialfv(GL_FRONT, GL_SPECULAR, specularity); // Reflectance
+    // glMaterialfv(GL_FRONT, GL_SHININESS, shininess); // Shininess
 
-    // Enable ambient light usage
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+    // // Enable ambient light usage
+    // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+    // glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    // glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-    // Position of the light source
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    // // Position of the light source
+    // glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     
     glMatrixMode(GL_MODELVIEW);
 
@@ -176,6 +176,13 @@ void openGLRender::initializeGL(){
     bitmapData = LoadBitmapFile("../battleships/tga/water2.bmp", &bitmapInfoHeader);
     bitmapData2 = LoadBitmapFile("../battleships/tga/skybox.bmp", &bitmapInfoHeader2);
 
+    //Bind the textures
+    glGenTextures(1, &texture); // generate texture object
+    glBindTexture(GL_TEXTURE_2D, texture); // enable our texture object
+
+    glGenTextures(1, &texture2); // generate texture object
+    glBindTexture(GL_TEXTURE_2D, texture2); // enable our texture object
+
 }
 
 void openGLRender::paintGL(){
@@ -197,12 +204,6 @@ void openGLRender::paintGL(){
     glEnable(GL_CULL_FACE); // do not calculate inside of poly's
     glFrontFace(GL_CCW); // counter clock-wise polygons are out
 
-    glGenTextures(1, &texture); // generate texture object
-    glBindTexture(GL_TEXTURE_2D, texture); // enable our texture object
-
-    glGenTextures(1, &texture2); // generate texture object
-    glBindTexture(GL_TEXTURE_2D, texture2); // enable our texture object
-
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
@@ -217,31 +218,30 @@ void openGLRender::paintGL(){
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader2.biWidth, bitmapInfoHeader2.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData2);
     glBegin(GL_QUADS); // front face
-    glTexCoord2f(0.75390625f, 0.24609375f); glVertex3f(20.0f, 20.0f, 20.0f);
+    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(20.0f, 20.0f, 20.0f);
     glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-20.0f, 20.0f, 20.0f);
     glTexCoord2f(0.24609375f, 0.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
-    glTexCoord2f(0.75390625f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
+    glTexCoord2f(0.7529296875f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
 
-    glTexCoord2f(0.75390625f, 0.24609375f); glVertex3f(20.0f, 20.0f, 20.0f);
+    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(20.0f, 20.0f, 20.0f);
     glTexCoord2f(1.0f, 0.24609375f); glVertex3f(20.0f, 20.0f, 0.0f);
-    glTexCoord2f(1.0f, 0.75390625f); glVertex3f(20.0f, -20.0f, 0.0f);
-    glTexCoord2f(0.75390625f, 0.75390625f); glVertex3f(20.0f, -20.0f, 20.0f);
+    glTexCoord2f(1.0f, 0.7529296875f); glVertex3f(20.0f, -20.0f, 0.0f);
+    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(20.0f, -20.0f, 20.0f);
 
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 20.0f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(20.0f, -20.0f, 00.0f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(-20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.7529296875f, 1.0f); glVertex3f(20.0f, -20.0f, 0.0f);
+    glTexCoord2f(0.24609375f, 1.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-20.0f, -20.0f, 20.0f);
 
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-20.0f, -20.0f, 20.0f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(-20.0f, 20.0f, 20.0f);
+    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.0f, 0.7529296875f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.24609375f); glVertex3f(-20.0f, 20.0f, 0.0f);
+    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-20.0f, 20.0f, 20.0f);
 
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, 20.0f, 20.0f);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(20.0f, -20.0f, 20.0f);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(-20.0f, -20.0f, 20.0f);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(-20.0f, 20.0f, 20.0f);
-
+    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(20.0f, 20.0f, 20.0f);
+    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-20.0f, -20.0f, 20.0f);
+    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-20.0f, 20.0f, 20.0f);
 
     glEnd();
 
