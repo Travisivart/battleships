@@ -103,6 +103,50 @@ void projectile::draw()
     	//this->box.checkCollision(this->mesh, this->mesh);
     }
     //qDebug()<<"draw missile";
+
+    glBegin(GL_LINES);
+    float minx = this->getBox().getMinX();
+    float miny = this->getBox().getMinY();
+    float minz = this->getBox().getMinZ();
+    float maxx = this->getBox().getMaxX();
+    float maxy = this->getBox().getMaxY();
+    float maxz = this->getBox().getMaxZ();
+
+    //Draw bottom square
+    glVertex3f(minx, miny ,minz);
+    glVertex3f(minx, maxy ,minz);
+    glVertex3f(minx, maxy ,minz);
+    glVertex3f(maxx, maxy ,minz);
+    glVertex3f(maxx, maxy ,minz);
+    glVertex3f(maxx, miny ,minz);
+    glVertex3f(maxx, miny ,minz);
+    glVertex3f(minx, miny ,minz);
+
+    //Draw vertical lines
+    glVertex3f(minx, miny ,minz);
+    glVertex3f(minx, miny ,maxz);
+    glVertex3f(minx, maxy ,minz);
+    glVertex3f(minx, maxy ,maxz);
+    glVertex3f(maxx, maxy ,minz);
+    glVertex3f(maxx, maxy ,maxz);
+    glVertex3f(maxx, miny ,minz);
+    glVertex3f(maxx, miny ,maxz);
+
+    //Draw top square
+    glVertex3f(minx, miny ,maxz);
+    glVertex3f(minx, maxy ,maxz);
+
+    glVertex3f(minx, maxy ,maxz);
+    glVertex3f(maxx, maxy ,maxz);
+
+    glVertex3f(maxx, maxy ,maxz);
+    glVertex3f(maxx, miny ,maxz);
+
+    glVertex3f(maxx, miny ,maxz);
+    glVertex3f(minx, miny ,maxz);
+
+    glEnd();
+
     glPopMatrix();
 }
 
