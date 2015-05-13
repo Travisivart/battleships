@@ -65,9 +65,9 @@ void projectile::changemesh(GLMmodel* missile, GLfloat translation[3], GLfloat r
     this->rotation[0] = rotation[0];
     this->rotation[1] = rotation[1];
     this->rotation[2] = rotation[2];
-    this->scaling[0] = .2f;
-    this->scaling[1] = .2f;
-    this->scaling[2] = .2f;
+    this->scaling[0] = .1f;
+    this->scaling[1] = .1f;
+    this->scaling[2] = .1f;
 }
 
 
@@ -78,7 +78,7 @@ void projectile::draw()
     //glLoadIdentity();
 
     //glTranslatef(0, 0, 0);
-	if((this->translation[1]>20 || this->translation[0]>20 || this->translation[1]<-20 || this->translation[0]<-20) ){
+	if((this->translation[1]>100 || this->translation[0]>100 || this->translation[1]<-100 || this->translation[0]<-100) ){
 		qDebug()<<"destroy missile";
 		this->mesh=NULL;
         openGLObject::destroy();
