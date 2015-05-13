@@ -16,6 +16,7 @@
 #include "ship.h"
 #include "openglcamera.h"
 #include "../tutor/glm.h"
+#include "projectile.h"
 
 #define GAME_MODE 0
 #define MENU_MODE 1
@@ -86,6 +87,7 @@ public:
     void update(const int &msec);
 
     //Spawn enemies around the map
+    void spawnMissile();
     void spawnEnemies();
 
     //Delete destroyed objects
@@ -99,6 +101,7 @@ public:
     static GLMmodel* load(QString filename);
 
     GLMmodel *ships;
+    GLMmodel *missilemesh;
 protected:
 
     // void paintGL();
@@ -122,6 +125,8 @@ private:
 
     unsigned char* bitmapData; // the texture data
     unsigned char* bitmapData2;
+
+    QTime delay;
 };
 
 #endif // OPENGLRENDER_H

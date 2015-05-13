@@ -25,6 +25,7 @@ ship::ship()
     this->mode = GLM_MATERIAL;
 
     mesh = NULL;
+    this->missilemesh=NULL;
 
     this->destructible = true;
     this->alive = true;
@@ -55,8 +56,13 @@ ship::ship(GLMmodel* ship,bool player)
     this->mode = GLM_MATERIAL;
     this->mesh=ship;
     this->missilemesh = openGLRender::load("../battleships/obj/Missiles.obj");
+<<<<<<< HEAD
     // this->filename = newFilename;
     this->missile=new projectile();
+=======
+   // this->filename = newFilename;
+    //this->missile=new projectile();
+>>>>>>> origin/master
 
     //qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
     //this->load(this->filename);
@@ -189,7 +195,11 @@ QString ship::getFilename()
 
 void ship::attack()
 {
+<<<<<<< HEAD
     this->missile->changemesh(this->missilemesh,this->translation,this->rotation);
+=======
+   //openGLRender::spawnMissile(this->missilemesh,getTranslation(),getRotation());
+>>>>>>> origin/master
 
 }
 
@@ -259,11 +269,37 @@ void ship::update(const int &msec)
 
 void ship::draw()
 {
-    this->missile->draw();
-    glPushMatrix();
+
+
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = { 100.0 };
+
+   //GLfloat global_ambient[]={}
+
+    GLfloat light0_ambient[] = { 1,1,1, 1.0 };
+    GLfloat light0_diffuse[] = { 0.0, 0.0, 0.0, 1.0 };
+    GLfloat light0_specular[] = { 10.0, 10.0, 10.0, 1.0 };
+    GLfloat light0_position[4];
+    light0_position[0] = this->translation[0];
+    light0_position[1] = this->translation[1];
+    light0_position[2] = this->translation[2]-15;
+    light0_position[3] = 0;
+
+    //light0_position[2]+=5;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
+    // glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+    // glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 
     //glLoadIdentity();
-
+    //glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 0.0);
+    //glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION,this->translation);
+    
+    glPushMatrix();
     glTranslatef(this->translation[0], this->translation[1], this->translation[2]);
 
     glRotatef(this->rotation[0], 1.0f, 0.0f, 0.0f);
@@ -273,6 +309,7 @@ void ship::draw()
     //Perform scaling
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
 
+<<<<<<< HEAD
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
 
 
@@ -318,6 +355,16 @@ void ship::draw()
     glVertex3f(minx, miny ,maxz);
 
     glEnd();
+=======
+    //Return to original position
+    //glTranslatef(0.0,0.0,0.0);
+    glRotatef(90, 1.0,0.0,0.0);
+    glRotatef(180, 0.0,1.0,0.0);
+    glmDraw(this->mesh,this->mode, GL_TRIANGLES);
+
+//    glDisable(GL_LIGHTING);
+  //  glEnable(GL_LIGHTING);
+>>>>>>> origin/master
 
     glPopMatrix();
 }
@@ -334,7 +381,7 @@ void ship::draw(openGLCamera *c)
 
     //Perform scaling
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
-    glmDraw(this->mesh,this->mode, GL_TRIANGLES);
+    glmDraw(this->mesh,GLM_COLOR, GL_TRIANGLES);
     this->box.checkCollision(this->mesh, this->mesh);
     glPopMatrix();
 }

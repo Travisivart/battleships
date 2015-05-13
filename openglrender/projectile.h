@@ -9,11 +9,15 @@
 
 #include "openglobject.h"
 #include "../tutor/glm.h"
+#include "boundingbox.h"
 
+class boundingbox;
 class projectile : public openGLObject
 {
 public:
     projectile();
+    projectile(GLMmodel* mesh,GLfloat *translation, GLfloat *rotation);
+
     virtual ~projectile();
 
     //Set methods
@@ -26,6 +30,13 @@ public:
     void changemesh(GLMmodel* missile,GLfloat translation[3], GLfloat rotation[3]);
     void draw();
 
+    boundingBox getBox();
+    bool isAlive();
+    bool isDescructable();
+    void destroy();
+
+
+
 
     QString name();
 
@@ -33,12 +44,16 @@ protected:
     GLfloat velocity;
     GLfloat acceleration;
     GLMmodel* mesh;
+    
+    boundingBox box;
 
 
 
     GLfloat translation[3];
     GLfloat rotation[3];
     GLfloat scaling[3];
+    // bool destructible;
+    // bool alive;
 };
 
 #endif // PROJECTILE_H

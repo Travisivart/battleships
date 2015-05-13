@@ -6,7 +6,23 @@ projectile::projectile()
 {
 	this->mesh=NULL;
 }
+projectile::projectile(GLMmodel* mesh,GLfloat *translation,GLfloat *rotation){
+	this->mesh=mesh;
+	//this->getBox().calculateBox(this->mesh);
+    this->box.calculateBox(this->mesh);
+	this->translation[0] = translation[0];
+    this->translation[1] = translation[1];
+    this->translation[2] = translation[2];
 
+    this->rotation[0] = rotation[0];
+    this->rotation[1] = rotation[1];
+    this->rotation[2] = rotation[2];
+    this->scaling[0] = .2f;
+    this->scaling[1] = .2f;
+    this->scaling[2] = .2f;
+    this->destructible=true;
+    this->alive=true;
+}
 projectile::~projectile()
 {
 
@@ -40,6 +56,8 @@ QString projectile::name()
 
 void projectile::changemesh(GLMmodel* missile, GLfloat translation[3], GLfloat rotation[3]){
 	this->mesh=missile;
+	this->getBox().calculateBox(this->mesh);
+    //this->box.calculateBox(this->mesh);
 	this->translation[0] = translation[0];
     this->translation[1] = translation[1];
     this->translation[2] = translation[2];
@@ -60,9 +78,11 @@ void projectile::draw()
     //glLoadIdentity();
 
     //glTranslatef(0, 0, 0);
-	if(this->translation[1]>20 && this->translation[0]>20){
+	if((this->translation[1]>20 && this->translation[0]>20 && this->translation[1]<-20 && this->translation[0]<-20) ){
 		//qDebug()<<"missile translation"<<this->translation[2];
 		this->mesh=NULL;
+        openGLObject::destroy();
+        openGLObject::destroy();
 	}
 	else
     	glTranslatef(this->translation[0] -= ((0.5f )*sin(this->rotation[2]*3.14159265/180)), this->translation[1] += ((0.5f)*cos(this->rotation[2]*3.14159265/180)), this->translation[2]);
@@ -78,8 +98,25 @@ void projectile::draw()
     //glTranslatef(0.0,0.0,0.0);
     // glRotatef(90, 1.0,0.0,0.0);
     // glRotatef(180, 0.0,1.0,0.0);
-    if(this->mesh!=NULL)
+    if(this->mesh!=NULL){
     	glmDraw(this->mesh,GLM_MATERIAL, GL_TRIANGLES);
+    	//this->box.checkCollision(this->mesh, this->mesh);
+    }
     //qDebug()<<"draw missile";
     glPopMatrix();
+}
+
+
+boundingBox projectile::getBox()
+{
+    return this->box;
+}
+
+
+bool projectile::isAlive(){
+	return this->alive;
+}
+
+bool projectile::isDescructable(){
+	return this->destructible;
 }

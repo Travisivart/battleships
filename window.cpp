@@ -20,7 +20,7 @@ Window::Window(QOpenGLWidget *parent) :
     QTimer::singleShot(1000, this, SLOT(doWorkInIdle()));
 
     //GLMmodel* playership=openGLRender::load("../battleships/obj/shipboat3.obj");
-    GLMmodel* playership=openGLRender::load("../battleships/obj/Shipboatsmall.obj");
+    GLMmodel* playership=openGLRender::load("../battleships/obj/Shipboatsmall1.obj");
     //Load player model
     this->ui->openGLRenderWindow->push(new ship(playership,true));
     ((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);

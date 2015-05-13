@@ -50,9 +50,9 @@ public:
 
     bool checkCollision(openGLMesh *otherMesh);
 
-    bool isDescructable();
-    void destroy();
-    bool isAlive();
+    // bool isDescructable();
+    // void destroy();
+    // bool isAlive();
 
     //Returns the object's name
     QString name();
@@ -74,8 +74,8 @@ protected:
     //The location of the .obj file
     QString filename;
 
-    bool destructible;
-    bool alive;
+    // bool destructible;
+    // bool alive;
 };
 
 #endif // OPENGLMESH_H

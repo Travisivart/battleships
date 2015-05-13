@@ -325,6 +325,7 @@ glmReadMTL(GLMmodel* model, char* name)
 
     /* now, read in the data */
     nummaterials = 0;
+    GLfloat test[] = {0,0,0};
     while(fscanf(file, "%s", buf) != EOF) {
         switch(buf[0]) {
         case '#':				/* comment */

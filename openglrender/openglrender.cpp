@@ -81,7 +81,8 @@ openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuf
 {
     this->objects = new QList<openGLObject*>();
     this->ships = load("../battleships/obj/Shipboatsmall.obj");
-    //this->models = new QList<GLMmodel*>();
+    this->missilemesh = load("../battleships/obj/Missiles.obj");    //this->models = new QList<GLMmodel*>();
+    this->delay.start();
     this->selectedObj = -1;
 
     this->inputQueue = new QList<quint32>();
@@ -118,28 +119,28 @@ GLMmodel* openGLRender::load(QString filename)
 
 void openGLRender::initializeGL(){
 
-    float ambientLight[] = { 1, 1, 1, 1.0 };
-    float specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
-    float specularity[] = { 1.0, 1.0, 1.0, 1.0 };
-    float emission[]={0.3, 0.3, 0.3, 1.0};
-    float shininess[] = { 60.0 };
-    float lightPosition[] = { 0.0, 0.0, 10.0, 1.0 };
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+    // float ambientLight[] = { 1, 1, 1, 1.0 };
+    // float specularLight[] = { 1.0, 1.0, 1.0, 1.0 };
+    // float specularity[] = { 1.0, 1.0, 1.0, 1.0 };
+    // float emission[]={0.3, 0.3, 0.3, 1.0};
+    // float shininess[] = { 60.0 };
+    // float lightPosition[] = { 0.0, 0.0, 10.0, 1.0 };
+    // glEnable(GL_LIGHTING);
+    // glEnable(GL_LIGHT0);
     // glColorMaterial ( GL_FRONT, GL_EMISSION ) ;
     // glEnable ( GL_COLOR_MATERIAL ) ;
-    glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, emission ) ;
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specularity); // Reflectance
-    glMaterialfv(GL_FRONT, GL_SHININESS, shininess); // Shininess
+    // glMaterialfv( GL_FRONT_AND_BACK, GL_EMISSION, emission ) ;
+    // glMaterialfv(GL_FRONT, GL_SPECULAR, specularity); // Reflectance
+    // glMaterialfv(GL_FRONT, GL_SHININESS, shininess); // Shininess
 
-    // Enable ambient light usage
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+    // // Enable ambient light usage
+    // glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+    // glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    // glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
-    // Position of the light source
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    // // Position of the light source
+    // glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     
     glMatrixMode(GL_MODELVIEW);
 
@@ -276,7 +277,7 @@ void openGLRender::draw(){
                 if(((openGLPolygon*)objects->at(i))->isFinished())
                     ((openGLPolygon*)objects->at(i))->drawFilled();
 
-            if(objects->at(i)->name() != "openGLPolygon" && objects->at(i)->name() != "ship")
+            if(objects->at(i)->name() != "openGLPolygon" && objects->at(i)->name() != "ship" && objects->at(i)->name() != "projectile")
                 objects->at(i)->draw();
         }
 
@@ -299,6 +300,9 @@ void openGLRender::draw(){
                     ((ship*)this->objects->at(i))->draw();
                 else
                     this->objects->at(i)->draw();
+            }
+            else if(objects->at(i)->name()=="projectile"){
+                ((projectile*)this->objects->at(i))->draw();
             }
         }
     }
@@ -411,8 +415,11 @@ void openGLRender::processInput()
             case 32:
                 //Create a projectile
                 //qDebug()<<"Create projectile";
-                o = this->objects->at(0);
-                ((ship*)o)->attack();
+
+                if(this->delay.elapsed()>1000){
+                    this->spawnMissile();
+                    this->delay.restart();
+                }
                 break;
 
                 //Left arrow key
@@ -479,7 +486,12 @@ void openGLRender::update(const int &msec)
         if(this->objects->at(i)->name() == "ship")
             ((ship*)this->objects->at(i))->update(msec);
 }
+void openGLRender::spawnMissile(){
+    openGLObject *o;
+    o = this->objects->at(0);
+   this->push(new projectile(this->missilemesh,((ship*)o)->getTranslation(),((ship*)o)->getRotation()));
 
+}
 void openGLRender::spawnEnemies()
 {
     float transX, transY;
@@ -499,8 +511,8 @@ void openGLRender::spawnEnemies()
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            transX = (float)(qrand()%30+70)/10;
-            transY = (float)(qrand()%30+70)/10;
+            transX = (float)(qrand()%10);
+            transY = (float)(qrand()%10);
             //rotZ = (float)(qrand()%100+5)/10;
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
@@ -535,11 +547,17 @@ void openGLRender::checkCollisions()
                 //If there is a collision between objects i and j then do something (destroy both objects)
                 if(((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) ))
                 {
-                    qDebug()<<"Collision between objects:" <<i <<"and" <<j;
-                    if( ((openGLMesh*)this->objects->at(i))->isDescructable())
-                        ((openGLMesh*)this->objects->at(i))->destroy();
-                    if( ((openGLMesh*)this->objects->at(j))->isDescructable())
-                        ((openGLMesh*)this->objects->at(j))->destroy();
+                    if((this->objects->at(i)->name()=="projectile" || this->objects->at(j)->name()=="projectile")&& (i==0||j==0)){
+                        qDebug()<<"skipped";
+                        break;
+                    }
+                    else{
+                        qDebug()<<"Collision between objects:" <<i <<"and" <<j;
+                        if( (this->objects->at(i))->isDescructable())
+                            (this->objects->at(i))->destroy();
+                        if( (this->objects->at(j))->isDescructable())
+                            (this->objects->at(j))->destroy();
+                    }
                 }
 
             }
@@ -551,13 +569,13 @@ void openGLRender::removeDestroyedObjects()
 {
     for(int i=0; i< this->objects->size(); i++)
     {
-        if(!((openGLMesh*)this->objects->at(i))->isAlive())
+        if(!(this->objects->at(i))->isAlive())
         {
             if (i != 0)
             {
                 qDebug()<<"object:" <<i <<"is destroyed";
                 //((openGLMesh*)this->objects->at(i))->deleteMesh();
-                delete ((openGLMesh*)this->objects->at(i));
+                delete (this->objects->at(i));
                 this->objects->removeAt(i);
             }
         }
