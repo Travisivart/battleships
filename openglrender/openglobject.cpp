@@ -44,3 +44,20 @@ void openGLObject::setDebug(const bool &d)
 {
     debug = d;
 }
+
+
+bool openGLObject::isDescructable()
+{
+    return this->destructible;
+}
+
+void openGLObject::destroy()
+{
+    this->alive = false;
+    qDebug()<<"object destroyed";
+    return;
+}
+bool openGLObject::isAlive()
+{
+    return this->alive;
+}

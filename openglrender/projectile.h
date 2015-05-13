@@ -31,6 +31,10 @@ public:
     void draw();
 
     boundingBox getBox();
+    bool isAlive();
+    bool isDescructable();
+    void destroy();
+
 
 
 
@@ -48,6 +52,8 @@ protected:
     GLfloat translation[3];
     GLfloat rotation[3];
     GLfloat scaling[3];
+    // bool destructible;
+    // bool alive;
 };
 
 #endif // PROJECTILE_H

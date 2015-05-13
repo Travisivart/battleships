@@ -30,10 +30,16 @@ public:
     void setCurrent(const bool &newCurrent);
 
     void setDebug(const bool &d);
+    bool isDescructable();
+    bool isAlive();
+    void destroy();
+
 
 protected:
     bool current;
     bool debug;
+    bool destructible;
+    bool alive;
 };
 
 #endif // OPENGLOBJECT_H

@@ -82,7 +82,7 @@ openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuf
     this->objects = new QList<openGLObject*>();
     this->ships = load("../battleships/obj/Shipboatsmall.obj");
     this->missilemesh = load("../battleships/obj/Missiles.obj");    //this->models = new QList<GLMmodel*>();
-
+    this->delay.start();
     this->selectedObj = -1;
 
     this->inputQueue = new QList<quint32>();
@@ -277,7 +277,7 @@ void openGLRender::draw(){
                 if(((openGLPolygon*)objects->at(i))->isFinished())
                     ((openGLPolygon*)objects->at(i))->drawFilled();
 
-            if(objects->at(i)->name() != "openGLPolygon" && objects->at(i)->name() != "ship")
+            if(objects->at(i)->name() != "openGLPolygon" && objects->at(i)->name() != "ship" && objects->at(i)->name() != "projectile")
                 objects->at(i)->draw();
         }
 
@@ -415,7 +415,11 @@ void openGLRender::processInput()
             case 32:
                 //Create a projectile
                 //qDebug()<<"Create projectile";
-               this->spawnMissile();
+
+                if(this->delay.elapsed()>1000){
+                    this->spawnMissile();
+                    this->delay.restart();
+                }
                 break;
 
                 //Left arrow key
@@ -543,11 +547,17 @@ void openGLRender::checkCollisions()
                 //If there is a collision between objects i and j then do something (destroy both objects)
                 if(((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) ))
                 {
-                    qDebug()<<"Collision between objects:" <<i <<"and" <<j;
-                    if( ((openGLMesh*)this->objects->at(i))->isDescructable())
-                        ((openGLMesh*)this->objects->at(i))->destroy();
-                    if( ((openGLMesh*)this->objects->at(j))->isDescructable())
-                        ((openGLMesh*)this->objects->at(j))->destroy();
+                    if((this->objects->at(i)->name()=="projectile" || this->objects->at(j)->name()=="projectile")&& (i==0||j==0)){
+                        qDebug()<<"skipped";
+                        break;
+                    }
+                    else{
+                        qDebug()<<"Collision between objects:" <<i <<"and" <<j;
+                        if( (this->objects->at(i))->isDescructable())
+                            (this->objects->at(i))->destroy();
+                        if( (this->objects->at(j))->isDescructable())
+                            (this->objects->at(j))->destroy();
+                    }
                 }
 
             }
@@ -559,13 +569,13 @@ void openGLRender::removeDestroyedObjects()
 {
     for(int i=0; i< this->objects->size(); i++)
     {
-        if(!((openGLMesh*)this->objects->at(i))->isAlive())
+        if(!(this->objects->at(i))->isAlive())
         {
             if (i != 0)
             {
                 qDebug()<<"object:" <<i <<"is destroyed";
                 //((openGLMesh*)this->objects->at(i))->deleteMesh();
-                delete ((openGLMesh*)this->objects->at(i));
+                delete (this->objects->at(i));
                 this->objects->removeAt(i);
             }
         }

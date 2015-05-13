@@ -125,6 +125,8 @@ private:
 
     unsigned char* bitmapData; // the texture data
     unsigned char* bitmapData2;
+
+    QTime delay;
 };
 
 #endif // OPENGLRENDER_H
