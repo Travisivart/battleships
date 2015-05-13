@@ -55,13 +55,13 @@ ship::ship(GLMmodel* ship,bool player)
     this->mode = GLM_MATERIAL;
     this->mesh=ship;
     this->missilemesh = openGLRender::load("../battleships/obj/Missiles.obj");
-   // this->filename = newFilename;
+    // this->filename = newFilename;
     this->missile=new projectile();
 
     //qDebug()<<"ship::ship(const QString newFilename)" <<"Attempting file load";
     //this->load(this->filename);
 
-    qDebug()<<"Calculating bounding box";
+    //qDebug()<<"Calculating bounding box";
     this->getBox().calculateBox(this->mesh);
     this->box.calculateBox(this->mesh);
     //qDebug()<<"MaxX: " <<box.getMaxX();
@@ -80,20 +80,20 @@ ship::~ship()
 }
 
 float ship::getVelocity(){
-	return this->velocity;
+    return this->velocity;
 }
 
 void ship::increaseAcceleration(){
     
-    if(velocity<.11)
-        velocity+=.004;
+    if(velocity<.11f)
+        velocity+=.004f;
 }
 
 void ship::decreaseAcceleration(){
-    if(this->velocity>0.003)
-        velocity-=.003;
+    if(this->velocity>0.003f)
+        velocity-=.003f;
     else
-        this->velocity=0;
+        this->velocity=0.0f;
 
 }
 
@@ -189,13 +189,14 @@ QString ship::getFilename()
 
 void ship::attack()
 {
-   this->missile->changemesh(this->missilemesh,this->translation,this->rotation);
+    this->missile->changemesh(this->missilemesh,this->translation,this->rotation);
 
 }
 
 void ship::update(const int &msec)
 {
     float bounce=-.01f;
+    bounce = 0.0f;
     int trigger=0;
 
     //qDebug()<<"Ship update";
@@ -203,23 +204,23 @@ void ship::update(const int &msec)
     //qDebug()<<"velocity: " <<velocity+(float)(rand()%3-1)/3;
     if(player){
         if(trigger%10==0){
-            if(rand()%2>0)
-                bounce=.01f;
-            else
-                bounce=-.01f;
+            //if(rand()%2>0)
+            //    bounce=.01f;
+            //else
+            //    bounce=-.01f;
         }
-            this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
-            //this->translation[1] += 1.0f * msec/1000;
-            this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
-            //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
-            bounce=0;
-            trigger++;
+        this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+        //this->translation[1] += 1.0f * msec/1000;
+        this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+        //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+        bounce=0;
+        trigger++;
     }
     else{
         if(this->translation[1]>20){
             qDebug()<<"ship out of bounds";
             qDebug()<<"random number between 90-270"<< rand()%178+91;
-             rotate(rotation[0], rotation[1], 0);
+            rotate(rotation[0], rotation[1], 0);
             rotate(rotation[0], rotation[1], rand()%178+90);
             translate(translation[0],19,translation[2]);
 
@@ -235,7 +236,7 @@ void ship::update(const int &msec)
         }
         if(this->translation[0]<-20){
             qDebug()<<"ship out of bounds";
-             rotate(rotation[0], rotation[1], 0);
+            rotate(rotation[0], rotation[1], 0);
             rotate(rotation[0], rotation[1], rand()%178+181);
             translate(-19,translation[1],translation[2]);
 
@@ -248,7 +249,7 @@ void ship::update(const int &msec)
 
 
         }
-       
+
         this->translation[0] -= ((0.5f * msec/100)*sin(this->rotation[2]*3.14159265/180));
         //this->translation[1] += 1.0f * msec/1000;
         this->translation[1] += ((0.5f * msec/100)*cos(this->rotation[2]*3.14159265/180));
@@ -272,12 +273,51 @@ void ship::draw()
     //Perform scaling
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
 
-    //Return to original position
-    //glTranslatef(0.0,0.0,0.0);
-    glRotatef(90, 1.0,0.0,0.0);
-    glRotatef(180, 0.0,1.0,0.0);
-
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
+
+
+    glBegin(GL_LINES);
+    float minx = this->getBox().getMinX();
+    float miny = this->getBox().getMinY();
+    float minz = this->getBox().getMinZ();
+    float maxx = this->getBox().getMaxX();
+    float maxy = this->getBox().getMaxY();
+    float maxz = this->getBox().getMaxZ();
+
+    //Draw bottom square
+    glVertex3f(minx, miny ,minz);
+    glVertex3f(minx, maxy ,minz);
+    glVertex3f(minx, maxy ,minz);
+    glVertex3f(maxx, maxy ,minz);
+    glVertex3f(maxx, maxy ,minz);
+    glVertex3f(maxx, miny ,minz);
+    glVertex3f(maxx, miny ,minz);
+    glVertex3f(minx, miny ,minz);
+
+    //Draw vertical lines
+    glVertex3f(minx, miny ,minz);
+    glVertex3f(minx, miny ,maxz);
+    glVertex3f(minx, maxy ,minz);
+    glVertex3f(minx, maxy ,maxz);
+    glVertex3f(maxx, maxy ,minz);
+    glVertex3f(maxx, maxy ,maxz);
+    glVertex3f(maxx, miny ,minz);
+    glVertex3f(maxx, miny ,maxz);
+
+    //Draw top square
+    glVertex3f(minx, miny ,maxz);
+    glVertex3f(minx, maxy ,maxz);
+
+    glVertex3f(minx, maxy ,maxz);
+    glVertex3f(maxx, maxy ,maxz);
+
+    glVertex3f(maxx, maxy ,maxz);
+    glVertex3f(maxx, miny ,maxz);
+
+    glVertex3f(maxx, miny ,maxz);
+    glVertex3f(minx, miny ,maxz);
+
+    glEnd();
 
     glPopMatrix();
 }
@@ -291,11 +331,6 @@ void ship::draw(openGLCamera *c)
     glRotatef(this->rotation[0] + c->getRotation()[0], 1.0f, 0.0f, 0.0f);
     glRotatef(this->rotation[1] + c->getRotation()[1], 0.0f, 1.0f, 0.0f);
     glRotatef(this->rotation[2] + c->getRotation()[2], 0.0f, 0.0f, 1.0f);
-
-    //Return to original position
-    //glTranslatef(0.0,0.0,0.0);
-    glRotatef(90, 1.0,0.0,0.0);
-    glRotatef(180, 0.0,1.0,0.0);
 
     //Perform scaling
     glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
