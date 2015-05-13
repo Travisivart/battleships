@@ -1,8 +1,9 @@
 #ifndef OPENGLMESH_H
 #define OPENGLMESH_H
 
-#include "openglobject.h"
+#include "openglmesh.h"
 #include "boundingbox.h"
+#include "openglobject.h"
 
 #include "math.h"
 #include "../tutor/glm.h"
