@@ -18,22 +18,30 @@ openGLCamera::~openGLCamera()
 
 void openGLCamera::init()
 {
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat mat_shininess[] = { 50.0 };
-    GLfloat light0_ambient[] = { 5.0, 5.0, 5.0, 5.0 };
-    GLfloat light0_diffuse[] = { 10.0, 10.0, 10.0, 10.0 };
-    GLfloat light0_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat light0_position[] = { 10.0, 10.0, 10.0, 0.0 };
+    GLfloat mat_specular[] = { 0.508273f, 0.508273f, 0.508273f, 1.0f };
+    GLfloat mat_shininess[] = { 0.4 };
+    GLfloat light0_ambient[] = { 0.19225f, 0.19225f, 0.19225f, 1.0f };
+    GLfloat light0_diffuse[] = { 0.50754f, 0.50754f, 0.50754f, 1.0f };
+    GLfloat light0_specular[] = { 0.508273f, 0.508273f, 0.508273f, 1.0 };
+    GLfloat light0_position[] = { 10.0, 10.0, -10.0, 0.0 };
+    GLfloat light1_position[] = { -10.0, -10.0, 10.0, 0.0 };
 
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, light0_ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, light0_diffuse);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
     glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
     glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
     glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, light0_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light0_diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, light0_specular);
+    glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
 
 }
 
