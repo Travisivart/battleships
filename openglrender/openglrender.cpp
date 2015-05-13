@@ -163,7 +163,11 @@ void openGLRender::initializeGL(){
     glMatrixMode(GL_PROJECTION);
     //glLoadIdentity();
 
+<<<<<<< HEAD
     glOrtho(-43.428f, 43.428f, -20.0f, 20.0f, -500.0f, 500.0f);
+=======
+    glOrtho(-100.0f, 100.0f, -100.0f, 100.0f, -500.0f, 500.0f);
+>>>>>>> origin/master
 
     //glMatrixMode(GL_MODELVIEW);
     //glLoadIdentity();
@@ -555,9 +559,9 @@ void openGLRender::checkCollisions()
                 //qDebug()<<"Checking for collision at:" <<i <<"and" <<j;
                 //If there is a collision between objects i and j then do something (destroy both objects)
                 if(((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) ))
-                {
-                    if((this->objects->at(i)->name()=="projectile" || this->objects->at(j)->name()=="projectile")&& (i==0||j==0)){
-                        qDebug()<<"skipped";
+                {   qDebug()<<this->objects->at(i)->name();
+                    if((this->objects->at(i)->name()=="projectile" || this->objects->at(j)->name()=="projectile")&& (i==0)){
+                        qDebug()<<i<<"skipped"<<j;
                         break;
                     }
                     else{

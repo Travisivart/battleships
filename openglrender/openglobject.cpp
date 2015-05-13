@@ -61,3 +61,4 @@ bool openGLObject::isAlive()
 {
     return this->alive;
 }
+

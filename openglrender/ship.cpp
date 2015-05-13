@@ -218,6 +218,7 @@ void ship::update(const int &msec)
         trigger++;
     }
     else{
+<<<<<<< HEAD
         if(this->translation[1]>200){
             //qDebug()<<"ship out of bounds";
             //qDebug()<<"random number between 90-270"<< rand()%178+91;
@@ -247,13 +248,44 @@ void ship::update(const int &msec)
             rotate(rotation[0], rotation[1], 0);
             rotate(rotation[0], rotation[1], rand()%178-90);
             translate(translation[0],-199,translation[2]);
+=======
+        if(this->translation[1]>100){
+            qDebug()<<"ship out of bounds";
+            qDebug()<<"random number between 90-270"<< rand()%178+91;
+            rotate(rotation[0], rotation[1], 0);
+            rotate(rotation[0], rotation[1], rand()%178+90);
+            translate(translation[0],translation[1]-1,translation[2]);
+
+
+        }
+        if(this->translation[0]>100){
+            qDebug()<<"ship out of bounds";
+            rotate(rotation[0], rotation[1], 0);
+            rotate(rotation[0], rotation[1], rand()%178+1);
+            translate(translation[0]-1,translation[1],translation[2]);
+
+
+        }
+        if(this->translation[0]<-100){
+            qDebug()<<"ship out of bounds";
+            rotate(rotation[0], rotation[1], 0);
+            rotate(rotation[0], rotation[1], rand()%178+181);
+            translate(translation[0]+1,translation[1],translation[2]);
+
+        }
+        if(this->translation[1]<-100){
+            qDebug()<<"ship out of bounds";
+            rotate(rotation[0], rotation[1], 0);
+            rotate(rotation[0], rotation[1], rand()%178-90);
+            translate(translation[0],translation[1]+1,translation[2]);
+>>>>>>> origin/master
 
 
         }
 
-        this->translation[0] -= ((0.5f * msec/100)*sin(this->rotation[2]*3.14159265/180));
+        this->translation[0] -= ((10.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
         //this->translation[1] += 1.0f * msec/1000;
-        this->translation[1] += ((0.5f * msec/100)*cos(this->rotation[2]*3.14159265/180));
+        this->translation[1] += ((10.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
         //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
     }
 }
@@ -262,29 +294,29 @@ void ship::draw()
 {
 
 
-    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-    GLfloat mat_shininess[] = { 100.0 };
+   //  GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+   //  GLfloat mat_shininess[] = { 100.0 };
 
-   //GLfloat global_ambient[]={}
+   // //GLfloat global_ambient[]={}
 
-    GLfloat light0_ambient[] = { 1,1,1, 1.0 };
-    GLfloat light0_diffuse[] = { 0.0, 0.0, 0.0, 1.0 };
-    GLfloat light0_specular[] = { 10.0, 10.0, 10.0, 1.0 };
-    GLfloat light0_position[4];
-    light0_position[0] = this->translation[0];
-    light0_position[1] = this->translation[1];
-    light0_position[2] = this->translation[2]-15;
-    light0_position[3] = 0;
+   //  GLfloat light0_ambient[] = { 1,1,1, 1.0 };
+   //  GLfloat light0_diffuse[] = { 0.0, 0.0, 0.0, 1.0 };
+   //  GLfloat light0_specular[] = { 10.0, 10.0, 10.0, 1.0 };
+   //  GLfloat light0_position[4];
+   //  light0_position[0] = this->translation[0];
+   //  light0_position[1] = this->translation[1];
+   //  light0_position[2] = this->translation[2]-15;
+   //  light0_position[3] = 0;
 
-    //light0_position[2]+=5;
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
-    // glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
-    // glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-    glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
+   //  //light0_position[2]+=5;
+   //  glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+   //  glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+   //  glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
+   //  // glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+   //  // glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
+   //  glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+   //  glEnable(GL_LIGHTING);
+   //  glEnable(GL_LIGHT0);
 
     //glLoadIdentity();
     //glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 0.0);

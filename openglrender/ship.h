@@ -8,7 +8,7 @@
 #include "projectile.h"
 //#include "../tutor/glm.h"
 class openGLMesh;
-class projectile;
+// class projectile;
 
 class ship : public openGLMesh
 {

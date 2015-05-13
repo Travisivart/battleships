@@ -7,7 +7,7 @@ projectile::projectile()
 	this->mesh=NULL;
 }
 projectile::projectile(GLMmodel* mesh,GLfloat *translation,GLfloat *rotation){
-	this->mesh=mesh;
+    this->mesh=mesh;
 	//this->getBox().calculateBox(this->mesh);
     this->box.calculateBox(this->mesh);
 	this->translation[0] = translation[0];
@@ -65,9 +65,9 @@ void projectile::changemesh(GLMmodel* missile, GLfloat translation[3], GLfloat r
     this->rotation[0] = rotation[0];
     this->rotation[1] = rotation[1];
     this->rotation[2] = rotation[2];
-    this->scaling[0] = .2f;
-    this->scaling[1] = .2f;
-    this->scaling[2] = .2f;
+    this->scaling[0] = .1f;
+    this->scaling[1] = .1f;
+    this->scaling[2] = .1f;
 }
 
 
@@ -78,11 +78,11 @@ void projectile::draw()
     //glLoadIdentity();
 
     //glTranslatef(0, 0, 0);
-	if((this->translation[1]>20 && this->translation[0]>20 && this->translation[1]<-20 && this->translation[0]<-20) ){
-		//qDebug()<<"missile translation"<<this->translation[2];
+	if((this->translation[1]>100 || this->translation[0]>100 || this->translation[1]<-100 || this->translation[0]<-100) ){
+		qDebug()<<"destroy missile";
 		this->mesh=NULL;
         openGLObject::destroy();
-        openGLObject::destroy();
+        //openGLObject::destroy();
 	}
 	else
     	glTranslatef(this->translation[0] -= ((0.5f )*sin(this->rotation[2]*3.14159265/180)), this->translation[1] += ((0.5f)*cos(this->rotation[2]*3.14159265/180)), this->translation[2]);
@@ -151,16 +151,16 @@ void projectile::draw()
 }
 
 
-boundingBox projectile::getBox()
-{
-    return this->box;
-}
+//boundingBox projectile::getBox()
+//{
+//    return this->box;
+//}
 
 
-bool projectile::isAlive(){
-	return this->alive;
-}
+//bool projectile::isAlive(){
+//	return this->alive;
+//}
 
-bool projectile::isDescructable(){
-	return this->destructible;
-}
+//bool projectile::isDescructable(){
+//	return this->destructible;
+//}

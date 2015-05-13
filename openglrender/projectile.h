@@ -8,11 +8,14 @@
 #define PROJECTILE_H
 
 #include "openglobject.h"
+#include "openglmesh.h"
 #include "../tutor/glm.h"
 #include "boundingbox.h"
 
-class boundingbox;
-class projectile : public openGLObject
+// class boundingbox;
+ class openGLMesh;
+
+class projectile : public openGLMesh
 {
 public:
     projectile();
@@ -30,10 +33,10 @@ public:
     void changemesh(GLMmodel* missile,GLfloat translation[3], GLfloat rotation[3]);
     void draw();
 
-    boundingBox getBox();
-    bool isAlive();
-    bool isDescructable();
-    void destroy();
+    // boundingBox getBox();
+    // bool isAlive();
+    // bool isDescructable();
+    // void destroy();
 
 
 
@@ -43,9 +46,9 @@ public:
 protected:
     GLfloat velocity;
     GLfloat acceleration;
-    GLMmodel* mesh;
+    // GLMmodel* mesh;
     
-    boundingBox box;
+    // boundingBox box;
 
 
 
