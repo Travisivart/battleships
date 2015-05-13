@@ -513,7 +513,7 @@ void openGLRender::spawnEnemies()
             //qDebug()<<"spawnEnemies";
             this->push(new ship(this->ships,false));
 
-            ((ship*)this->pop())->scale(0.02f, 0.02f, 0.02f);
+            ((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
             //this->push(new ship("../battleships/obj/tetrahedron.obj"));
 
             qsrand(QTime::currentTime().msec());
