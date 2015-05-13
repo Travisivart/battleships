@@ -241,13 +241,63 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
     float* myScale = this->getScaling();
     float* otherScale = otherMesh->getScaling();
 
+    float temp;
     float myMinX, myMinY, myMinZ, myMaxX, myMaxY, myMaxZ;
     float otherMinX, otherMinY, otherMinZ, otherMaxX, otherMaxY, otherMaxZ;
 
-    myMinX = myScale[0]*this->box.getMinX() + myTrans[0];
-    myMinY = myScale[1]*this->box.getMinY() + myTrans[1];
-    myMaxX = myScale[0]*this->box.getMaxX() + myTrans[0];
-    myMaxY = myScale[1]*this->box.getMaxY() + myTrans[1];
+    float myxTopLeft, myxTopRight, myxBottomLeft, myxBottomRight;
+    float myyTopLeft, myyTopRight, myyBottomLeft, myyBottomRight;
+
+    //myMinX = myScale[0] * (this->box.getMinX() * cos(myRot[2]*3.14159265/180) + this->box.getMinY() * sin(myRot[2]*3.14159265/180)) + myTrans[0];
+    //myMinY = myScale[1] * (this->box.getMinY() * cos(myRot[2]*3.14159265/180) - this->box.getMinX() * sin(myRot[2]*3.14159265/180)) + myTrans[1];
+    //myMaxX = myScale[0] * (this->box.getMaxX() * cos(myRot[2]*3.14159265/180) + this->box.getMaxY() * sin(myRot[2]*3.14159265/180)) + myTrans[0];
+    //myMaxY = myScale[1] * (this->box.getMaxY() * cos(myRot[2]*3.14159265/180) - this->box.getMaxX() * sin(myRot[2]*3.14159265/180)) + myTrans[1];
+
+    myxTopLeft = myScale[0] * (this->box.getMinX() * cos(myRot[2]*3.14159265/180) - this->box.getMaxY() * sin(myRot[2]*3.14159265/180)) + myTrans[0];
+    myxTopRight = myScale[0] * (this->box.getMaxX() * cos(myRot[2]*3.14159265/180) - this->box.getMaxY() * sin(myRot[2]*3.14159265/180)) + myTrans[0];
+    myxBottomLeft = myScale[0] * (this->box.getMinX() * cos(myRot[2]*3.14159265/180) - this->box.getMinY() * sin(myRot[2]*3.14159265/180)) + myTrans[0];
+    myxBottomRight = myScale[0] * (this->box.getMaxX() * cos(myRot[2]*3.14159265/180) - this->box.getMinY() * sin(myRot[2]*3.14159265/180)) + myTrans[0];
+
+    myyTopLeft = myScale[1] * (this->box.getMaxY() * cos(myRot[2]*3.14159265/180) + this->box.getMinX() * sin(myRot[2]*3.14159265/180)) + myTrans[1];
+    myyTopRight = myScale[1] * (this->box.getMaxY() * cos(myRot[2]*3.14159265/180) + this->box.getMaxX() * sin(myRot[2]*3.14159265/180)) + myTrans[1];
+    myyBottomLeft = myScale[1] * (this->box.getMinY() * cos(myRot[2]*3.14159265/180) + this->box.getMinX() * sin(myRot[2]*3.14159265/180)) + myTrans[1];
+    myyBottomRight = myScale[1] * (this->box.getMinY() * cos(myRot[2]*3.14159265/180) + this->box.getMaxX() * sin(myRot[2]*3.14159265/180)) + myTrans[1];
+
+    myMinX = myxTopLeft;
+    myxTopRight < myMinX ? myMinX = myxTopRight : myMinX;
+    myxBottomLeft < myMinX ? myMinX = myxBottomLeft : myMinX;
+    myxBottomRight < myMinX ? myMinX = myxBottomRight : myMinX;
+
+    myMinY = myyTopLeft;
+    myyTopRight < myMinY ? myMinY = myyTopRight : myMinY;
+    myyBottomLeft < myMinY ? myMinY = myyBottomLeft : myMinY;
+    myyBottomRight < myMinY ? myMinY = myyBottomRight : myMinY;
+
+    myMaxX = myxTopLeft;
+    myxTopRight > myMaxX ? myMaxX = myxTopRight : myMaxX;
+    myxBottomLeft > myMaxX ? myMaxX = myxBottomLeft : myMaxX;
+    myxBottomRight > myMaxX ? myMaxX = myxBottomRight : myMaxX;
+
+    myMaxY = myyTopLeft;
+    myyTopRight > myMaxY ? myMaxY = myyTopRight : myMaxY;
+    myyBottomLeft > myMaxY ? myMaxY = myyBottomLeft : myMaxY;
+    myyBottomRight > myMaxY ? myMaxY = myyBottomRight : myMaxY;
+
+
+    //qDebug()<<"myMinX" <<myMinX <<"myMaxX" <<myMaxX <<"myMinY" <<myMinY <<"myMaxY" <<myMaxY;
+    /*if(myMaxX < myMinX)
+    {
+        temp = myMinX;
+        myMinX = myMaxX;
+        myMaxX = temp;
+    }*/
+    //qDebug()<<"this->box.getMinX()" <<this->box.getMaxX() <<"this->box.getMinY()" <<this->box.getMaxY();
+    //qDebug()<<"cos(myRot[2]*3.14159265/180)" << cos(myRot[2]*3.14159265/180) <<"sin(myRot[2]*3.14159265/180)" <<sin(myRot[2]*3.14159265/180);
+    //qDebug()<<"getMinX" <<this->box.getMinX() <<"cos" <<cos(myRot[2]*3.14159265/180) <<"getMaxY" <<this->box.getMaxY() <<"sin" <<sin(-myRot[2]*3.14159265/180);
+    //qDebug()<<"this->box.getMinX()" <<myScale[0]*this->box.getMinX() + myTrans[0] <<"this->box.getMaxX()" <<myScale[0]*this->box.getMaxX() <<"this->box.getMinY()" <<myScale[1]*this->box.getMinY() <<"this->box.getMaxY()" <<myScale[1]*this->box.getMaxY();
+
+    //qDebug()<<"myxTopLeft" << myxTopLeft <<"myxTopRight" <<myxTopRight <<"myxBottomLeft" <<myxBottomLeft << "myxBottomRight" <<myxBottomRight <<"myMinX" <<myMinX;
+    //qDebug()<<"yTopLeft" << yTopLeft <<"yTopRight" <<yTopRight <<"yBottomLeft" <<yBottomLeft << "yBottomRight" <<yBottomRight ;
 
     otherMinX = otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0];
     otherMinY = otherScale[1]*otherMesh->getBox().getMinY() + otherTrans[1];
@@ -263,7 +313,7 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
     //this->translation[1] += ((3.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
 
     //qDebug()<<myScale[0]*this->box.getMinX() + myTrans[0] <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] << myScale[0]*this->box.getMaxX() +myTrans[0];
-//qDebug()<<"Checking for collision";
+    //qDebug()<<"Checking for collision";
     //qDebug()<<"My Real minX: " <<myScale[0]*box.getMinX() + myTrans[0] <<"My Real maxX: " <<myScale[0]*box.getMaxX() + myTrans[0];
     //qDebug()<<"sin(myRot[2]*3.1415 9265/180" <<sin(myRot[2]*3.14159265/180);
     //qDebug()<<"My Real minX: " <<myScale[0]*this->box.getMinX()+abs(sin(myRot[2]*3.14159265/180)) + myTrans[0] <<"My Real maxX: " <<myScale[0]*this->box.getMaxX()+abs(sin(myRot[2]*3.14159265/180)) + myTrans[0];
@@ -299,10 +349,10 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
 
     }*/
 
-//    if (collisionFlag)
-        //qDebug()<<"COLLISION";
+    //    if (collisionFlag)
+    //qDebug()<<"COLLISION";
     //else
-        //qDebug()<<"NO COLLISION";
+    //qDebug()<<"NO COLLISION";
     
 
     return collisionFlag;
