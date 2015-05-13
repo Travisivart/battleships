@@ -43,6 +43,7 @@ public:
     void mouseMoveEvent(QMouseEvent *ev);
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);
+    void wheelEvent(QWheelEvent *ev);
 
     void translate(float x, float y, float z);
     void rotate(float x, float y, float z);
