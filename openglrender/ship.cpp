@@ -218,37 +218,6 @@ void ship::update(const int &msec)
         trigger++;
     }
     else{
-<<<<<<< HEAD
-        if(this->translation[1]>200){
-            //qDebug()<<"ship out of bounds";
-            //qDebug()<<"random number between 90-270"<< rand()%178+91;
-            rotate(rotation[0], rotation[1], 0);
-            rotate(rotation[0], rotation[1], rand()%178+90);
-            translate(translation[0],199,translation[2]);
-
-
-        }
-        if(this->translation[0]>200){
-            //qDebug()<<"ship out of bounds";
-            rotate(rotation[0], rotation[1], 0);
-            rotate(rotation[0], rotation[1], rand()%178+1);
-            translate(199,translation[1],translation[2]);
-
-
-        }
-        if(this->translation[0]<-200){
-            //qDebug()<<"ship out of bounds";
-            rotate(rotation[0], rotation[1], 0);
-            rotate(rotation[0], rotation[1], rand()%178+181);
-            translate(-199,translation[1],translation[2]);
-
-        }
-        if(this->translation[1]<-200){
-            //qDebug()<<"ship out of bounds";
-            rotate(rotation[0], rotation[1], 0);
-            rotate(rotation[0], rotation[1], rand()%178-90);
-            translate(translation[0],-199,translation[2]);
-=======
         if(this->translation[1]>100){
             qDebug()<<"ship out of bounds";
             qDebug()<<"random number between 90-270"<< rand()%178+91;
@@ -278,9 +247,6 @@ void ship::update(const int &msec)
             rotate(rotation[0], rotation[1], 0);
             rotate(rotation[0], rotation[1], rand()%178-90);
             translate(translation[0],translation[1]+1,translation[2]);
->>>>>>> origin/master
-
-
         }
 
         this->translation[0] -= ((10.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));

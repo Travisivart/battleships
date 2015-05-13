@@ -163,11 +163,7 @@ void openGLRender::initializeGL(){
     glMatrixMode(GL_PROJECTION);
     //glLoadIdentity();
 
-<<<<<<< HEAD
-    glOrtho(-43.428f, 43.428f, -20.0f, 20.0f, -500.0f, 500.0f);
-=======
-    glOrtho(-100.0f, 100.0f, -100.0f, 100.0f, -500.0f, 500.0f);
->>>>>>> origin/master
+    glOrtho(-100.0f*2.1714, 100.0f*2.1714, -100.0f, 100.0f, -500.0f, 500.0f);
 
     //glMatrixMode(GL_MODELVIEW);
     //glLoadIdentity();
