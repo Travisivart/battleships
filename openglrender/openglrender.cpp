@@ -80,7 +80,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
     this->objects = new QList<openGLObject*>();
-    this->ships = load("../battleships/obj/Shipboatsmall.obj");
+    this->ships = load("../battleships/obj/Shipboatsmall1.obj");
     this->missilemesh = load("../battleships/obj/Missiles.obj");    //this->models = new QList<GLMmodel*>();
     this->delay.start();
     this->selectedObj = -1;
@@ -163,7 +163,7 @@ void openGLRender::initializeGL(){
     glMatrixMode(GL_PROJECTION);
     //glLoadIdentity();
 
-    glOrtho(-20.0f, 20.0f, -20.0f, 20.0f, -20.0f, 20.0f);
+    glOrtho(-10.0f, 10.0f, -10.0f, 10.0f, -50.0f, 50.0f);
 
     //glMatrixMode(GL_MODELVIEW);
     //glLoadIdentity();
@@ -212,9 +212,9 @@ void openGLRender::paintGL(){
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
     glBegin(GL_QUADS); // front face
     glTexCoord2f(0.0f, 0.0f); glVertex3f(20.0f, -20.0f, 0.0f);
-    glTexCoord2f(10.0f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
-    glTexCoord2f(10.0f, 10.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
-    glTexCoord2f(0.0f, 10.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
+    glTexCoord2f(40.0f, 0.0f); glVertex3f(20.0f, 20.0f, 0.0f);
+    glTexCoord2f(40.0f, 40.0f); glVertex3f(-20.0f, 20.0f, 0.0f);
+    glTexCoord2f(0.0f, 40.0f); glVertex3f(-20.0f, -20.0f, 0.0f);
     glEnd();
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader2.biWidth, bitmapInfoHeader2.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData2);
@@ -498,14 +498,22 @@ void openGLRender::spawnEnemies()
     float rotZ;
 
     //Always make sure there are at least 4 enemies in the world. (Player + enemies = 5)
-    if( this->objects->size() < 5 )
+
+    int counter = 0;
+
+    //count how many ships there are
+    for(int i = 0; i < this->objects->size(); i++)
+        if(this->objects->at(i)->name() == "ship")
+            counter++;
+
+    if( counter < 5 )
     {
-        while(this->objects->size() < 5)
+        while(counter < 5)
         {
             //qDebug()<<"spawnEnemies";
             this->push(new ship(this->ships,false));
 
-            ((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
+            ((ship*)this->pop())->scale(0.02f, 0.02f, 0.02f);
             //this->push(new ship("../battleships/obj/tetrahedron.obj"));
 
             qsrand(QTime::currentTime().msec());
@@ -522,6 +530,7 @@ void openGLRender::spawnEnemies()
             ((ship*)this->pop())->rotate(0, 0, rand()%359);
 
             //((ship*)this->pop())->rotate();
+            counter++;
         }
     }
 }
