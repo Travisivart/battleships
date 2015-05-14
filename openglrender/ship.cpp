@@ -86,13 +86,13 @@ float ship::getVelocity(){
 
 void ship::increaseAcceleration(){
     
-    if(velocity<.11f)
-        velocity+=.004f;
+    if(velocity<2.0f)
+        velocity+=.05f;
 }
 
 void ship::decreaseAcceleration(){
     if(this->velocity>0.003f)
-        velocity-=.003f;
+        velocity-=.03f;
     else
         this->velocity=0.0f;
 
@@ -249,9 +249,9 @@ void ship::update(const int &msec)
             translate(translation[0],translation[1]+1,translation[2]);
         }
 
-        this->translation[0] -= ((10.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
+        this->translation[0] -= ((30.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));
         //this->translation[1] += 1.0f * msec/1000;
-        this->translation[1] += ((10.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
+        this->translation[1] += ((30.0f * msec/100)*cos(this->rotation[2]*3.14159265/180));
         //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
     }
 }
