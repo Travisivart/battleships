@@ -212,7 +212,7 @@ void ship::update(const int &msec)
             //    bounce=-.01f;
         }
 
-        if(this->translation[1]>800){
+        if(this->translation[1]>785){
             outofbounds=true;
             qDebug()<<"ymax";
             this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
@@ -222,7 +222,7 @@ void ship::update(const int &msec)
             
 
         }
-        if(this->translation[0]>800){
+        if(this->translation[0]>785){
             outofbounds=true;
 
             qDebug()<<"xmax";
@@ -234,7 +234,7 @@ void ship::update(const int &msec)
 
 
         }
-        if(this->translation[0]<-800){
+        if(this->translation[0]<-785){
             outofbounds=true;
             qDebug()<<"xmin";
             qDebug()<<this->rotation[2];
@@ -243,7 +243,7 @@ void ship::update(const int &msec)
             this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
 
         }
-        if(this->translation[1]<-800){
+        if(this->translation[1]<-785){
             outofbounds=true;
             qDebug()<<"ymin "<<(-90)%360;
             this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
