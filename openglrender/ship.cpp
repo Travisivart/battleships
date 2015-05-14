@@ -344,49 +344,49 @@ void ship::draw()
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
 
 
-    glBegin(GL_LINES);
-    float minx = this->getBox().getMinX();
-    float miny = this->getBox().getMinY();
-    float minz = this->getBox().getMinZ();
-    float maxx = this->getBox().getMaxX();
-    float maxy = this->getBox().getMaxY();
-    float maxz = this->getBox().getMaxZ();
-//    qDebug()<<"minx "<<minx<<" miny "<<miny<<" minz "<<minz<<" maxx "<<maxx<<" maxy "<<maxy<<" maxz "<<maxz;
+//     glBegin(GL_LINES);
+//     float minx = this->getBox().getMinX();
+//     float miny = this->getBox().getMinY();
+//     float minz = this->getBox().getMinZ();
+//     float maxx = this->getBox().getMaxX();
+//     float maxy = this->getBox().getMaxY();
+//     float maxz = this->getBox().getMaxZ();
+// //    qDebug()<<"minx "<<minx<<" miny "<<miny<<" minz "<<minz<<" maxx "<<maxx<<" maxy "<<maxy<<" maxz "<<maxz;
 
-    //Draw bottom square
-    glVertex3f(minx, miny ,minz);
-    glVertex3f(minx, maxy ,minz);
-    glVertex3f(minx, maxy ,minz);
-    glVertex3f(maxx, maxy ,minz);
-    glVertex3f(maxx, maxy ,minz);
-    glVertex3f(maxx, miny ,minz);
-    glVertex3f(maxx, miny ,minz);
-    glVertex3f(minx, miny ,minz);
+//     //Draw bottom square
+//     glVertex3f(minx, miny ,minz);
+//     glVertex3f(minx, maxy ,minz);
+//     glVertex3f(minx, maxy ,minz);
+//     glVertex3f(maxx, maxy ,minz);
+//     glVertex3f(maxx, maxy ,minz);
+//     glVertex3f(maxx, miny ,minz);
+//     glVertex3f(maxx, miny ,minz);
+//     glVertex3f(minx, miny ,minz);
 
-    //Draw vertical lines
-    glVertex3f(minx, miny ,minz);
-    glVertex3f(minx, miny ,maxz);
-    glVertex3f(minx, maxy ,minz);
-    glVertex3f(minx, maxy ,maxz);
-    glVertex3f(maxx, maxy ,minz);
-    glVertex3f(maxx, maxy ,maxz);
-    glVertex3f(maxx, miny ,minz);
-    glVertex3f(maxx, miny ,maxz);
+//     //Draw vertical lines
+//     glVertex3f(minx, miny ,minz);
+//     glVertex3f(minx, miny ,maxz);
+//     glVertex3f(minx, maxy ,minz);
+//     glVertex3f(minx, maxy ,maxz);
+//     glVertex3f(maxx, maxy ,minz);
+//     glVertex3f(maxx, maxy ,maxz);
+//     glVertex3f(maxx, miny ,minz);
+//     glVertex3f(maxx, miny ,maxz);
 
-    //Draw top square
-    glVertex3f(minx, miny ,maxz);
-    glVertex3f(minx, maxy ,maxz);
+//     //Draw top square
+//     glVertex3f(minx, miny ,maxz);
+//     glVertex3f(minx, maxy ,maxz);
 
-    glVertex3f(minx, maxy ,maxz);
-    glVertex3f(maxx, maxy ,maxz);
+//     glVertex3f(minx, maxy ,maxz);
+//     glVertex3f(maxx, maxy ,maxz);
 
-    glVertex3f(maxx, maxy ,maxz);
-    glVertex3f(maxx, miny ,maxz);
+//     glVertex3f(maxx, maxy ,maxz);
+//     glVertex3f(maxx, miny ,maxz);
 
-    glVertex3f(maxx, miny ,maxz);
-    glVertex3f(minx, miny ,maxz);
+//     glVertex3f(maxx, miny ,maxz);
+//     glVertex3f(minx, miny ,maxz);
 
-    glEnd();
+//     glEnd();
 
     glPopMatrix();
 }
