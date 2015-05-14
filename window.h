@@ -174,10 +174,13 @@ private:
     QTime lastAwake;
     QTime lastBlock;
 
-    bool clicked;
+    bool leftClicked;
+    bool rightClicked;
 
     bool buildingPolygon;
 
+    int xTra;
+    int yTra;
     int xRot;
     int zRot;
 

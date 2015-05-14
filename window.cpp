@@ -12,7 +12,8 @@ Window::Window(QOpenGLWidget *parent) :
 
     ui->setupUi(this);
 
-    this->clicked = false;
+    this->leftClicked = false;
+    this->rightClicked = false;
 
     this->buildingPolygon = false;
 
@@ -21,6 +22,7 @@ Window::Window(QOpenGLWidget *parent) :
 
     //GLMmodel* playership=openGLRender::load("../battleships/obj/shipboat3.obj");
     GLMmodel* playership=openGLRender::load("../battleships/obj/Shipboatsmall1.obj");
+    //GLMmodel* playership=openGLRender::load("../battleships/obj/Pillar.obj");
     //Load player model
     this->ui->openGLRenderWindow->push(new ship(playership,true));
     //((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
@@ -120,6 +122,10 @@ void Window::keyPressEvent(QKeyEvent *ev)
 
     if(!this->playgame)
     {
+        glLoadIdentity();
+
+        updateCamera();
+
         this->playgame = true;
         ui->openGLRenderWindow->paintGL();
     }
@@ -149,13 +155,22 @@ void Window::wheelEvent(QWheelEvent *ev)
 
 void Window::mouseMoveEvent(QMouseEvent *ev)
 {
-    if(clicked)
+    if(rightClicked)
     {
         ui->cameraZRotSlider->setValue(ui->cameraZRotSlider->value()-(ev->x()-xRot));
         ui->cameraXRotSlider->setValue(ui->cameraXRotSlider->value()-(ev->y()-zRot));
 
         xRot = ev->x();
         zRot = ev->y();
+    }
+
+    else if (leftClicked)
+    {
+        ui->cameraYSlider->setValue(ui->cameraYSlider->value()- 32*(ev->y()-(yTra)));
+        ui->cameraXSlider->setValue(ui->cameraXSlider->value()+ 32*(ev->x()-(xTra)));
+
+        xTra = ev->x();
+        yTra = ev->y();
     }
 
     /*
@@ -233,9 +248,15 @@ void Window::mousePressEvent(QMouseEvent *ev){
 
     if( ev->button() == 2)
     {
-        clicked = true;
+        rightClicked = true;
         xRot = ev->x();
         zRot = ev->y();
+    }
+    if(ev->button() == 1)
+    {
+        leftClicked = true;
+        xTra = ev->x();
+        yTra = ev->y();
     }
     /*
     int x = (ev->x()-10)*2-OGLWIDTH;
@@ -397,7 +418,9 @@ void Window::mousePressEvent(QMouseEvent *ev){
 void Window::mouseReleaseEvent(QMouseEvent *ev){
 
     if( ev->button() == 2)
-        clicked = false;
+        rightClicked = false;
+    else if (ev->button() == 1)
+        leftClicked = false;
     /*
     if(clicked && (ev->button() == Qt::LeftButton) && ev->x()>=10 && ev->x()<=OGLWIDTH+10 && ev->y()>=YOFFSET && ev->y() <=OGLHEIGHT+YOFFSET){
 
@@ -494,7 +517,7 @@ void Window::on_clearBtn_clicked()
     ui->openGLRenderWindow->clearObjects();
     ui->openGLRenderWindow->clearGL();
 
-    this->clicked = false;
+    //this->clicked = false;
 
     this->buildingPolygon = false;
 
@@ -728,7 +751,7 @@ void Window::on_polyAddFinalPointBtn_clicked()
         }
         ui->polygonClosed->setEnabled(true);
         buildingPolygon = false;
-        this->clicked = false;
+        //this->clicked = false;
     }
 
     /*
@@ -1202,7 +1225,7 @@ void Window::on_cameraXRotSlider_valueChanged(int value)
 
     updateCamera();
 
-   // ui->openGLRenderWindow->paintGL();
+    // ui->openGLRenderWindow->paintGL();
 
     //ui->cameraXRotSliderEdit->setText(QString::number(value));
 }
