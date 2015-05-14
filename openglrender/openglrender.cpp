@@ -519,8 +519,8 @@ void openGLRender::spawnEnemies()
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            transX = (float)(qrand()%10);
-            transY = (float)(qrand()%10);
+            transX = (float)(qrand()%90);
+            transY = (float)(qrand()%90);
             //rotZ = (float)(qrand()%100+5)/10;
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
@@ -555,18 +555,22 @@ void openGLRender::checkCollisions()
                 //qDebug()<<"Checking for collision at:" <<i <<"and" <<j;
                 //If there is a collision between objects i and j then do something (destroy both objects)
                 if(((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) ))
-                {   qDebug()<<this->objects->at(i)->name();
-                    if((this->objects->at(i)->name()=="projectile" || this->objects->at(j)->name()=="projectile")&& (i==0)){
+                {   
+                    qDebug()<< this->objects->at(i)->name();
+                    // if((this->objects->at(i)->name()=="projectile" || this->objects->at(j)->name()=="projectile")&& (i==0)){
+                    if(i==0 &&  this->objects->at(j)->name()=="projectile"){
                         qDebug()<<i<<"skipped"<<j;
                         break;
                     }
-                    else{
+                    else if(this->objects->at(i)->name()=="projectile" && this->objects->at(j)->name()=="projectile" ){
+                        break;
+                    }
                         qDebug()<<"Collision between objects:" <<i <<"and" <<j;
                         if( (this->objects->at(i))->isDescructable())
                             (this->objects->at(i))->destroy();
                         if( (this->objects->at(j))->isDescructable())
                             (this->objects->at(j))->destroy();
-                    }
+                    
                 }
 
             }

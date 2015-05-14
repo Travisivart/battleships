@@ -298,7 +298,7 @@ void ship::draw()
     glRotatef(this->rotation[2], 0.0f, 0.0f, 1.0f);
 
     //Perform scaling
-    glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
+    //glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
 
     glmDraw(this->mesh,this->mode, GL_TRIANGLES);
 
