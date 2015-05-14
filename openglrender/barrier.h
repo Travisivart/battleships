@@ -7,6 +7,7 @@ class barrier : public openGLMesh
 {
 public:
     barrier();
+    barrier(GLMmodel *wall);
     ~barrier();
 
     QString name();

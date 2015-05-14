@@ -17,6 +17,7 @@
 #include "openglcamera.h"
 #include "../tutor/glm.h"
 #include "projectile.h"
+#include "barrier.h"
 
 #define GAME_MODE 0
 #define MENU_MODE 1
@@ -103,6 +104,7 @@ public:
 
     GLMmodel *ships;
     GLMmodel *missilemesh;
+    GLMmodel *walls;
 protected:
 
     // void paintGL();

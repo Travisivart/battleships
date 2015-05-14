@@ -83,6 +83,7 @@ openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuf
     this->objects = new QList<openGLObject*>();
     this->ships = load("../battleships/obj/Shipboatsmall1.obj");
     this->missilemesh = load("../battleships/obj/Missiles.obj");    //this->models = new QList<GLMmodel*>();
+    this->walls = load("../battleships/obj/Pillar.obj");
     this->delay.start();
     this->timecounter.start();
     this->selectedObj = -1;
@@ -607,6 +608,17 @@ void openGLRender::spawnEnemies()
             //((ship*)this->pop())->rotate();
             counter++;
         }
+        this->push(new barrier(this->walls));
+        transX = (float)(qrand()%7900);
+        transY = (float)(qrand()%7900);
+
+        qrand()%2 == 0 ? transX : transX = transX*(-1);
+        qrand()%2 == 0 ? transY : transY = transY*(-1);
+
+        ((barrier*)this->pop())->translate(transX/10.0f,transY/10.0f, 0.0f );
+        ((barrier*)this->pop())->rotate(0, 0, rand()%359);
+        ((barrier*)this->pop())->scale(qrand()%36+4,qrand()%36+4,8.0);
+
     }
 }
 
