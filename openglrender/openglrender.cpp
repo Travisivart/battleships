@@ -643,17 +643,17 @@ void openGLRender::checkCollisions()
                 //If there is a collision between objects i and j then do something (destroy both objects)
                 if(((openGLMesh*)this->objects->at(i))->checkCollision( ((openGLMesh*)this->objects->at(j)) ))
                 {   
-                    qDebug()<< this->objects->at(i)->name();
+                    //qDebug()<< this->objects->at(i)->name();
                     // if((this->objects->at(i)->name()=="projectile" || this->objects->at(j)->name()=="projectile")&& (i==0)){
                     if(i==0 &&  this->objects->at(j)->name()=="projectile"){
-                        qDebug()<<i<<"skipped"<<j;
+                        //qDebug()<<i<<"skipped"<<j;
                         break;
                     }
                     else if(this->objects->at(i)->name()=="projectile" && this->objects->at(j)->name()=="projectile" ){
-                        qDebug()<<i<<"skipped"<<j;
+                        //qDebug()<<i<<"skipped"<<j;
                         break;
                     }
-                        qDebug()<<"Collision between objects:" <<i <<"and" <<j;
+                        //qDebug()<<"Collision between objects:" <<i <<"and" <<j;
                         if( (this->objects->at(i))->isDescructable())
                             (this->objects->at(i))->destroy();
                         if( (this->objects->at(j))->isDescructable())
@@ -674,7 +674,7 @@ void openGLRender::removeDestroyedObjects()
         {
             if (i != 0)
             {
-                qDebug()<<"object:" <<i <<"is destroyed";
+                //qDebug()<<"object:" <<i <<"is destroyed";
                 //((openGLMesh*)this->objects->at(i))->deleteMesh();
                 delete (this->objects->at(i));
                 this->objects->removeAt(i);

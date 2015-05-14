@@ -54,7 +54,7 @@ bool openGLObject::isDescructable()
 void openGLObject::destroy()
 {
     this->alive = false;
-    qDebug()<<"object destroyed";
+    //qDebug()<<"object destroyed";
     return;
 }
 bool openGLObject::isAlive()

@@ -359,8 +359,8 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
         if ((myMinY >= otherMinY && myMinY <= otherMaxY) || (myMaxY <= otherMaxY && myMaxY >= otherMinY))
         {
             collisionFlag = true;
-            if (this->name() == "projectile" || otherMesh->name() == "projectile")
-                qDebug()<<"projectile collision";
+            //if (this->name() == "projectile" || otherMesh->name() == "projectile")
+                //qDebug()<<"projectile collision";
         }
 
     }

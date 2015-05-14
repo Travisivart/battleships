@@ -79,7 +79,7 @@ void projectile::draw()
 
     //glTranslatef(0, 0, 0);
 	if((this->translation[1]>800 || this->translation[0]>800 || this->translation[1]<-800 || this->translation[0]<-800) ){
-		qDebug()<<"destroy missile";
+        //qDebug()<<"destroy missile";
 		this->mesh=NULL;
         openGLObject::destroy();
         //openGLObject::destroy();
