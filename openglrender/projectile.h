@@ -52,9 +52,9 @@ protected:
 
 
 
-    GLfloat translation[3];
-    GLfloat rotation[3];
-    GLfloat scaling[3];
+    // GLfloat translation[3];
+    // GLfloat rotation[3];
+    // GLfloat scaling[3];
     // bool destructible;
     // bool alive;
 };

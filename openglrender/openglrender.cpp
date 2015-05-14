@@ -587,6 +587,7 @@ void openGLRender::checkCollisions()
                         break;
                     }
                     else if(this->objects->at(i)->name()=="projectile" && this->objects->at(j)->name()=="projectile" ){
+                        qDebug()<<i<<"skipped"<<j;
                         break;
                     }
                         qDebug()<<"Collision between objects:" <<i <<"and" <<j;

@@ -308,6 +308,7 @@ void ship::draw()
     float maxx = this->getBox().getMaxX();
     float maxy = this->getBox().getMaxY();
     float maxz = this->getBox().getMaxZ();
+//    qDebug()<<"minx "<<minx<<" miny "<<miny<<" minz "<<minz<<" maxx "<<maxx<<" maxy "<<maxy<<" maxz "<<maxz;
 
     //Draw bottom square
     glVertex3f(minx, miny ,minz);

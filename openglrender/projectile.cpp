@@ -17,9 +17,9 @@ projectile::projectile(GLMmodel* mesh,GLfloat *translation,GLfloat *rotation){
     this->rotation[0] = rotation[0];
     this->rotation[1] = rotation[1];
     this->rotation[2] = rotation[2];
-    this->scaling[0] = .2f;
-    this->scaling[1] = .2f;
-    this->scaling[2] = .2f;
+    this->scaling[0] = 2.0f;
+    this->scaling[1] = 2.0f;
+    this->scaling[2] = 2.0f;
     this->destructible=true;
     this->alive=true;
 }
@@ -78,7 +78,7 @@ void projectile::draw()
     //glLoadIdentity();
 
     //glTranslatef(0, 0, 0);
-	if((this->translation[1]>100*2.1714 || this->translation[0]>100*2.1714 || this->translation[1]<-100*2.1714 || this->translation[0]<-100*2.1714) ){
+	if((this->translation[1]>800 || this->translation[0]>800 || this->translation[1]<-800 || this->translation[0]<-800) ){
 		qDebug()<<"destroy missile";
 		this->mesh=NULL;
         openGLObject::destroy();
@@ -92,7 +92,7 @@ void projectile::draw()
     glRotatef(this->rotation[2], 0.0f, 0.0f, 1.0f);
 
     //Perform scaling
-//   glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
+   glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
 
     //Return to original position
     //glTranslatef(0.0,0.0,0.0);
@@ -111,6 +111,7 @@ void projectile::draw()
     float maxx = this->getBox().getMaxX();
     float maxy = this->getBox().getMaxY();
     float maxz = this->getBox().getMaxZ();
+    // qDebug()<<"minx "<<minx<<" miny "<<miny<<" minz "<<minz<<" maxx "<<maxx<<" maxy "<<maxy<<" maxz "<<maxz;
 
     //Draw bottom square
     glVertex3f(minx, miny ,minz);
