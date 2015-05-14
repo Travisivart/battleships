@@ -177,6 +177,9 @@ private:
     bool clicked;
 
     bool buildingPolygon;
+
+    int xRot;
+    int zRot;
 };
 
 #endif // WINDOW_H

@@ -133,7 +133,16 @@ void Window::wheelEvent(QWheelEvent *ev)
 
 void Window::mouseMoveEvent(QMouseEvent *ev)
 {
+    if(clicked)
+    {
+        ui->cameraZRotSlider->setValue(ui->cameraZRotSlider->value()-(ev->x()-xRot));
+        ui->cameraXRotSlider->setValue(ui->cameraXRotSlider->value()-(ev->y()-zRot));
 
+        xRot = ev->x();
+        zRot = ev->y();
+    }
+
+        /*
     if (clicked && ev->x()>=10 && ev->x()<=OGLWIDTH+10 && ev->y()>=YOFFSET && ev->y() <=OGLHEIGHT+YOFFSET)
     {
         int x = (ev->x()-10)*2-OGLWIDTH;
@@ -201,11 +210,17 @@ void Window::mouseMoveEvent(QMouseEvent *ev)
 
             ui->openGLRenderWindow->paintGL();
         }
-    }
+    }*/
 }
 
 void Window::mousePressEvent(QMouseEvent *ev){
 
+    if( ev->button() == 2)
+    {
+        clicked = true;
+        xRot = ev->x();
+        zRot = ev->y();
+    }
     /*
     int x = (ev->x()-10)*2-OGLWIDTH;
     int y = (-1)*((ev->y()-YOFFSET)*2-OGLHEIGHT);
@@ -365,8 +380,9 @@ void Window::mousePressEvent(QMouseEvent *ev){
 
 void Window::mouseReleaseEvent(QMouseEvent *ev){
 
-
-/*
+    if( ev->button() == 2)
+        clicked = false;
+    /*
     if(clicked && (ev->button() == Qt::LeftButton) && ev->x()>=10 && ev->x()<=OGLWIDTH+10 && ev->y()>=YOFFSET && ev->y() <=OGLHEIGHT+YOFFSET){
 
         openGLObject *o;
