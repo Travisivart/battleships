@@ -360,7 +360,7 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
         {
             collisionFlag = true;
             if (this->name() == "projectile" || otherMesh->name() == "projectile")
-                qDebug()<<"projectile collision"<<myTrans[1];
+                qDebug()<<"projectile collision";
         }
 
     }

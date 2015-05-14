@@ -199,6 +199,7 @@ void ship::update(const int &msec)
     float bounce=-.01f;
     bounce = 0.0f;
     int trigger=0;
+    bool outofbounds=false;
 
     //qDebug()<<"Ship update";
 
@@ -210,12 +211,54 @@ void ship::update(const int &msec)
             //else
             //    bounce=-.01f;
         }
-        this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
-        //this->translation[1] += 1.0f * msec/1000;
-        this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
-        //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
-        bounce=0;
-        trigger++;
+
+        if(this->translation[1]>800){
+            outofbounds=true;
+            qDebug()<<"ymax";
+            this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+            qDebug()<<this->rotation[2];
+           if(this->rotation[2]>90||this->rotation[2]<-90)
+            this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+            
+
+        }
+        if(this->translation[0]>800){
+            outofbounds=true;
+
+            qDebug()<<"xmax";
+            qDebug()<<this->rotation[2];
+            if(this->rotation[2]<-180||this->rotation[2]>0 || this->rotation[2>180])
+                this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+            this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+
+
+
+        }
+        if(this->translation[0]<-800){
+            outofbounds=true;
+            qDebug()<<"xmin";
+            qDebug()<<this->rotation[2];
+            if(this->rotation[2]>180 ||this->rotation[2]<0)
+                this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+            this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+
+        }
+        if(this->translation[1]<-800){
+            outofbounds=true;
+            qDebug()<<"ymin "<<(-90)%360;
+            this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+            qDebug()<<this->rotation[2];
+            if(this->rotation[2]<90 ||this->rotation[2]>270)
+                this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+        }
+        if(outofbounds==false){ //if((this->translation[1]<800 && this->translation[0]<800 && this->translation[1]>-800 && this->translation[0]>-800)){
+            this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
+            //this->translation[1] += 1.0f * msec/1000;
+            this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
+            //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+        }
+            bounce=0;
+            trigger++;
     }
     else{
         if(this->translation[1]>800){

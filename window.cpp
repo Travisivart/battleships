@@ -129,6 +129,7 @@ void Window::keyPressEvent(QKeyEvent *ev)
     {
         //qDebug()<<"Pressed:" <<ev->key();
         this->ui->openGLRenderWindow->pushInput(ev->key());
+        
     }
 
 }
