@@ -513,14 +513,14 @@ void openGLRender::spawnEnemies()
             //qDebug()<<"spawnEnemies";
             this->push(new ship(this->ships,false));
 
-            ((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
+            //((ship*)this->pop())->scale(0.2f, 0.2f, 0.2f);
             //this->push(new ship("../battleships/obj/tetrahedron.obj"));
 
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            transX = (float)(qrand()%2000);
-            transY = (float)(qrand()%2000);
+            transX = (float)(qrand()%1800);
+            transY = (float)(qrand()%1800);
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
             qrand()%2 == 0 ? transY : transY = transY*(-1);
