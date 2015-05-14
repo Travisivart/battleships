@@ -165,7 +165,7 @@ void openGLRender::initializeGL(){
     glMatrixMode(GL_PROJECTION);
     //glLoadIdentity();
 
-    glOrtho(-100.0f*2.1714, 100.0f*2.1714, -100.0f, 100.0f, -500.0f, 500.0f);
+    glOrtho(-100.0f*2.1714, 100.0f*2.1714, -100.0f, 100.0f, -2000.0f, 2000.0f);
 
     //glMatrixMode(GL_MODELVIEW);
     //glLoadIdentity();
@@ -216,58 +216,58 @@ void openGLRender::paintGL(){
     if(this->counter.elapsed()<1000){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
         glBegin(GL_QUADS); // front face
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(200.0f, -200.0f, 0.0f);
-        glTexCoord2f(40.0f, 0.0f); glVertex3f(200.0f, 200.0f, 0.0f);
-        glTexCoord2f(40.0f, 40.0f); glVertex3f(-200.0f, 200.0f, 0.0f);
-        glTexCoord2f(0.0f, 40.0f); glVertex3f(-200.0f, -200.0f, 0.0f);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(800.0f, -800.0f, 0.0f);
+        glTexCoord2f(40.0f, 0.0f); glVertex3f(800.0f, 800.0f, 0.0f);
+        glTexCoord2f(40.0f, 40.0f); glVertex3f(-800.0f, 800.0f, 0.0f);
+        glTexCoord2f(0.0f, 40.0f); glVertex3f(-800.0f, -800.0f, 0.0f);
         glEnd();
     }
     else if(this->counter.elapsed()<2000) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData3);
         glBegin(GL_QUADS); // front face
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(200.0f, -200.0f, 0.0f);
-        glTexCoord2f(40.0f, 0.0f); glVertex3f(200.0f, 200.0f, 0.0f);
-        glTexCoord2f(40.0f, 40.0f); glVertex3f(-200.0f, 200.0f, 0.0f);
-        glTexCoord2f(0.0f, 40.0f); glVertex3f(-200.0f, -200.0f, 0.0f);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(800.0f, -800.0f, 0.0f);
+        glTexCoord2f(40.0f, 0.0f); glVertex3f(800.0f, 800.0f, 0.0f);
+        glTexCoord2f(40.0f, 40.0f); glVertex3f(-800.0f, 800.0f, 0.0f);
+        glTexCoord2f(0.0f, 40.0f); glVertex3f(-800.0f, -800.0f, 0.0f);
         glEnd();
     }
     else{
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
         glBegin(GL_QUADS); // front face
-        glTexCoord2f(0.0f, 0.0f); glVertex3f(200.0f, -200.0f, 0.0f);
-        glTexCoord2f(40.0f, 0.0f); glVertex3f(200.0f, 200.0f, 0.0f);
-        glTexCoord2f(40.0f, 40.0f); glVertex3f(-200.0f, 200.0f, 0.0f);
-        glTexCoord2f(0.0f, 40.0f); glVertex3f(-200.0f, -200.0f, 0.0f);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(800.0f, -800.0f, 0.0f);
+        glTexCoord2f(40.0f, 0.0f); glVertex3f(800.0f, 800.0f, 0.0f);
+        glTexCoord2f(40.0f, 40.0f); glVertex3f(-800.0f, 800.0f, 0.0f);
+        glTexCoord2f(0.0f, 40.0f); glVertex3f(-800.0f, -800.0f, 0.0f);
         glEnd();
         this->counter.restart();
     }
     //counter++;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader2.biWidth, bitmapInfoHeader2.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData2);
     glBegin(GL_QUADS); // front face
-    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(200.0f, 200.0f, 200.0f);
-    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-200.0f, 200.0f, 200.0f);
-    glTexCoord2f(0.24609375f, 0.0f); glVertex3f(-200.0f, 200.0f, 0.0f);
-    glTexCoord2f(0.7529296875f, 0.0f); glVertex3f(200.0f, 200.0f, 0.0f);
+    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(800.0f, 800.0f, 800.0f);
+    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-800.0f, 800.0f, 800.0f);
+    glTexCoord2f(0.24609375f, 0.0f); glVertex3f(-800.0f, 800.0f, 0.0f);
+    glTexCoord2f(0.7529296875f, 0.0f); glVertex3f(800.0f, 800.0f, 0.0f);
 
-    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(200.0f, 200.0f, 200.0f);
-    glTexCoord2f(1.0f, 0.24609375f); glVertex3f(200.0f, 200.0f, 0.0f);
-    glTexCoord2f(1.0f, 0.7529296875f); glVertex3f(200.0f, -200.0f, 0.0f);
-    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(200.0f, -200.0f, 200.0f);
+    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(800.0f, 800.0f, 800.0f);
+    glTexCoord2f(1.0f, 0.24609375f); glVertex3f(800.0f, 800.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.7529296875f); glVertex3f(800.0f, -800.0f, 0.0f);
+    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(800.0f, -800.0f, 800.0f);
 
-    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(200.0f, -200.0f, 200.0f);
-    glTexCoord2f(0.7529296875f, 1.0f); glVertex3f(200.0f, -200.0f, 0.0f);
-    glTexCoord2f(0.24609375f, 1.0f); glVertex3f(-200.0f, -200.0f, 0.0f);
-    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-200.0f, -200.0f, 200.0f);
+    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(800.0f, -800.0f, 800.0f);
+    glTexCoord2f(0.7529296875f, 1.0f); glVertex3f(800.0f, -800.0f, 0.0f);
+    glTexCoord2f(0.24609375f, 1.0f); glVertex3f(-800.0f, -800.0f, 0.0f);
+    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-800.0f, -800.0f, 800.0f);
 
-    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-200.0f, -200.0f, 200.0f);
-    glTexCoord2f(0.0f, 0.7529296875f); glVertex3f(-200.0f, -200.0f, 0.0f);
-    glTexCoord2f(0.0f, 0.24609375f); glVertex3f(-200.0f, 200.0f, 0.0f);
-    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-200.0f, 200.0f, 200.0f);
+    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-800.0f, -800.0f, 800.0f);
+    glTexCoord2f(0.0f, 0.7529296875f); glVertex3f(-800.0f, -800.0f, 0.0f);
+    glTexCoord2f(0.0f, 0.24609375f); glVertex3f(-800.0f, 800.0f, 0.0f);
+    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-800.0f, 800.0f, 800.0f);
 
-    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(200.0f, 200.0f, 200.0f);
-    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(200.0f, -200.0f, 200.0f);
-    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-200.0f, -200.0f, 200.0f);
-    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-200.0f, 200.0f, 200.0f);
+    glTexCoord2f(0.7529296875f, 0.24609375f); glVertex3f(800.0f, 800.0f, 800.0f);
+    glTexCoord2f(0.7529296875f, 0.7529296875f); glVertex3f(800.0f, -800.0f, 800.0f);
+    glTexCoord2f(0.24609375f, 0.7529296875f); glVertex3f(-800.0f, -800.0f, 800.0f);
+    glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-800.0f, 800.0f, 800.0f);
 
     glEnd();
 
@@ -544,8 +544,8 @@ void openGLRender::spawnEnemies()
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            transX = (float)(qrand()%1800);
-            transY = (float)(qrand()%1800);
+            transX = (float)(qrand()%7900);
+            transY = (float)(qrand()%7900);
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
             qrand()%2 == 0 ? transY : transY = transY*(-1);

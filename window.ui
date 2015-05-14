@@ -78,7 +78,7 @@
     <bool>false</bool>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <widget class="QTabWidget" name="drawingTypesTab">
@@ -2591,7 +2591,7 @@
          </rect>
         </property>
         <property name="minimum">
-         <number>-75</number>
+         <number>-85</number>
         </property>
         <property name="maximum">
          <number>0</number>
