@@ -457,6 +457,10 @@ void openGLRender::processInput()
     //40 = Down arrow
     //32 = Space
     //27 = Esc
+    //87 = w
+    //65 = a
+    //83 = s
+    //68 = d
     //qDebug()<<"key: " <<ev->key() <<ev->nativeVirtualKey() <<ev->text();
 
     if( !this->inputQueue->isEmpty())
@@ -491,20 +495,21 @@ void openGLRender::processInput()
                 //this->camera->rotate(rot[0], rot[1], rot[2]+0.6f);
 
                 break;
+            case 65:
+                //Rotate the player slightly left
+                o = this->objects->at(0);
+                rot = ((ship*)o)->getRotation();
+                ((ship*)o)->rotate(rot[0], rot[1], rot[2]+0.6f);
+break;
 
                 //Up arrow key
             case 16777235:
                 o = this->objects->at(0);
                 ((ship*)o)->increaseAcceleration();
-                // trans = ((ship*)o)->getTranslation();
-                // rot = ((ship*)o)->getRotation();
-                // trans[0] -= (.05)*sin(rot[2]*3.14159265/180);
-                // //this->translation[1] += 1.0f * msec/1000;
-                // trans[1] += (.05)*cos(rot[2]*3.14159265/180);
-                // ((ship*)o)->translate(trans[0],trans[1],trans[2]);
-                //((ship*)o)->rotate(rot[0], rot[1], rot[2]);
-
-                //((ship*)o)->translate(trans[0]-(0.1f*sin(rot[2]*3.14159265/180)), trans[1]+(0.1f*cos(rot[2]*3.14159265/180)), trans[2]);
+                break;
+            case 87:
+                o = this->objects->at(0);
+                ((ship*)o)->increaseAcceleration();
                 break;
 
                 //Right arrow key
@@ -515,8 +520,20 @@ void openGLRender::processInput()
                 //this->camera->rotate(rot[0], rot[1], rot[2]+0.6f);
                 break;
 
+            case 68:
+                o = this->objects->at(0);
+                rot = ((ship*)o)->getRotation();
+                ((ship*)o)->rotate(rot[0], rot[1], rot[2]-0.6f);
+                break;
+
                 //Down arrow key
             case 16777237:
+                //Reduce acceleration
+                o = this->objects->at(0);
+                ((ship*)o)->decreaseAcceleration();
+                break;
+
+            case 83:
                 //Reduce acceleration
                 o = this->objects->at(0);
                 ((ship*)o)->decreaseAcceleration();
