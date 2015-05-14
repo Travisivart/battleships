@@ -217,7 +217,7 @@ void ship::update(const int &msec)
             qDebug()<<"ymax";
             this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
             qDebug()<<this->rotation[2];
-           if(this->rotation[2]>90 && this->rotation[2]<270 ||this->rotation[2]<-90 && this->rotation[2]>-270)
+           if((this->rotation[2]>90 && this->rotation[2]<270) || (this->rotation[2]<-90 && this->rotation[2]>-270))
             this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
             
 
@@ -227,7 +227,7 @@ void ship::update(const int &msec)
 
             qDebug()<<"xmax";
             qDebug()<<this->rotation[2];
-            if(this->rotation[2]<-180|| this->rotation[2]>0 && this->rotation[2]<180)
+            if(this->rotation[2]<-180|| (this->rotation[2]>0 && this->rotation[2]<180))
                 this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
             this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
 
@@ -238,7 +238,7 @@ void ship::update(const int &msec)
             outofbounds=true;
             qDebug()<<"xmin";
             qDebug()<<this->rotation[2];
-            if(this->rotation[2]>180 ||this->rotation[2]<0 && this->rotation[2]>-180)
+            if(this->rotation[2]>180 ||(this->rotation[2]<0 && this->rotation[2]>-180))
                 this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
             this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
 
@@ -248,7 +248,7 @@ void ship::update(const int &msec)
             qDebug()<<"ymin "<<(-90)%360;
             this->translation[0] -= ((this->velocity+bounce)*sin(this->rotation[2]*3.14159265/180));
             qDebug()<<this->rotation[2];
-            if(this->rotation[2]<90 && this->rotation[2]<-90 ||this->rotation[2]>270 || this->rotation[2]<-270)
+            if((this->rotation[2]<90 && this->rotation[2]<-90 )||(this->rotation[2]>270 || this->rotation[2]<-270))
                 this->translation[1] += ((this->velocity+bounce)*cos(this->rotation[2]*3.14159265/180));
         }
         if(outofbounds==false){ //if((this->translation[1]<800 && this->translation[0]<800 && this->translation[1]>-800 && this->translation[0]>-800)){
