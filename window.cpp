@@ -1175,6 +1175,7 @@ void Window::on_polyGoraud_clicked()
 
 void Window::translate(float x, float y, float z)
 {
+    glMatrixMode(GL_MODELVIEW);
     glTranslatef(x/100, y/100, z/100);
     //glTranslatef((float)ui->cameraXSlider->value()/100, (float)ui->cameraYSlider->value()/100, (float)ui->cameraZSlider->value()/100);
 }
@@ -1193,9 +1194,9 @@ void Window::on_cameraXSlider_valueChanged(int value)
 
     updateCamera();
 
-    ui->openGLRenderWindow->paintGL();
+    //ui->openGLRenderWindow->paintGL();
 
-    ui->cameraXSliderEdit->setText(QString::number(value));
+    //ui->cameraXSliderEdit->setText(QString::number(value));
 }
 
 void Window::on_cameraYSlider_valueChanged(int value)
@@ -1204,9 +1205,9 @@ void Window::on_cameraYSlider_valueChanged(int value)
 
     updateCamera();
 
-    ui->openGLRenderWindow->paintGL();
+    //ui->openGLRenderWindow->paintGL();
 
-    ui->cameraYSliderEdit->setText(QString::number(value));
+    //ui->cameraYSliderEdit->setText(QString::number(value));
 }
 
 void Window::on_cameraZSlider_valueChanged(int value)
@@ -1215,9 +1216,9 @@ void Window::on_cameraZSlider_valueChanged(int value)
 
     updateCamera();
 
-    ui->openGLRenderWindow->paintGL();
+    //ui->openGLRenderWindow->paintGL();
 
-    ui->cameraZSliderEdit->setText(QString::number(value));
+    //ui->cameraZSliderEdit->setText(QString::number(value));
 }
 
 void Window::on_cameraXRotSlider_valueChanged(int value)
@@ -1237,9 +1238,9 @@ void Window::on_cameraYRotSlider_valueChanged(int value)
 
     updateCamera();
 
-    ui->openGLRenderWindow->paintGL();
+    //ui->openGLRenderWindow->paintGL();
 
-    ui->cameraYRotSliderEdit->setText(QString::number(value));
+    //ui->cameraYRotSliderEdit->setText(QString::number(value));
 }
 
 void Window::on_cameraZRotSlider_valueChanged(int value)
