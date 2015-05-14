@@ -354,9 +354,9 @@ bool openGLMesh::checkCollision(openGLMesh *otherMesh)
     //qDebug()<<"Ot Real minX: " <<otherScale[0]*otherMesh->getBox().getMinX() + otherTrans[0] <<"Ot Real maxX: " <<otherScale[0]*otherMesh->getBox().getMaxX() + otherTrans[0];
 
 
-    if (myMinX <= otherMinX && myMaxX >= otherMinX || myMinX <= otherMaxX && myMaxX >= otherMaxX)
+    if ((myMinX >= otherMinX && myMinX <= otherMaxX) || (myMaxX <= otherMaxX && myMaxX >= otherMinX))
     {
-        if (myMinY <= otherMinY && myMaxY >= otherMinY || myMinY <= otherMaxY && myMaxY >= otherMaxY)
+        if ((myMinY >= otherMinY && myMinY <= otherMaxY) || (myMaxY <= otherMaxY && myMaxY >= otherMinY))
         {
             collisionFlag = true;
             if (this->name() == "projectile" || otherMesh->name() == "projectile")

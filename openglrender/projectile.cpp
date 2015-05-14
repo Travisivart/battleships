@@ -85,14 +85,14 @@ void projectile::draw()
         //openGLObject::destroy();
 	}
 	else
-    	glTranslatef(this->translation[0] -= ((0.5f )*sin(this->rotation[2]*3.14159265/180)), this->translation[1] += ((0.5f)*cos(this->rotation[2]*3.14159265/180)), this->translation[2]);
+    	glTranslatef(this->translation[0] -= ((10.0f )*sin(this->rotation[2]*3.14159265/180)), this->translation[1] += ((10.0f)*cos(this->rotation[2]*3.14159265/180)), this->translation[2]);
 
     glRotatef(this->rotation[0], 1.0f, 0.0f, 0.0f);
     glRotatef(this->rotation[1], 0.0f, 1.0f, 0.0f);
     glRotatef(this->rotation[2], 0.0f, 0.0f, 1.0f);
 
     //Perform scaling
-   glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
+//   glScalef(this->scaling[0], this->scaling[1], this->scaling[2]);
 
     //Return to original position
     //glTranslatef(0.0,0.0,0.0);

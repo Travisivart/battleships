@@ -84,7 +84,7 @@ openGLRender::openGLRender(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuf
     this->ships = load("../battleships/obj/Shipboatsmall1.obj");
     this->missilemesh = load("../battleships/obj/Missiles.obj");    //this->models = new QList<GLMmodel*>();
     this->delay.start();
-    this->counter.start();
+    this->timecounter.start();
     this->selectedObj = -1;
 
     this->inputQueue = new QList<quint32>();
@@ -213,7 +213,7 @@ void openGLRender::paintGL(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     // generate the texture image
-    if(this->counter.elapsed()<1000){
+    if(this->timecounter.elapsed()<1000){
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
         glBegin(GL_QUADS); // front face
         glTexCoord2f(0.0f, 0.0f); glVertex3f(800.0f, -800.0f, 0.0f);
@@ -222,7 +222,7 @@ void openGLRender::paintGL(){
         glTexCoord2f(0.0f, 40.0f); glVertex3f(-800.0f, -800.0f, 0.0f);
         glEnd();
     }
-    else if(this->counter.elapsed()<2000) {
+    else if(this->timecounter.elapsed()<2000) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth, bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData3);
         glBegin(GL_QUADS); // front face
         glTexCoord2f(0.0f, 0.0f); glVertex3f(800.0f, -800.0f, 0.0f);
@@ -239,7 +239,7 @@ void openGLRender::paintGL(){
         glTexCoord2f(40.0f, 40.0f); glVertex3f(-800.0f, 800.0f, 0.0f);
         glTexCoord2f(0.0f, 40.0f); glVertex3f(-800.0f, -800.0f, 0.0f);
         glEnd();
-        this->counter.restart();
+        this->timecounter.restart();
     }
     //counter++;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader2.biWidth, bitmapInfoHeader2.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData2);
