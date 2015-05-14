@@ -1247,7 +1247,7 @@ void Window::on_cameraZoomSlider_valueChanged(int value)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho((float)(-value), (float)value, (float)(-value), (float)(value) , -500, 500);
+    glOrtho((float)(-value)*2.171, (float)value*2.171, (float)(-value), (float)(value) , -500, 500);
     //glOrtho((float)(-value), (float)value, (float)(-value), (float)(value), (float)(-value), (float)(value));
 
     //glOrtho(-0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0.5f);

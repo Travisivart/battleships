@@ -218,7 +218,7 @@ void ship::update(const int &msec)
         trigger++;
     }
     else{
-        if(this->translation[1]>100){
+        if(this->translation[1]>100*2.1714){
             qDebug()<<"ship out of bounds";
             qDebug()<<"random number between 90-270"<< rand()%178+91;
             rotate(rotation[0], rotation[1], 0);
@@ -227,7 +227,7 @@ void ship::update(const int &msec)
 
 
         }
-        if(this->translation[0]>100){
+        if(this->translation[0]>100*2.1714){
             qDebug()<<"ship out of bounds";
             rotate(rotation[0], rotation[1], 0);
             rotate(rotation[0], rotation[1], rand()%178+1);
@@ -235,20 +235,18 @@ void ship::update(const int &msec)
 
 
         }
-        if(this->translation[0]<-100){
+        if(this->translation[0]<-100*2.1714){
             qDebug()<<"ship out of bounds";
             rotate(rotation[0], rotation[1], 0);
             rotate(rotation[0], rotation[1], rand()%178+181);
             translate(translation[0]+1,translation[1],translation[2]);
 
         }
-        if(this->translation[1]<-100){
+        if(this->translation[1]<-100*2.1714){
             qDebug()<<"ship out of bounds";
             rotate(rotation[0], rotation[1], 0);
             rotate(rotation[0], rotation[1], rand()%178-90);
             translate(translation[0],translation[1]+1,translation[2]);
-
-
         }
 
         this->translation[0] -= ((10.0f * msec/100)*sin(this->rotation[2]*3.14159265/180));

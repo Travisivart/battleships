@@ -163,7 +163,7 @@ void openGLRender::initializeGL(){
     glMatrixMode(GL_PROJECTION);
     //glLoadIdentity();
 
-    glOrtho(-100.0f, 100.0f, -100.0f, 100.0f, -500.0f, 500.0f);
+    glOrtho(-100.0f*2.1714, 100.0f*2.1714, -100.0f*2.1714, 100.0f*2.1714, -500.0f, 500.0f);
 
     //glMatrixMode(GL_MODELVIEW);
     //glLoadIdentity();
@@ -494,7 +494,7 @@ void openGLRender::spawnMissile(){
 }
 void openGLRender::spawnEnemies()
 {
-    float transX, transY;
+    GLfloat transX, transY;
     float rotZ;
 
     //Always make sure there are at least 4 enemies in the world. (Player + enemies = 5)
@@ -506,9 +506,9 @@ void openGLRender::spawnEnemies()
         if(this->objects->at(i)->name() == "ship")
             counter++;
 
-    if( counter < 5 )
+    if( counter < 10 )
     {
-        while(counter < 5)
+        while(counter < 10)
         {
             //qDebug()<<"spawnEnemies";
             this->push(new ship(this->ships,false));
@@ -519,14 +519,13 @@ void openGLRender::spawnEnemies()
             qsrand(QTime::currentTime().msec());
 
             //Give the enemies some random positioning
-            transX = (float)(qrand()%90);
-            transY = (float)(qrand()%90);
-            //rotZ = (float)(qrand()%100+5)/10;
+            transX = (float)(qrand()%2000);
+            transY = (float)(qrand()%2000);
 
             qrand()%2 == 0 ? transX : transX = transX*(-1);
             qrand()%2 == 0 ? transY : transY = transY*(-1);
 
-            ((ship*)this->pop())->translate(transX, transY, 0.0f );
+            ((ship*)this->pop())->translate(transX/10.0f,transY/10.0f, 0.0f );
             ((ship*)this->pop())->rotate(0, 0, rand()%359);
 
             //((ship*)this->pop())->rotate();
