@@ -2726,10 +2726,10 @@
          <number>1</number>
         </property>
         <property name="maximum">
-         <number>40</number>
+         <number>200</number>
         </property>
         <property name="singleStep">
-         <number>1</number>
+         <number>4</number>
         </property>
         <property name="value">
          <number>20</number>
