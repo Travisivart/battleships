@@ -180,6 +180,8 @@ private:
 
     int xRot;
     int zRot;
+
+    bool playgame;
 };
 
 #endif // WINDOW_H

@@ -17,13 +17,15 @@ Window::Window(QOpenGLWidget *parent) :
     this->buildingPolygon = false;
 
     //Sets an idle function to run after 1000 milliseconds
-    QTimer::singleShot(1000, this, SLOT(doWorkInIdle()));
+    QTimer::singleShot(0, this, SLOT(doWorkInIdle()));
 
     //GLMmodel* playership=openGLRender::load("../battleships/obj/shipboat3.obj");
     GLMmodel* playership=openGLRender::load("../battleships/obj/Shipboatsmall1.obj");
     //Load player model
     this->ui->openGLRenderWindow->push(new ship(playership,true));
     //((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
+
+    playgame = false;
 }
 
 Window::~Window()
@@ -72,35 +74,42 @@ void Window::doWorkInIdle()
     ui->openGLRenderWindow->setFocus();
 
 
+
     //qDebug()<<"old:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
-    lastAwake = QTime::currentTime();
+
     //qDebug()<<"new:" <<lastBlock.msecsTo(lastAwake) <<lastAwake.msecsTo(lastBlock);
     //Sets this idle function to run again after 10 milliseconds
     QTimer::singleShot(0, this, SLOT(doWorkInIdle()));
-
-    if (lastBlock.msecsTo(lastAwake) > 0)
+    if (playgame)
     {
-        //Spawn enemies
-        this->ui->openGLRenderWindow->spawnEnemies();
+        lastAwake = QTime::currentTime();
 
-        //Process input queue
-        this->ui->openGLRenderWindow->processInput();
+        if (lastBlock.msecsTo(lastAwake) > 0)
+        {
+            //Spawn enemies
+            this->ui->openGLRenderWindow->spawnEnemies();
 
-        //update objects to new positions
-        this->ui->openGLRenderWindow->update(lastBlock.msecsTo(lastAwake));
+            //Process input queue
+            this->ui->openGLRenderWindow->processInput();
 
-        //Check for collisions
-        this->ui->openGLRenderWindow->checkCollisions();
+            //update objects to new positions
+            this->ui->openGLRenderWindow->update(lastBlock.msecsTo(lastAwake));
 
-        //Remove destroyed objects
-        this->ui->openGLRenderWindow->removeDestroyedObjects();
+            //Check for collisions
+            this->ui->openGLRenderWindow->checkCollisions();
 
-        //Update camera position
-        this->ui->openGLRenderWindow->updateCamera();
+            //Remove destroyed objects
+            this->ui->openGLRenderWindow->removeDestroyedObjects();
 
-        ui->openGLRenderWindow->paintGL();
+            //Update camera position
+            this->ui->openGLRenderWindow->updateCamera();
+
+            ui->openGLRenderWindow->paintGL();
+        }
+        lastBlock = QTime::currentTime();
     }
-    lastBlock = QTime::currentTime();
+    else
+        ui->openGLRenderWindow->paintTitle((float)ui->cameraXRotSlider->value(), (float)ui->cameraYRotSlider->value(), (float)ui->cameraZRotSlider->value());
 }
 
 void Window::keyPressEvent(QKeyEvent *ev)
@@ -108,6 +117,13 @@ void Window::keyPressEvent(QKeyEvent *ev)
     //Give focus back to the openGL window.
     //if (!ui->openGLRenderWindow->hasFocus())
     //ui->openGLRenderWindow->setFocus();
+
+    if(!this->playgame)
+    {
+        this->playgame = true;
+        ui->openGLRenderWindow->paintGL();
+    }
+
 
     if( !ev->isAutoRepeat())
     {
@@ -142,7 +158,7 @@ void Window::mouseMoveEvent(QMouseEvent *ev)
         zRot = ev->y();
     }
 
-        /*
+    /*
     if (clicked && ev->x()>=10 && ev->x()<=OGLWIDTH+10 && ev->y()>=YOFFSET && ev->y() <=OGLHEIGHT+YOFFSET)
     {
         int x = (ev->x()-10)*2-OGLWIDTH;
@@ -1186,9 +1202,9 @@ void Window::on_cameraXRotSlider_valueChanged(int value)
 
     updateCamera();
 
-    ui->openGLRenderWindow->paintGL();
+   // ui->openGLRenderWindow->paintGL();
 
-    ui->cameraXRotSliderEdit->setText(QString::number(value));
+    //ui->cameraXRotSliderEdit->setText(QString::number(value));
 }
 
 void Window::on_cameraYRotSlider_valueChanged(int value)
@@ -1208,9 +1224,9 @@ void Window::on_cameraZRotSlider_valueChanged(int value)
 
     updateCamera();
 
-    ui->openGLRenderWindow->paintGL();
+    //ui->openGLRenderWindow->paintGL();
 
-    ui->cameraZRotSliderEdit->setText(QString::number(value));
+    //ui->cameraZRotSliderEdit->setText(QString::number(value));
 }
 
 void Window::updateCamera()
@@ -1269,7 +1285,7 @@ void Window::on_cameraZoomSlider_valueChanged(int value)
     //glOrtho(-0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0.5f);
 
     //qDebug()<<value;
-    ui->openGLRenderWindow->paintGL();
+    //ui->openGLRenderWindow->paintGL();
     //glViewport(0,0,OGLWIDTH*value,OGLHEIGHT*value);
 
     ui->cameraAspectSlider_1->setValue(value);

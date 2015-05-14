@@ -188,10 +188,13 @@ void openGLRender::initializeGL(){
     glBindTexture(GL_TEXTURE_2D, texture2); // enable our texture object
     //counter=0;
 
+    title = glmReadOBJ("../battleships/obj/battleships.obj");
+    title2 = glmReadOBJ("../battleships/obj/pressanykey.obj");
+
 }
 
 void openGLRender::paintGL(){
-    
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
@@ -270,7 +273,6 @@ void openGLRender::paintGL(){
     glTexCoord2f(0.24609375f, 0.24609375f); glVertex3f(-800.0f, 800.0f, 800.0f);
 
     glEnd();
-
     /* //Draw 2d ui overlay
     glMatrixMode(GL_PROJECTION);
 
@@ -288,6 +290,38 @@ void openGLRender::paintGL(){
     makeCurrent();
     this->swapBuffers();
 
+}
+
+void openGLRender::paintTitle(float rotX, float rotY, float rotZ)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_MODELVIEW);
+
+    glShadeModel(GL_SMOOTH); // use smooth shading
+    glEnable(GL_DEPTH_TEST); // hidden surface removal
+    glEnable(GL_CULL_FACE); // do not calculate inside of poly's
+    glFrontFace(GL_CCW); // counter clock-wise polygons are out
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    glLoadIdentity();
+    glRotatef(rotX, 1.0f, 0.0f, 0.0f);
+    glRotatef(rotY, 0.0f, 1.0f, 0.0f);
+    glRotatef(rotZ, 0.0f, 0.0f, 1.0f);
+    glScalef(12.0f,12.0f,12.0f);
+    glmDraw(title, GLM_MATERIAL, GL_TRIANGLES);
+    glLoadIdentity();
+    glTranslatef(1.0f,-16.0f,0.0f);
+    glRotatef(rotX, 1.0f, 0.0f, 0.0f);
+    glRotatef(rotY, 0.0f, 1.0f, 0.0f);
+    glRotatef(rotZ, 0.0f, 0.0f, 1.0f);
+    glScalef(12.0f,12.0f,12.0f);
+    glmDraw(title2, GLM_MATERIAL, GL_TRIANGLES);
+
+    makeCurrent();
+    this->swapBuffers();
 }
 
 void openGLRender::draw(){

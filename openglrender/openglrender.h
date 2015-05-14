@@ -61,6 +61,7 @@ public:
     void initializeGL();
 
     void paintGL();
+    void paintTitle(float rotX, float rotY, float rotZ);
     void clearGL();
     void setColorGL(int newRed, int newGreen, int newBlue);
     void clearObjects();
@@ -129,6 +130,9 @@ private:
     QTime timecounter;
 
     QTime delay;
+
+    GLMmodel *title;
+    GLMmodel *title2;
 };
 
 #endif // OPENGLRENDER_H
