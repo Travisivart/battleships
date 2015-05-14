@@ -23,7 +23,7 @@ Window::Window(QOpenGLWidget *parent) :
     GLMmodel* playership=openGLRender::load("../battleships/obj/Shipboatsmall1.obj");
     //Load player model
     this->ui->openGLRenderWindow->push(new ship(playership,true));
-    ((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
+    //((ship*)ui->openGLRenderWindow->pop())->scale(0.2f, 0.2f, 0.2f);
 }
 
 Window::~Window()
@@ -128,7 +128,7 @@ void Window::keyReleaseEvent(QKeyEvent *ev)
 }
 void Window::wheelEvent(QWheelEvent *ev)
 {
-    ui->cameraZoomSlider->setValue(ui->cameraZoomSlider->value() - ev->delta()/120);
+    ui->cameraZoomSlider->setValue(ui->cameraZoomSlider->value() - 4*ev->delta()/120);
 }
 
 void Window::mouseMoveEvent(QMouseEvent *ev)
